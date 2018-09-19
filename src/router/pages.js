@@ -32,6 +32,11 @@ export default {
     component: () => import('pages/Home.vue'),
     label: 'Profil'
   },
+  [links.CALENDAR]: {
+    path: '/calendar',
+    component: () => import('pages/Home.vue'),
+    label: 'Calendrier'
+  },
   [links.PRODUCTS]: {
     path: '/products',
     component: () => import('pages/Home.vue'),
@@ -45,16 +50,16 @@ export default {
   [links.MANAGE_SHOPS]: {
     path: '/manageShops',
     component: () => import('pages/Home.vue'),
-    label: 'Les Budzonneries'
+    label: 'Gestion des Budzonneries'
   },
   [links.MANAGE_SITE]: {
     path: '/manageSite',
     component: () => import('pages/Home.vue'),
-    label: 'Gestion Site'
+    label: 'Gestion du Site'
   },
   [links.MAP]: {
     path: '/map',
-    component: () => import('pages/Home.vue'),
+    component: () => import('pages/Map.vue'),
     label: 'Carte'
   }
 }

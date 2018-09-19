@@ -6,6 +6,7 @@ export const LOGOUT = 'logout'
 export const PROFILE = 'profile'
 
 export const HOME = 'home'
+export const CALENDAR = 'calendar'
 export const PRODUCTS = 'products'
 export const MY_SHOP = 'myShop'
 export const MAP = 'map'

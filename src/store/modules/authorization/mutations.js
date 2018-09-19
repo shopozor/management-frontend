@@ -5,15 +5,13 @@ export function storeAuthorization (state, payload) {
   state.userId = payload.userId
   state.token = payload.token
   state.authorization = payload.authorization
-
-  console.log(state.authorization)
 }
 
 export function logout (state) {
-  state.userId = undefined
-  state.token = undefined
-  state.email = undefined
-  state.authorization = types.auth.NOT_CONNECTED
+  state.userId = ''
+  state.token = ''
+  state.email = ''
+  state.authorization = [types.auth.NOT_CONNECTED]
 
   this.$router.push({ path: '/' })
 }

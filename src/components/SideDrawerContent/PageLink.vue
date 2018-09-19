@@ -1,6 +1,7 @@
 <template>
     <q-item
-      v-if="label !== undefined && actualPath !== path"
+      :class="{'bg-primary text-white': actualPath === path}"
+      v-if="label !== undefined"
       @click.native="() => $router.push({path})">
         <q-item-main :label="label" />
     </q-item>

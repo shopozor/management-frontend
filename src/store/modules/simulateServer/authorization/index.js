@@ -47,7 +47,7 @@ export const getAuthorization = ({ userId, token }) => {
       } else {
         resolve({
           message: '[GET_AUTHORIZATION] token is not valid',
-          authorization: types.auth.NOT_CONNECTED
+          authorization: [types.auth.NOT_CONNECTED]
         })
       }
     }, delayInMs)

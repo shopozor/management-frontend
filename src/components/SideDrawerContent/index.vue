@@ -8,12 +8,25 @@
     {{ user }}
   </q-list-header>
     <page-link
-      v-for="el in access"
-      v-if="el !== separator"
-      :key="pages[el].path"
-      :path="pages[el].path"
-      :label="pages[el].label" />
-    <q-item-separator v-else />
+      v-for="(value, key) in access.user"
+      v-if="value"
+      :key="pages[key].path"
+      :path="pages[key].path"
+      :label="pages[key].label" />
+    <q-item-separator />
+    <page-link
+      v-for="(value, key) in access.pages"
+      v-if="value"
+      :key="pages[key].path"
+      :path="pages[key].path"
+      :label="pages[key].label" />
+    <q-item-separator />
+    <page-link
+      v-for="(value, key) in access.last"
+      v-if="value"
+      :key="pages[key].path"
+      :path="pages[key].path"
+      :label="pages[key].label" />
   </q-list>
 </template>
 
@@ -35,9 +48,11 @@ export default {
   props: { drawerOpen: Boolean },
   computed: {
     ...mapGetters(['email', 'authorization']),
-    access: function () { return access(this.authorization) },
+    access: function () {
+      return access(this.authorization)
+    },
     user () {
-      if (this.email !== undefined) return this.email
+      if (this.email !== '') return this.email
       else return 'non connecté'
     }
   },

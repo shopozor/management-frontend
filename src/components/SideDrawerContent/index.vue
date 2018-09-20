@@ -47,9 +47,9 @@ export default {
   },
   props: { drawerOpen: Boolean },
   computed: {
-    ...mapGetters(['email', 'authorization']),
+    ...mapGetters(['email', 'authorizations']),
     access: function () {
-      return access(this.authorization)
+      return access(this.authorizations)
     },
     user () {
       if (this.email !== '') return this.email

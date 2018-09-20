@@ -1,24 +1,23 @@
-import * as server from '../simulateServer/authorization'
+import * as request from '../simulateServer/requestUser'
 
 export function signup ({ commit }, { email, password }) {
-  server
+  request
     .signup({ email, password })
     .then(response => {
-      console.log(response)
       this.$router.push({ path: '/ConfirmationEmailSent' })
     })
     .catch(error => commit('error', error))
 }
 
 export function login ({ commit }, { email, password, stayLoggedIn }) {
-  server
+  request
     .login({ email, password })
     .then(response => {
-      commit('storeAuthorization', {
+      commit('storeAuthorizations', {
         email,
         token: response.token,
         userId: response.userId,
-        authorization: response.authorization
+        authorizations: response.authorizations
       })
       stayLoggedIn ? saveToken(response.userId, response.token) : removeToken()
       this.$router.back()
@@ -36,15 +35,16 @@ function removeToken () {
   localStorage.removeItem('token')
 }
 
-export function getAuthorization ({ commit }, { userId, token }) {
-  server
-    .getAuthorization({ userId, token })
+export function getAuthorizations ({ commit }, { userId, token }) {
+  console.log('[actions/getAuthorizations]')
+  request
+    .getAuthorizations({ userId, token })
     .then(response => {
-      commit('storeAuthorization', {
+      commit('storeAuthorizations', {
         email: response.email,
-        token,
-        userId,
-        authorization: response.authorization
+        token: response.token,
+        userId: response.userId,
+        authorizations: response.authorizations
       })
     })
     .catch(error => {
@@ -53,7 +53,7 @@ export function getAuthorization ({ commit }, { userId, token }) {
 }
 
 export function logout ({ commit }, { userId, token }) {
-  server
+  request
     .logout({ userId, token })
     .then(response => {
       commit('logout')

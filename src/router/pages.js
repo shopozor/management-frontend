@@ -1,6 +1,13 @@
 import * as links from '../types/links'
 
-// A page that can be reached from the burger menu must have a label
+/**
+ * A page that can be reached from the burger menu must have a label
+ *
+ * To add a new menu reachable page:
+ *  1) add its type to types/links.js
+ *  2) authorize and return access in router/access.js
+ *  3) add a path, component and label here
+ **/
 
 export default {
   [links.HOME]: {
@@ -34,7 +41,7 @@ export default {
   },
   [links.CALENDAR]: {
     path: '/calendar',
-    component: () => import('pages/Home.vue'),
+    component: () => import('pages/Calendar.vue'),
     label: 'Calendrier'
   },
   [links.PRODUCTS]: {
@@ -61,5 +68,10 @@ export default {
     path: '/map',
     component: () => import('pages/Map.vue'),
     label: 'Carte'
+  },
+  [links.ORDERS]: {
+    path: '/orders',
+    component: () => import('pages/Home.vue'),
+    label: 'Commandes'
   }
 }

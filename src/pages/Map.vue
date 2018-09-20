@@ -3,7 +3,7 @@
         <gmap-map class="q-ma-md"
         :center="center"
         :zoom="9"
-        map-type-id="terrain"
+        map-type-id="roadmap"
         style="width: 100vw; height: 500px"
       >
         <gmap-marker
@@ -12,7 +12,7 @@
             v-for="(m, index) in markers"
             :position="m.position"
             :clickable="true"
-            @click="center=m.position"
+            @click="() => moveTo(m.position)"
         />
         </gmap-map>
     </q-page>
@@ -44,6 +44,11 @@ export default {
       }, {
         position: { lat: 46.421299, lng: 6.928725 }
       }]
+    }
+  },
+  methods: {
+    moveTo (end) {
+      window.open(`https://www.google.ch/maps/dir//'${end.lat},${end.lng}'/`)
     }
   }
 }

@@ -1,6 +1,7 @@
 <template>
   <q-page>
-    Accueil
+    {{ Date.now() }}
+    {{ Date('2019-01-01') }}
   </q-page>
 </template>
 

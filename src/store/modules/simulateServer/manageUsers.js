@@ -33,12 +33,13 @@ export const changeUserPassword = ({ email, userId, newPassword }) => {
 }
 
 export const createUser = ({ email, password }) => {
-  const hash = window.btoa(email)
+  const hash = `user:${window.btoa(email)}`
   const newUser = {
     userId: hash,
     email,
     password,
-    authorizations: [auth.CONSUMER]
+    authorizations: [auth.CONSUMER],
+    productIds: []
   }
   updateUsers({ newUsers: { [hash]: { ...newUser } } })
 }
@@ -65,7 +66,7 @@ export const getUser = ({ email, userId }) => {
   const users = readServer().users
   if (userId) return users[userId]
   else if (email) return Object.values(users).find(user => user.email === email)
-  else console.error('[GET_USER] You must specify user email or user id')
+  else return undefined
 }
 
 export const updateUsers = ({ newUsers }) => {

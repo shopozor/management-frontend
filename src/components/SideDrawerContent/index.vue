@@ -47,12 +47,12 @@ export default {
   },
   props: { drawerOpen: Boolean },
   computed: {
-    ...mapGetters(['email', 'authorizations']),
+    ...mapGetters(['email', 'authorizations', 'isAuthorized']),
     access: function () {
       return access(this.authorizations)
     },
     user () {
-      if (this.email !== '') return this.email
+      if (this.isAuthorized) return this.email
       else return 'non connecté'
     }
   },

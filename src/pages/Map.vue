@@ -20,10 +20,10 @@
 
 <script>
 import * as VueGoogleMaps from 'vue2-google-maps'
-import Vue2 from 'vue'
+import Vue from 'vue'
 import budzi from '../assets/budzi.png'
 
-Vue2.use(VueGoogleMaps, {
+Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyA4xnZ_np7vsCKUEmlXAhF46WO_sbygF7Q',
     v: '3.'

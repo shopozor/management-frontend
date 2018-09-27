@@ -17,42 +17,54 @@ export const createProduct = ({ userId, token, newProduct }) => {
       ) {
         manageProducts.createProduct({ userId, newProduct })
         resolve({
-          message: `[CREATE_PRODUCT] new product successfully created`,
+          message: `[createProduct()] new product successfully created`,
           products: manageProducts.getProducts({ userId })
         })
       } else {
-        reject(new Error(`[CREATE_PRODUCT] could not create product`))
+        reject(new Error(`[createProduct()] could not create product`))
       }
     }, delayInMs)
   })
 }
 
-export const getProducts = ({ userId, token }) => {
+export const getProductsOf = ({ userId, token }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (validate.tokenIsValid({ userId, token })) {
         resolve({
-          message: `[GET_PRODUCTS] products successfully received`,
-          products: manageProducts.getProducts({ userId })
+          message: `[getProducts()] products successfully received`,
+          products: manageProducts.getProductsOf({ userId })
         })
       } else {
-        reject(new Error('[GET_PRODUCTS] not authorized'))
+        reject(new Error('[getProducts()] not authorized'))
       }
     }, delayInMs)
   })
 }
 
-export const updateProduct = ({ userId, token, productId, newProps }) => {
+// limiter les droits de modifications aux seules variables pertinentes
+export const updateProduct = ({
+  userId,
+  token,
+  productId,
+  title,
+  description,
+  image,
+  conservationDaysAfterSale,
+  conservationMethod,
+  aisle
+}) => {
+  const newProps = { title, description, image, conservationDaysAfterSale, conservationMethod, aisle }
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (validate.tokenIsValid({ userId, token })) {
-        manageProducts.updateProduct({ userId, productId, newProps })
+      if (validate.tokenIsValid({ userId, token }) && validate.userOwnsProduct({ userId, productId })) {
+        manageProducts.updateProduct({ productId, newProps })
         resolve({
-          message: `[UPDATE_PRODUCT] product successfully updated`,
+          message: `[updateProduct()] product successfully updated`,
           products: manageProducts.getProducts({ userId })
         })
       } else {
-        reject(new Error(`[UPDATE_PRODUCT] not authorized`))
+        reject(new Error(`[updateProduct()] not authorized`))
       }
     }, delayInMs)
   })
@@ -64,11 +76,11 @@ export const removeProduct = ({ userId, token, productId }) => {
       if (validate.tokenIsValid({ userId, token })) {
         manageProducts.removeProduct({ userId, productId })
         resolve({
-          message: `[REMOVE_PRODUCT] product successfully removed`,
+          message: `[removeProduct()] product successfully removed`,
           products: manageProducts.getProducts({ userId })
         })
       } else {
-        reject(new Error(`[REMOVE_PRODUCT] not authorized`))
+        reject(new Error(`[removeProduct()] not authorized`))
       }
     }, delayInMs)
   })

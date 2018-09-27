@@ -3823,10 +3823,6 @@ lodash.findkey@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.findkey/-/lodash.findkey-4.6.0.tgz#83058e903b51cbb759d09ccf546dea3ea39c4718"
 
-lodash.has@^4.5.2:
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/lodash.has/-/lodash.has-4.5.2.tgz#d19f4dc1095058cccbe2b0cdf4ee0fe4aa37c862"
-
 lodash.kebabcase@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
@@ -3918,10 +3914,6 @@ lru-cache@4.1.3, lru-cache@^4.0.1, lru-cache@^4.1.1, lru-cache@^4.1.2:
   dependencies:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
-
-luxon@^1.2.1:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.3.3.tgz#e66e8537a62c9b351ba69b766d7fb70b07ab5e57"
 
 make-dir@^1.0.0:
   version "1.3.0"
@@ -5079,13 +5071,6 @@ q@^1.1.2:
 qs@6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
-
-quasar-calendar@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/quasar-calendar/-/quasar-calendar-0.3.0.tgz#0642fda5306f370955fb85097d865f6e331ac7c5"
-  dependencies:
-    lodash.has "^4.5.2"
-    luxon "^1.2.1"
 
 quasar-cli@^0.17.0:
   version "0.17.15"
@@ -6357,6 +6342,12 @@ vue-server-renderer@2.5.17:
     serialize-javascript "^1.3.0"
     source-map "0.5.6"
 
+vue-simple-calendar@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vue-simple-calendar/-/vue-simple-calendar-4.0.2.tgz#b2c7530759e6e07314b27848f96705ee18029875"
+  dependencies:
+    vue "^2.5.17"
+
 vue-style-loader@4.1.2, vue-style-loader@^4.1.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
@@ -6382,7 +6373,7 @@ vue2-google-maps@^0.10.2:
     babel-runtime "^5.8.0"
     marker-clusterer-plus "^2.1.4"
 
-vue@2.5.17:
+vue@2.5.17, vue@^2.5.17:
   version "2.5.17"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
 

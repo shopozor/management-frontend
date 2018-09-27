@@ -1,33 +1,56 @@
-// import types from '../../../types'
+import { readServer, updateServer } from './serverAccess'
 import { getUser, updateUser } from './manageUsers'
 
 export const createProduct = ({ email, userId, newProduct }) => {
   const user = getUser({ email, userId })
   const productId = generateProductId({ userId: user.userId })
-  const newProducts = { ...user.products, [productId]: { ...newProduct, productId } }
-  updateUser({ email, userId, newProps: { products: newProducts } })
+  const newProducts = { [productId]: { ...newProduct, productId, owner: user.userId } }
+  updateProducts({ newProducts })
+  giveProductAccessToUser({ userId, email, productId })
 }
 
-const generateProductId = ({ userId }) => `${userId}/product/${Date.now()}`
-
-export const updateProduct = ({ email, userId, productId, newProps }) => {
-  const product = getProducts({ email, userId })[productId]
-  const newProducts = { [productId]: { ...product, ...newProps } }
-  updateProducts({ userId, email, newProducts })
+export const giveProductAccessToUser = ({ email, userId, productId }) => {
+  const productIds = getProductIdsOfUser({ userId, email })
+  productIds.push(productId)
+  updateUser({ userId, email, newProps: { productIds } })
 }
 
-export const removeProduct = ({ email, userId, productId }) => {
-  const products = getProducts({ email, userId })
+const generateProductId = ({ userId }) => `${userId}/product:${Date.now()}`
+
+export const updateProduct = ({ productId, newProps }) => {
+  const newProduct = { ...getProducts()[productId], ...newProps }
+  const newProducts = { [productId]: newProduct }
+  updateProducts({ newProducts })
+}
+
+export const removeProduct = ({ productId }) => {
+  removeProductAccess({ productId })
+  const products = getProducts()
   delete products[productId]
-  updateUser({ userId, email, newProps: { products } })
+  updateServer({ newProps: { products } })
 }
 
-export const getProducts = ({ userId, email }) => {
-  const user = getUser({ email, userId })
-  return user.products
+export const removeProductAccess = ({ productId }) => {
+  const userId = getOwnerOfProduct({ productId })
+  const productIds = getUser({ userId }).productIds.filter(id => id !== productId)
+  updateUser({ userId, newProps: { productIds } })
 }
 
-export const updateProducts = ({ userId, email, newProducts }) => {
-  const products = { ...getUser({ email, userId }).products, ...newProducts }
-  updateUser({ userId, email, newProps: { products } })
+export const getProductsOf = ({ userId, email }) => {
+  const productIds = getProductIdsOfUser({ userId, email })
+  const products = getProducts()
+  const productsOfUser = {}
+  productIds.forEach(id => { productsOfUser[id] = products[id] })
+  return productsOfUser
 }
+
+export const getOwnerOfProduct = ({ productId }) => getProducts()[productId].owner
+
+export const getProductIdsOfUser = ({ userId, email }) => getUser({ userId, email }).productIds
+
+export const updateProducts = ({ newProducts }) => {
+  const products = { ...getProducts(), ...newProducts }
+  updateServer({ newProps: { products } })
+}
+
+export const getProducts = () => readServer().products

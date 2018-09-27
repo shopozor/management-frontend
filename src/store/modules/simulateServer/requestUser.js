@@ -38,14 +38,12 @@ export const getAuthorizations = ({ userId, token }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (validate.tokenIsValid({ userId, token })) {
-        console.log('ok')
         resolve({
           message: `[GET_AUTHORIZATIONS] token is valid`,
           email: manageUsers.getUser({ userId }).email,
           authorizations: manageUsers.getAuthorizations({ userId })
         })
       } else {
-        console.log('ok, mais...')
         resolve({
           message: '[GET_AUTHORIZATION] token is not valid',
           authorizations: [types.auth.NOT_CONNECTED]

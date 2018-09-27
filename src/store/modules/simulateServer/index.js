@@ -5,7 +5,8 @@ import * as auth from '../../../types/authorization'
 
 export const initFakeServer = () => {
   writeServer({
-    users: {}
+    users: {},
+    products: {}
   })
 
   createUser({ email: 'client@budzons.ch', password: 'Budzonnerie1' })
@@ -28,8 +29,8 @@ export const initFakeServer = () => {
   createProduct({
     email: 'producteur@budzons.ch',
     newProduct: {
-      name: 'Ragoût de Budzon',
-      description: 'de délicieuses fourmis en ragoût',
+      name: 'Lait de Budzon',
+      description: 'Ben t\'imagines pas le prix de la trayeuse',
       stock: [
         {
           measure: 500,

@@ -15,7 +15,12 @@ export const passwordIsValid = ({ email, userId, password }) => {
 
 export const tokenIsValid = ({ email, userId, token }) => {
   const user = getUser({ email, userId })
-  return token === user.token
+  return token && user && token === user.token
+}
+
+export const userOwnsProduct = ({ userId, email, productId }) => {
+  const ownedProducts = getUser({ userId, email }).productIds
+  return ownedProducts.some(id => id === productId)
 }
 
 export const userHasAuthorizations = ({ userId, email, authorizations }) => {

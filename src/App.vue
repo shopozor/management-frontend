@@ -16,7 +16,7 @@ export default {
     ...mapActions(['getAuthorizations'])
   },
   created () {
-    const serverMustBeInitialized = localStorage.getItem('fake_server') === null
+    const serverMustBeInitialized = true // localStorage.getItem('fake_server') === null
     if (serverMustBeInitialized) {
       initFakeServer()
 
@@ -60,7 +60,7 @@ export default {
                                   localStorage.setItem('products', JSON.stringify(response.products))
                                   console.log(response.message)
 
-                                  rqProduct.getProducts({userId, token})
+                                  rqProduct.getProductsOf({userId, token})
                                     .then(response => {
                                       localStorage.setItem('products', JSON.stringify(response.products))
                                       console.log(response.message)
@@ -69,7 +69,7 @@ export default {
                                       const newProps = { description: 'De délicieuses fourmis en ragoût' }
                                       rqProduct.updateProduct({ userId, token, productId, newProps })
                                         .then(response => {
-                                          console.log(response.products)
+                                          console.log(response.message)
                                           localStorage.setItem('products', JSON.stringify(response.products))
 
                                           rqProduct.removeProduct({ userId, token, productId })

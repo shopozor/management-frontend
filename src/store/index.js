@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import auth from './modules/authorization'
+import user from './modules/user'
 
 Vue.use(Vuex)
 
@@ -11,23 +11,11 @@ Vue.use(Vuex)
  */
 
 export default new Vuex.Store({
-  state: {
-    counter1: 0,
-    counter2: 0
-  },
-  getters: {
-    counter1: state => state.counter1,
-    counter2: ({ counter2 }) => counter2
-  },
-  mutations: {
-    increment1: state => state.counter1++,
-    increment2: ({ counter2 }) => counter2++
-  },
-  actions: {
-    increment1: context => context.commit('increment1'),
-    increment2: ({ commit }) => commit('increment2')
-  },
+  state: { },
+  getters: { },
+  mutations: { },
+  actions: { },
   modules: {
-    auth
+    user
   }
 })

@@ -1,12 +1,14 @@
-import { writeServer } from './serverAccess'
-import { createUser, authorize } from './manageUsers'
-import { createProduct } from './manageProducts'
+import { setServer } from './serverAccess'
+import { createUser, authorize } from './users/manageUsers'
+import { createProduct } from './products/manageProducts'
 import * as auth from '../../../types/authorization'
 
 export const initFakeServer = () => {
-  writeServer({
+  setServer({
     users: {},
-    products: {}
+    products: {},
+    formats: {},
+    orders: {}
   })
 
   createUser({ email: 'client@budzons.ch', password: 'Budzonnerie1' })

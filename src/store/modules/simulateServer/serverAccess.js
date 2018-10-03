@@ -10,26 +10,31 @@ export const getOrdersOfFormat = ({ formatId, requiredStates }) => {
     const order = getOrders()[orderId]
     if (!requiredStates || requiredStates.includes(order.state)) {
       ownedOrders[orderId] = order
+      return ownedOrders
     }
   }, {})
 }
 
-export const getOrdersToReceiveOfCustomer = ({ userId, requiredStates }) => {
-  const owned = getUser({ userId }).orders
+export const getOrdersToReceiveOfCustomer = ({ userId, email, requiredStates }) => {
+  const user = getUser({ userId, email })
+  const owned = user.ordersToReceive
   return owned.reduce((ordersToReceive, orderId) => {
     const order = getOrders()[orderId]
-    if (order.customer === userId && (!requiredStates || requiredStates.includes(order.state))) {
+    if (order.customer === user.userId && (!requiredStates || requiredStates.includes(order.state))) {
       ordersToReceive[orderId] = order
+      return ordersToReceive
     }
   }, {})
 }
 
-export const getOrdersToDeliverOfProducer = ({ userId, requiredStates }) => {
-  const owned = getUser({ userId }).orders
+export const getOrdersToDeliverOfProducer = ({ userId, email, requiredStates }) => {
+  const user = getUser({ userId, email })
+  const owned = user.ordersToDeliver
   return owned.reduce((ordersToDeliver, orderId) => {
     const order = getOrder({ orderId })
-    if (order.producer === userId && (!requiredStates || requiredStates.includes(order.state))) {
+    if (order.producer === user.userId && (!requiredStates || requiredStates.includes(order.state))) {
       ordersToDeliver[orderId] = order
+      return ordersToDeliver
     }
   }, {})
 }
@@ -40,16 +45,19 @@ export const getFormatsOfProduct = ({ productId, requiredStates }) => {
     const format = getFormat({ formatId })
     if (format.product === productId && (!requiredStates || requiredStates.includes(format.state))) {
       ownedFormats[formatId] = format
+      return ownedFormats
     }
   }, {})
 }
 
-export const getProductsOfProducer = ({ userId, requiredStates }) => {
-  const owned = getUser({ userId }).products
+export const getProductsOfProducer = ({ userId, email, requiredStates }) => {
+  const user = getUser({ userId, email })
+  const owned = user.products
   return owned.reduce((ownedProducts, productId) => {
     const product = getProduct({ productId })
-    if (product.producer === userId && (!requiredStates || requiredStates.includes(product.state))) {
+    if (product.producer === user.userId && (!requiredStates || requiredStates.includes(product.state))) {
       ownedProducts[productId] = product
+      return ownedProducts
     }
   }, {})
 }
@@ -98,6 +106,12 @@ export const deleteFormat = ({ formatId }) => {
   setFormats({ formats })
 }
 
+export const delayedUpdateFormat = ({ formatId, newNextChanges }) => {
+  const oldNextChanges = getFormat({ formatId }).nextChanges
+  const nextChanges = { ...oldNextChanges, ...newNextChanges }
+  updateFormat({ formatId, newProps: { nextChanges } })
+}
+
 export const updateFormat = ({ formatId, newProps }) => {
   const format = { ...getFormat({ formatId }), ...newProps, lastChange: Date.now() }
   updateFormats({ newFormats: { [formatId]: format } })
@@ -117,7 +131,7 @@ export const deleteFormats = () => {
 }
 
 export const updateFormats = ({ newFormats }) => {
-  const formats = { ...getServer(), ...newFormats }
+  const formats = { ...getServer().formats, ...newFormats }
   updateServer({ newProps: { formats } })
 }
 

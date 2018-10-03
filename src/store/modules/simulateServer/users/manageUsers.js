@@ -12,12 +12,12 @@ export const generateToken = ({ userId, email }) => {
   return token
 }
 
-export const removeToken = ({ email, userId }) => {
+export const removeToken = ({ userId, email }) => {
   updateUser({ email, userId, newProps: { token: undefined } })
 }
 
-export const getAuthorizations = ({ userId }) =>
-  getUser({ userId }).authorizations
+export const getAuthorizations = ({ userId, email }) =>
+  getUser({ userId, email }).authorizations
 
 export const changeUserEmail = ({ userId, newEmail }) => {
   updateUser({ userId, newProps: { email: newEmail } })
@@ -33,17 +33,20 @@ export const createUser = ({ email, password }) => {
     userId,
     email,
     password,
-    productIds: [],
+    ordersToReceive: [],
+    ordersToDeliver: [],
+    products: [],
     authorizations: [types.auth.CONSUMER],
     state: types.userState.ACTIVE
   }
   setUser({ userId, user })
 }
 
-export const authorize = ({ userId, authorization }) => {
-  const authorizations = getUser({ userId }).authorizations
+export const authorize = ({ userId, email, authorization }) => {
+  const user = getUser({ userId, email })
+  const authorizations = user.authorizations
   authorizations.push(authorization)
-  updateUser({ userId, newProps: { authorizations } })
+  updateUser({ userId: user.userId, newProps: { authorizations } })
 }
 
 export const removeOtherUser = ({ userId }) => {

@@ -1,6 +1,6 @@
 import * as server from '../serverAccess'
 import * as manageProducts from './manageProducts'
-import { tokenIsValid, userHasAuthorizations, productIsValid, userOwnsProduct } from '../validate'
+import * as rejectIf from '../rejectIf'
 import types from '../../../../types'
 
 const delayInMs = 200
@@ -8,22 +8,16 @@ const delayInMs = 200
 export const createProduct = ({ userId, token, newProduct }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (
-        tokenIsValid({ userId, token }) &&
-        userHasAuthorizations({
-          userId,
-          authorizations: [types.auth.PRODUCER]
-        }) &&
-        productIsValid({ product: newProduct })
-      ) {
-        manageProducts.createProduct({ userId, newProduct })
-        resolve({
-          message: `[createProduct()] new product successfully created`,
-          products: server.getProductsOfProducer({ userId })
-        })
-      } else {
-        reject(new Error(`[createProduct()] could not create product`))
-      }
+      rejectIf.tokenIsInvalid('createProduct', reject, { userId, token })
+      rejectIf.userHasNotAuthorizations('createProduct', reject, { userId, authorizations: [types.auth.PRODUCER] })
+      rejectIf.productIsNotValid('createProduct', reject, { product: newProduct })
+      rejectIf.someObjectPropIsNotUpdatable('createProduct', reject, { object: newProduct, objectType: 'product', id: 'newProduct' })
+
+      manageProducts.createProduct({ userId, newProduct })
+      resolve({
+        message: `[createProduct] The product was successfully created.`,
+        myProducts: server.getProductsOfProducer({ userId })
+      })
     }, delayInMs)
   })
 }
@@ -31,14 +25,13 @@ export const createProduct = ({ userId, token, newProduct }) => {
 export const getMyProducts = ({ userId, token }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (tokenIsValid({ userId, token })) {
-        resolve({
-          message: `[getMyProducts()] products successfully received`,
-          products: server.getProductsOfProducer({ userId })
-        })
-      } else {
-        reject(new Error('[getProducts()] not authorized'))
-      }
+      rejectIf.tokenIsInvalid('getMyProducts', reject, { userId, token })
+      rejectIf.userHasNotAuthorizations('getMyProducts', reject, { userId, authorizations: [types.auth.PRODUCER] })
+
+      resolve({
+        message: `[getMyProducts] Your own products were successfully received.`,
+        myProducts: server.getProductsOfProducer({ userId })
+      })
     }, delayInMs)
   })
 }
@@ -46,46 +39,32 @@ export const getMyProducts = ({ userId, token }) => {
 export const getProducts = ({ userId, token }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (
-        tokenIsValid({ userId, token }) &&
-        userHasAuthorizations({
-          userId,
-          authorizations: [types.auth.CONSUMER]
-        })) {
-        resolve({
-          message: `[getProducts()] products successfully received`,
-          products: server.getProducts()
-        })
-      }
+      rejectIf.tokenIsInvalid('getProducts', reject, { userId, token })
+      rejectIf.userHasNotAuthorizations('getProducts', reject, { userId, authorizations: [types.auth.CONSUMER] })
+
+      resolve({
+        message: `[getProducts] The products successfully received.`,
+        products: server.getProducts()
+      })
     }, delayInMs)
   })
 }
 
-// limiter les droits de modifications aux seules variables pertinentes
-export const updateProduct = ({
-  userId,
-  token,
-  productId,
-  title,
-  description,
-  image,
-  conservationDaysAfterSale,
-  conservationMethod,
-  aisle,
-  state
-}) => {
-  const newProps = { title, description, image, conservationDaysAfterSale, conservationMethod, aisle, state }
+export const updateProduct = ({ userId, token, productId, newProps }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (tokenIsValid({ userId, token }) && userOwnsProduct({ userId, productId })) {
-        server.updateProduct({ productId, newProps })
-        resolve({
-          message: `[updateProduct()] product successfully updated`,
-          products: server.getProductsOfProducer({ userId })
-        })
-      } else {
-        reject(new Error(`[updateProduct()] not authorized`))
-      }
+      rejectIf.tokenIsInvalid('updateProduct', reject, { userId, token })
+      rejectIf.userDoesNotOwnProduct('updateProduct', reject, { userId, productId })
+      rejectIf.userHasNotAuthorizations('updateProduct', reject, { userId, authorizations: [types.auth.PRODUCER] })
+      rejectIf.someObjectPropIsNotUpdatable('updateProduct', reject, { object: newProps, objectType: 'product', id: productId })
+      // TODO: pouvoir planifier le retrait d'un produit
+      rejectIf.productWillDisappearAndHasPendingOrders('updateProduct', reject, { productId, newProps })
+
+      server.updateProduct({ productId, newProps })
+      resolve({
+        message: `[updateProduct] Your product was successfully updated.`,
+        myProducts: server.getProductsOfProducer({ userId })
+      })
     }, delayInMs)
   })
 }

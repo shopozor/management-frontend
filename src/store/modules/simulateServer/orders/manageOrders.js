@@ -1,20 +1,17 @@
 import { setOrder, getUser, updateUser, getFormat, updateFormat } from '../serverAccess'
-import { amountDoesNotFallBelowPendingOrders } from '../validate'
+import types from '../../../../types'
 
-export const orderFormatsAndSummarize = ({ customerId, formatsAmounts }) => {
-  return Object.keys(formatsAmounts).reduce((summary, formatId) => {
-    summary[formatId] = orderFormatAndSummarize({ customerId, formatId, amount: formatsAmounts[formatId] })
-    return summary
+export const orderFormats = ({ customerId, formatsAmounts }) => {
+  Object.keys(formatsAmounts).map(formatId => {
+    orderFormat({ customerId, formatId, amount: formatsAmounts[formatId] })
   })
 }
 
-export const orderFormatAndSummarize = ({ customerId, formatId, amount }) => {
-  if (amountDoesNotFallBelowPendingOrders({ formatId, addedOrdersAmount: amount })) {
-    const orderId = createOrderId({ customerId, formatId })
-    createOrder({ orderId, customerId, formatId, amount })
-    recordOrderInCustomerData({ customerId, orderId })
-    recordOrderInFormatData({ formatId, orderId })
-  }
+export const orderFormat = ({ customerId, formatId, amount }) => {
+  const orderId = createOrderId({ customerId, formatId })
+  createOrder({ orderId, customerId, formatId, amount })
+  recordOrderInCustomerData({ customerId, orderId })
+  recordOrderInFormatData({ formatId, orderId })
 }
 
 export const recordOrderInCustomerData = ({ customerId, orderId }) => {
@@ -30,7 +27,14 @@ export const recordOrderInFormatData = ({ formatId, orderId }) => {
 }
 
 export const createOrder = ({ orderId, customerId, formatId, amount }) => {
-  const order = { customerId, formatId, amount }
+  const order = {
+    orderId,
+    customerId,
+    formatId,
+    amount,
+    cost: getFormat({ formatId }).customerPrice * amount,
+    state: types.orderState.PENDING_NOT_PAID
+  }
   setOrder({ orderId, order })
 }
 

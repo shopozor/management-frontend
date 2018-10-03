@@ -1,22 +1,47 @@
 import { getServer, getUser, getFormat, getProduct, getOrdersAmountsOfFormat } from './serverAccess'
 import types from '../../../types'
 
-export const userDoesExist = ({ email, userId }) => {
+const objectsUpdatableProps = {
+  format:
+    [
+      'size',
+      'unit',
+      'customerPrice',
+      'mode',
+      'state',
+      'amount'
+    ],
+  product:
+    [
+      'title',
+      'description',
+      'image',
+      'conservationDaysAfterSale',
+      'conservationMethod',
+      'aisle',
+      'state',
+      'defaultFormatMode',
+      'defaultCustomerPrice',
+      'defaultUnit'
+    ]
+}
+
+export const userDoesExist = ({ userId, email }) => {
   const users = getServer().users
   const userIdExists = userId && Object.keys(users).some(key => key === userId)
   const emailExists = email && Object.values(users).some(user => user.email === email)
   return userIdExists || emailExists
 }
 
-export const passwordIsValid = ({ email, userId, password }) => {
-  const user = getUser({ email, userId })
+export const passwordIsValid = ({ userId, email, password }) => {
+  const user = getUser({ userId, email })
   return password === user.password
 }
 
-export const userIsActive = ({ email, userId }) => getUser({ email, userId }).state === types.userState.ACTIVE
+export const userIsActive = ({ userId, email }) => getUser({ userId, email }).state === types.userState.ACTIVE
 
-export const tokenIsValid = ({ email, userId, token }) => {
-  const user = getUser({ email, userId })
+export const tokenIsValid = ({ userId, email, token }) => {
+  const user = getUser({ userId, email })
   return token && user && token === user.token
 }
 
@@ -31,12 +56,22 @@ export const userOwnsFormat = ({ userId, email, formatId }) => {
 }
 
 export const userOwnsProduct = ({ userId, email, productId }) => {
-  const ownedProducts = getUser({ userId, email }).productIds
+  const ownedProducts = getUser({ userId, email }).products
   return ownedProducts.some(id => id === productId)
 }
 
 export const productIsValid = ({ product }) => {
-  return product.name !== undefined
+  return product.title !== undefined
+}
+
+export const productWillNotDisappear = ({ productId, newState }) => {
+  const oldState = getProduct({ productId }).state
+  return oldState !== types.productState.VISIBLE || newState === types.productState.VISIBLE
+}
+
+export const productHasNoPendingOrders = ({ productId }) => {
+  const formats = getProduct({ productId }).formats
+  return formats.every(formatId => formatHasNoPendingOrder({ formatId }))
 }
 
 export const productOwnsFormat = ({ productId, formatId }) => getProduct({ productId }).formats.includes(formatId)
@@ -60,17 +95,38 @@ export const formatHasNoPendingOrder = ({ formatId }) => {
   return amount === 0
 }
 
-export const amountDoesNotFallBelowPendingOrders = ({
-  formatId,
-  newAmount = getFormat({ formatId }).amount,
-  addedOrdersAmount = 0
-}) => {
-  const oldOrdersAmount = getOrdersAmountsOfFormat({
+export const formatWillNotDisappear = ({ formatId, newState }) => {
+  const oldState = getFormat({ formatId }).state
+  return oldState !== types.formatState.VISIBLE || newState === types.formatState.VISIBLE
+}
+
+export const formatAmountDoesNotFallBelowPendingOrders = ({ formatId, newFormatAmount }) => {
+  const pendingOrdersAmount = getOrdersAmountsOfFormat({
     formatId,
     requiredStates: [
       types.orderState.PENDING_NOT_PAID,
       types.orderState.PENDING_PAID
     ]
   })
-  return newAmount >= oldOrdersAmount + addedOrdersAmount
+  return newFormatAmount >= pendingOrdersAmount
+}
+
+export const pendingOrdersAmountDoesNotExceedFormatAmount = ({ formatId, addedOrdersAmount }) => {
+  const oldPendingOrdersAmount = getOrdersAmountsOfFormat({
+    formatId,
+    requiredStates: [
+      types.orderState.PENDING_NOT_PAID,
+      types.orderState.PENDING_PAID
+    ]
+  })
+  const formatAmount = getFormat({ formatId }).amount
+  return formatAmount >= oldPendingOrdersAmount + addedOrdersAmount
+}
+
+export const formatBelongsToProduct = ({ formatId, productId }) => {
+  return getFormat({ formatId }).product === productId
+}
+
+export const objectPropIsUpdatable = ({ prop, objectType }) => {
+  return objectsUpdatableProps[objectType].includes(prop)
 }

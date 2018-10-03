@@ -1,4 +1,4 @@
-import * as request from '../simulateServer/requestUser'
+import * as request from '../simulateServer/users/requestUsers'
 
 export function signup ({ commit }, { email, password }) {
   request
@@ -25,20 +25,13 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
     .catch(error => commit('error', error))
 }
 
-function saveToken (userId, token) {
-  localStorage.setItem('userId', userId)
-  localStorage.setItem('token', token)
-}
-
-function removeToken () {
-  localStorage.removeItem('userId')
-  localStorage.removeItem('token')
-}
-
-export function getAuthorizations ({ commit }, { userId, token }) {
+export function getAuthorizations ({ commit, getters }) {
   console.log('[actions/getAuthorizations]')
   request
-    .getAuthorizations({ userId, token })
+    .getAuthorizations({
+      userId: getters.userId,
+      token: getters.token
+    })
     .then(response => {
       commit('storeAuthorizations', {
         email: response.email,
@@ -52,9 +45,12 @@ export function getAuthorizations ({ commit }, { userId, token }) {
     })
 }
 
-export function logout ({ commit }, { userId, token }) {
+export function logout ({ commit, getters }) {
   request
-    .logout({ userId, token })
+    .logout({
+      userId: getters.userId,
+      token: getters.token
+    })
     .then(response => {
       commit('logout')
       removeToken()
@@ -62,4 +58,14 @@ export function logout ({ commit }, { userId, token }) {
     .catch(error => {
       commit('error', error)
     })
+}
+
+function saveToken (userId, token) {
+  localStorage.setItem('userId', userId)
+  localStorage.setItem('token', token)
+}
+
+function removeToken () {
+  localStorage.removeItem('userId')
+  localStorage.removeItem('token')
 }

@@ -1,21 +1,46 @@
 import * as manageOrders from './manageOrders'
-import {tokenIsValid, userHasAuthorizations} from '../validate'
+import * as server from '../serverAccess'
+import * as rejectIf from '../rejectIf'
 import types from '../../../types'
 
 const delayInMs = 200
 
-export const orderFormats = ({ userId, token, formatsAmounts }) => {
+export const orderFormats = ({ userId, token, orders }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (
-        tokenIsValid({ userId, token }) &&
-        userHasAuthorizations({ userId, authorizations: [types.auth.CONSUMER] })
-      ) {
-        const balanceSheet = manageOrders.orderFormats({ customerId: userId, formatsAmounts })
-        resolve(balanceSheet)
-      } else {
-        reject(new Error('[orderProducts] You are not authorized to submit an order.'))
-      }
+      rejectIf.tokenIsInvalid('orderFormats', reject, { userId, token })
+      rejectIf.userHasNotAuthorizations('orderFormats', reject, { userId, authorizations: [types.auth.CONSUMER] })
+      rejectIf.somePendingOrdersAmountExceedsFormatAmount('orderFormats', reject, { orders })
+
+      manageOrders.orderFormats({ customerId: userId, orders })
+      resolve({
+        message: `[orderFormats] Orders may have been submitted. Check balance sheet.`,
+        myOrdersToReceive: server.getOrdersToReceiveOfCustomer({ userId })
+      })
+    }, delayInMs)
+  })
+}
+
+export const getMyOrdersToReceive = ({ userId, token }) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      rejectIf.tokenIsInvalid('getMyOrdersToReceive', reject, { userId, token })
+      resolve({
+        message: `[getMyOrdersToReceive] Your orders to receive have been successfully sent.`,
+        myOrdersToReceive: server.getOrdersToReceiveOfCustomer({ userId })
+      })
+    }, delayInMs)
+  })
+}
+
+export const getMyOrdersToDeliver = ({ userId, token }) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      rejectIf.tokenIsInvalid('getMyOrdersToDeliver', reject, { userId, token })
+      resolve({
+        message: `[getMyOrdersToDeliver] Your orders to deliver have been successfully sent.`,
+        myOrdersToDeliver: server.getOrdersToDeliverOfProducer({ userId })
+      })
     }, delayInMs)
   })
 }

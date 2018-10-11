@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 import user from './modules/user'
 import products from './modules/products'
+import formats from './modules/formats'
+import orders from './modules/orders'
 
 Vue.use(Vuex)
 
@@ -18,6 +20,8 @@ export default new Vuex.Store({
   actions: { },
   modules: {
     user,
-    products
+    products,
+    formats,
+    orders
   }
 })

@@ -1,10 +1,6 @@
 import { getUser, updateUser, setUser } from '../serverAccess'
 import types from '../../../../types'
 
-export const getToken = ({ userId, email }) => {
-  return getUser({ userId, email }).token
-}
-
 export const generateToken = ({ userId, email }) => {
   const user = getUser({ userId, email })
   const token = `${user.userId}/token/${Date.now()}`
@@ -33,9 +29,9 @@ export const createUser = ({ email, password }) => {
     userId,
     email,
     password,
-    ordersToReceive: [],
-    ordersToDeliver: [],
-    products: [],
+    ordersToReceiveIds: [],
+    ordersToDeliverIds: [],
+    productsIds: [],
     authorizations: [types.auth.CONSUMER],
     state: types.userState.ACTIVE
   }
@@ -52,6 +48,8 @@ export const authorize = ({ userId, email, authorization }) => {
 export const removeOtherUser = ({ userId }) => {
   updateUser({ userId, newProps: { state: types.userState.DELETED } })
 }
+
+export const getToken = ({ userId, email }) => getUser({ userId, email }).token
 
 export const getUserId = ({ email }) => getUser({ email }).userId
 

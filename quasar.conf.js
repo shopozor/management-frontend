@@ -49,6 +49,7 @@ module.exports = function (ctx) {
         'QToolbar',
         'QToolbarTitle',
         'QBtn',
+        'QPageSticky',
         'QIcon',
         'QList',
         'QListHeader',
@@ -60,14 +61,22 @@ module.exports = function (ctx) {
         'QInput',
         'QCheckbox',
         'QToggle',
-        'QSpinner'
+        'QSpinner',
+        'QCard',
+        'QCardTitle',
+        'QCardMain',
+        'QCardMedia',
+        'QCardSeparator',
+        'QCardActions',
+        'QDialog'
       ],
       directives: [
         'Ripple'
       ],
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'Dialog'
       ]
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
       // i18n: 'de' // Quasar language

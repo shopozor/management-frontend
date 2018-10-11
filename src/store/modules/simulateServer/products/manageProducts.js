@@ -7,8 +7,12 @@ export const createProduct = ({ userId, email, newProduct }) => {
   const product = {
     productId,
     state: types.productState.INVISIBLE,
-    producer: user.userId,
-    formats: [],
+    producerId: user.userId,
+    formatsIds: [],
+    ordersSummary: {
+      amount: 0,
+      customerPrice: 0
+    },
     ...newProduct
   }
   setProduct({ productId, product })
@@ -16,9 +20,9 @@ export const createProduct = ({ userId, email, newProduct }) => {
 }
 
 export const giveProductAccessToUser = ({ userId, email, productId }) => {
-  const products = getUser({ userId, email }).products
-  products.push(productId)
-  updateUser({ userId, email, newProps: { products } })
+  const productsIds = getUser({ userId, email }).productsIds
+  productsIds.push(productId)
+  updateUser({ userId, email, newProps: { productsIds } })
 }
 
 const generateProductId = ({ userId }) => `${userId}/product:${Date.now()}`

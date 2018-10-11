@@ -31,7 +31,7 @@ export const passwordIsInvalid = (method, reject, { userId, email, password }) =
 }
 
 export const tokenIsInvalid = (method, reject, { userId, token }) => {
-  if (!tokenIsValid({ userId, token })) {
+  if (!token || !userId || !tokenIsValid({ userId, token })) {
     reject(new Error(`[${method}] Your token is invalid. Please login.`))
   }
 }

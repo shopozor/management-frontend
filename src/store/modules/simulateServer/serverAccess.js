@@ -1,11 +1,11 @@
 // get objects of owner, filtering by states
 export const getOrdersAmountsOfFormat = ({ formatId, requiredStates }) => {
   const orders = getOrdersOfFormat({ formatId, requiredStates })
-  return Object.keys(orders).reduce((amount, orderId) => amount + orders[orderId].amount)
+  return Object.keys(orders).reduce((amount, orderId) => amount + orders[orderId].amount, 0)
 }
 
 export const getOrdersOfFormat = ({ formatId, requiredStates }) => {
-  const owned = getFormat({ formatId }).orders
+  const owned = getFormat({ formatId }).ordersIds
   return owned.reduce((ownedOrders, orderId) => {
     const order = getOrders()[orderId]
     if (!requiredStates || requiredStates.includes(order.state)) {
@@ -17,10 +17,10 @@ export const getOrdersOfFormat = ({ formatId, requiredStates }) => {
 
 export const getOrdersToReceiveOfCustomer = ({ userId, email, requiredStates }) => {
   const user = getUser({ userId, email })
-  const owned = user.ordersToReceive
+  const owned = user.ordersToReceiveIds
   return owned.reduce((ordersToReceive, orderId) => {
     const order = getOrders()[orderId]
-    if (order.customer === user.userId && (!requiredStates || requiredStates.includes(order.state))) {
+    if (order.customerId === user.userId && (!requiredStates || requiredStates.includes(order.state))) {
       ordersToReceive[orderId] = order
       return ordersToReceive
     }
@@ -29,10 +29,10 @@ export const getOrdersToReceiveOfCustomer = ({ userId, email, requiredStates }) 
 
 export const getOrdersToDeliverOfProducer = ({ userId, email, requiredStates }) => {
   const user = getUser({ userId, email })
-  const owned = user.ordersToDeliver
+  const owned = user.ordersToDeliverIds
   return owned.reduce((ordersToDeliver, orderId) => {
     const order = getOrder({ orderId })
-    if (order.producer === user.userId && (!requiredStates || requiredStates.includes(order.state))) {
+    if (order.producerId === user.userId && (!requiredStates || requiredStates.includes(order.state))) {
       ordersToDeliver[orderId] = order
       return ordersToDeliver
     }
@@ -40,10 +40,10 @@ export const getOrdersToDeliverOfProducer = ({ userId, email, requiredStates }) 
 }
 
 export const getFormatsOfProduct = ({ productId, requiredStates }) => {
-  const owned = getProduct({ productId }).formats
+  const owned = getProduct({ productId }).formatsIds
   return owned.reduce((ownedFormats, formatId) => {
     const format = getFormat({ formatId })
-    if (format.product === productId && (!requiredStates || requiredStates.includes(format.state))) {
+    if (format.productId === productId && (!requiredStates || requiredStates.includes(format.state))) {
       ownedFormats[formatId] = format
       return ownedFormats
     }
@@ -52,10 +52,10 @@ export const getFormatsOfProduct = ({ productId, requiredStates }) => {
 
 export const getProductsOfProducer = ({ userId, email, requiredStates }) => {
   const user = getUser({ userId, email })
-  const owned = user.products
+  const owned = user.productsIds
   return owned.reduce((ownedProducts, productId) => {
     const product = getProduct({ productId })
-    if (product.producer === user.userId && (!requiredStates || requiredStates.includes(product.state))) {
+    if (product.producerId === user.userId && (!requiredStates || requiredStates.includes(product.state))) {
       ownedProducts[productId] = product
       return ownedProducts
     }
@@ -90,13 +90,13 @@ export const deleteOrders = () => {
 
 export const updateOrders = ({ newOrders }) => {
   const orders = { ...getOrders(), ...newOrders }
-  updateServer({ newProps: orders })
+  updateServer({ newProps: { orders } })
 }
 
 export const getOrders = () => getServer().orders
 
 export const setOrders = ({ orders }) => {
-  updateServer({ newProps: orders })
+  updateServer({ newProps: { orders } })
 }
 
 // server > formats > format

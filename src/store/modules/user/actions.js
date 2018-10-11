@@ -26,11 +26,10 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
 }
 
 export function getAuthorizations ({ commit, getters }) {
-  console.log('[actions/getAuthorizations]')
   request
     .getAuthorizations({
-      userId: getters.userId,
-      token: getters.token
+      userId: localStorage.getItem('userId'),
+      token: localStorage.getItem('token')
     })
     .then(response => {
       commit('storeAuthorizations', {

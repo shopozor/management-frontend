@@ -4,12 +4,23 @@ import * as manageFormats from './manageFormats'
 
 const delayInMs = 200
 
+export const getFormats = ({ userId, token }) => {
+  return new Promise((resolve, reject) => {
+    rejectIf.tokenIsInvalid('getFormats', reject, { userId, token })
+
+    resolve({
+      message: `[getFormats] The formats were successfully sent.`,
+      formats: server.getFormats()
+    })
+  })
+}
+
 export const getFormatsOfProduct = ({ userId, token, productId }) => {
   return new Promise((resolve, reject) => {
     rejectIf.tokenIsInvalid('getFormatsOfProduct', reject, { userId, token })
 
     resolve({
-      message: `[getFormatsOfProduct] formats successfully received`,
+      message: `[getFormatsOfProduct] The formats of product ${productId} were successfully sent.`,
       formats: server.getFormatsOfProduct({ productId })
     })
   })

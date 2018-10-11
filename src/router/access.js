@@ -9,6 +9,7 @@ const access = {
     [links.PROFILE]: false,
     // pages
     [links.HOME]: true,
+    [links.FAKE_SHOP]: true,
     [links.MAP]: true,
     [links.ORDERS]: false,
     [links.PRODUCTS]: false,
@@ -25,6 +26,7 @@ const access = {
     [links.PROFILE]: true,
     // pages
     [links.HOME]: true,
+    [links.FAKE_SHOP]: true,
     [links.CALENDAR]: true,
     [links.MAP]: true,
     [links.ORDERS]: true,
@@ -42,6 +44,7 @@ const access = {
     [links.PROFILE]: true,
     // pages
     [links.HOME]: true,
+    [links.FAKE_SHOP]: true,
     [links.CALENDAR]: true,
     [links.MAP]: true,
     [links.ORDERS]: true,
@@ -59,6 +62,7 @@ const access = {
     [links.PROFILE]: true,
     // pages
     [links.HOME]: true,
+    [links.FAKE_SHOP]: true,
     [links.CALENDAR]: true,
     [links.MAP]: true,
     [links.ORDERS]: false,
@@ -76,6 +80,7 @@ const access = {
     [links.PROFILE]: true,
     // pages
     [links.HOME]: true,
+    [links.FAKE_SHOP]: true,
     [links.CALENDAR]: true,
     [links.MAP]: true,
     [links.ORDERS]: false,
@@ -93,6 +98,7 @@ const access = {
     [links.PROFILE]: true,
     // pages
     [links.HOME]: true,
+    [links.FAKE_SHOP]: true,
     [links.CALENDAR]: true,
     [links.MAP]: true,
     [links.ORDERS]: false,
@@ -117,6 +123,7 @@ export default authorizations => {
     },
     pages: {
       [links.HOME]: verify(authorizations, links.HOME),
+      [links.FAKE_SHOP]: verify(authorizations, links.FAKE_SHOP),
       [links.MAP]: verify(authorizations, links.MAP),
       [links.CALENDAR]: verify(authorizations, links.CALENDAR),
       [links.ORDERS]: verify(authorizations, links.ORDERS),

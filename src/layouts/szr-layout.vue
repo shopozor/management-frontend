@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import SideDrawerContent from '../components/SideDrawerContent'
+import SideDrawerContent from '../components/SideDrawerContent/SideDrawerContent'
 
 export default {
   name: 'SzrLayout',

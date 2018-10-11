@@ -28,10 +28,11 @@ export const createProduct = ({ commit, getters }, { newProduct }) => {
     .catch(error => { console.log(error) })
 }
 
-export const updateProduct = ({ commit, getters }, { newProps }) => {
+export const updateProduct = ({ commit, getters }, { productId, newProps }) => {
   request.updateProduct({
     userId: getters.userId,
     token: getters.token,
+    productId,
     newProps
   })
     .then(response => { commit('storeMyProducts', response.myProducts) })

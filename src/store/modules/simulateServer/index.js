@@ -1,8 +1,9 @@
-import { setServer, getUser } from './serverAccess'
+import { setServer, getUser, getFormats } from './serverAccess'
 import { createUser, authorize } from './users/manageUsers'
 import { createProduct } from './products/manageProducts'
 import { createSeveralFormats } from './formats/manageFormats'
 import types from '../../../types'
+import { orderFormats } from './orders/manageOrders'
 
 export const initFakeServer = () => {
   setServer({
@@ -76,10 +77,10 @@ export const initFakeServer = () => {
     }
   })
 
-  const productIds = getUser({ email: 'producteur@budzons.ch' }).products
+  const productsIds = getUser({ email: 'producteur@budzons.ch' }).productsIds
 
   createSeveralFormats({
-    productId: productIds[0],
+    productId: productsIds[0],
     formatsToCreate: {
       tempId1: {
         size: 5,
@@ -101,7 +102,7 @@ export const initFakeServer = () => {
   })
 
   createSeveralFormats({
-    productId: productIds[1],
+    productId: productsIds[1],
     formatsToCreate: {
       tempId1: {
         size: 300,
@@ -119,6 +120,17 @@ export const initFakeServer = () => {
         state: types.formatState.VISIBLE,
         amount: 4
       }
+    }
+  })
+
+  const formatIds = Object.keys(getFormats())
+  const customerId = getUser({ email: 'client@budzons.ch' }).userId
+
+  orderFormats({
+    customerId,
+    formatsAmounts: {
+      [formatIds[0]]: 1,
+      [formatIds[1]]: 3
     }
   })
 }

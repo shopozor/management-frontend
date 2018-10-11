@@ -20,6 +20,7 @@ const objectsUpdatableProps = {
       'conservationMethod',
       'aisle',
       'state',
+      'force',
       'defaultFormatMode',
       'defaultCustomerPrice',
       'defaultUnit'
@@ -51,12 +52,12 @@ export const userHasAuthorizations = ({ userId, email, authorizations }) => {
 }
 
 export const userOwnsFormat = ({ userId, email, formatId }) => {
-  const productId = getFormat({ formatId }).product
+  const productId = getFormat({ formatId }).productId
   return userOwnsProduct({ userId, email, productId })
 }
 
 export const userOwnsProduct = ({ userId, email, productId }) => {
-  const ownedProducts = getUser({ userId, email }).products
+  const ownedProducts = getUser({ userId, email }).productsIds
   return ownedProducts.some(id => id === productId)
 }
 
@@ -70,8 +71,8 @@ export const productWillNotDisappear = ({ productId, newState }) => {
 }
 
 export const productHasNoPendingOrders = ({ productId }) => {
-  const formats = getProduct({ productId }).formats
-  return formats.every(formatId => formatHasNoPendingOrder({ formatId }))
+  const formatsIds = getProduct({ productId }).formatsIds
+  return formatsIds.every(formatId => formatHasNoPendingOrder({ formatId }))
 }
 
 export const productOwnsFormat = ({ productId, formatId }) => getProduct({ productId }).formats.includes(formatId)

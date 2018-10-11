@@ -1,4 +1,4 @@
-import { setOrder, getUser, updateUser, getFormat, updateFormat } from '../serverAccess'
+import { setOrder, getUser, updateUser, getProduct, getFormat, updateFormat, updateProduct } from '../serverAccess'
 import types from '../../../../types'
 
 export const orderFormats = ({ customerId, formatsAmounts }) => {
@@ -8,31 +8,57 @@ export const orderFormats = ({ customerId, formatsAmounts }) => {
 }
 
 export const orderFormat = ({ customerId, formatId, amount }) => {
-  const orderId = createOrderId({ customerId, formatId })
-  createOrder({ orderId, customerId, formatId, amount })
+  const productId = getFormat({ formatId }).product
+  const producerId = getProduct({ productId }).producer
+  const orderId = createOrderId({ customerId, productId, formatId })
+  const customerPrice = calculatePrice({ formatId, amount })
+  createOrder({ orderId, customerId, producerId, formatId, amount, customerPrice })
   recordOrderInCustomerData({ customerId, orderId })
-  recordOrderInFormatData({ formatId, orderId })
+  recordOrderInProducerData({ producerId, orderId })
+  recordAndSummarizeOrderInFormatData({ formatId, orderId, customerPrice })
+  summarizeOrdersInProductData({ productId, customerPrice })
 }
+
+const calculatePrice = ({ formatId, amount }) => getFormat({ formatId }).customerPrice * amount
 
 export const recordOrderInCustomerData = ({ customerId, orderId }) => {
-  const orders = getUser({ userId: customerId }).orders
-  orders.push(orderId)
-  updateUser({ userId: customerId, newProps: { orders } })
+  const ordersToReceiveIds = getUser({ userId: customerId }).ordersToReceiveIds
+  ordersToReceiveIds.push(orderId)
+  updateUser({ userId: customerId, newProps: { ordersToReceiveIds } })
 }
 
-export const recordOrderInFormatData = ({ formatId, orderId }) => {
-  const orders = getFormat({ formatId }).orders
-  orders.push(orderId)
-  updateFormat({ formatId, newProps: { orders } })
+export const recordOrderInProducerData = ({ producerId, orderId }) => {
+  const producer = getUser({ userId: producerId })
+  const ordersToDeliverIds = producer.ordersToDeliverIds
+  ordersToDeliverIds.push(orderId)
+  updateUser({ userId: producerId, newProps: { ordersToDeliverIds } })
 }
 
-export const createOrder = ({ orderId, customerId, formatId, amount }) => {
+export const recordAndSummarizeOrderInFormatData = ({ formatId, orderId, customerPrice }) => {
+  const format = getFormat({ formatId })
+  const ordersIds = format.ordersIds
+  ordersIds.push(orderId)
+  const ordersSummary = format.ordersSummary
+  ordersSummary.amount += 1
+  ordersSummary.customerPrice += customerPrice
+  updateFormat({ formatId, newProps: { ordersIds, ordersSummary } })
+}
+
+export const summarizeOrdersInProductData = ({ productId, customerPrice }) => {
+  const ordersSummary = getProduct({ productId }).ordersSummary
+  ordersSummary.amount += 1
+  ordersSummary.customerPrice += customerPrice
+  updateProduct({ productId, newProps: { ordersSummary } })
+}
+
+export const createOrder = ({ orderId, customerId, producerId, formatId, amount, customerPrice }) => {
   const order = {
     orderId,
     customerId,
+    producerId,
     formatId,
     amount,
-    cost: getFormat({ formatId }).customerPrice * amount,
+    customerPrice,
     state: types.orderState.PENDING_NOT_PAID
   }
   setOrder({ orderId, order })

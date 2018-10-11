@@ -25,14 +25,23 @@ const createFormatId = ({ productId, formatTempId }) => {
 
 const createFormat = ({ productId, formatId, newFormat }) => {
   giveFormatAccessToProduct({ productId, formatId })
-  const format = { ...newFormat, formatId, product: productId }
+  const format = {
+    ...newFormat,
+    formatId,
+    product: productId,
+    ordersIds: [],
+    ordersSummary: {
+      amount: 0,
+      customerPrice: 0
+    }
+  }
   setFormat({ formatId, format })
 }
 
 const giveFormatAccessToProduct = ({ productId, formatId }) => {
-  const formats = getProduct({ productId }).formats
-  formats.push(formatId)
-  updateProduct({ productId, newProps: { formats } })
+  const formatsIds = getProduct({ productId }).formatsIds
+  formatsIds.push(formatId)
+  updateProduct({ productId, newProps: { formatsIds } })
 }
 
 // update format

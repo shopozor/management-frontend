@@ -16,62 +16,67 @@ export default {
     label: 'Accueil'
   },
   [links.SIGNUP]: {
-    path: '/signup',
+    path: `/${links.SIGNUP}`,
     component: () => import('pages/Signup.vue'),
     label: "S'inscrire"
   },
   [links.CONFIRMATION_EMAIL_SENT]: {
-    path: '/confirmationEmailSent',
+    path: `/${links.CONFIRMATION_EMAIL_SENT}`,
     component: () => import('pages/ConfirmationEmailSent.vue')
   },
   [links.LOGIN]: {
-    path: '/login',
+    path: `/${links.LOGIN}`,
     component: () => import('pages/Login.vue'),
     label: 'Se connecter'
   },
   [links.LOGOUT]: {
-    path: '/logout',
+    path: `/${links.LOGOUT}`,
     component: () => import('pages/Logout.vue'),
     label: 'Se déconnecter'
   },
   [links.PROFILE]: {
-    path: '/profile',
+    path: `/${links.PROFILE}`,
     component: () => import('pages/Home.vue'),
     label: 'Profil'
   },
   [links.CALENDAR]: {
-    path: '/calendar',
+    path: `/${links.CALENDAR}`,
     component: () => import('pages/Calendar.vue'),
     label: 'Calendrier'
   },
   [links.PRODUCTS]: {
-    path: '/products',
-    component: () => import('pages/Home.vue'),
+    path: `/${links.PRODUCTS}`,
+    component: () => import('pages/Products.vue'),
     label: 'Produits'
   },
   [links.MY_SHOP]: {
-    path: '/myShop',
+    path: `/${links.MY_SHOP}`,
     component: () => import('pages/Home.vue'),
     label: 'Ma Budzonnerie'
   },
   [links.MANAGE_SHOPS]: {
-    path: '/manageShops',
+    path: `/${links.MANAGE_SHOPS}`,
     component: () => import('pages/Home.vue'),
     label: 'Gestion des Budzonneries'
   },
   [links.MANAGE_SITE]: {
-    path: '/manageSite',
+    path: `/${links.MANAGE_SITE}`,
     component: () => import('pages/Home.vue'),
     label: 'Gestion du Site'
   },
   [links.MAP]: {
-    path: '/map',
+    path: `/${links.MAP}`,
     component: () => import('pages/Map.vue'),
     label: 'Carte'
   },
   [links.ORDERS]: {
-    path: '/orders',
+    path: `/${links.ORDERS}`,
     component: () => import('pages/Home.vue'),
     label: 'Commandes'
+  },
+  [links.FAKE_SHOP]: {
+    path: `/${links.FAKE_SHOP}`,
+    component: () => import('pages/Home.vue'),
+    label: 'Boutique Test'
   }
 }

@@ -15,7 +15,6 @@ export const signup = ({ email, password }) => {
   })
 }
 
-// TODO: utiliser ce pattern pour toutes les requêtes (vérifier auprès de L et C si c'est une bonne pratique)
 export const login = ({ email, password }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -41,7 +40,9 @@ export const getAuthorizations = ({ userId, token }) => {
       resolve({
         message: `[getAuthorizations] Your token is valid.`,
         email: manageUsers.getEmail({ userId }),
-        authorizations: getAuthorizations({ userId })
+        userId,
+        token,
+        authorizations: manageUsers.getAuthorizations({ userId })
       })
     }, delayInMs)
   })

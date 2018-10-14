@@ -19,7 +19,7 @@ export const createSeveralFormats = ({ productId, formatsToCreate }) => {
 }
 
 const createFormatId = ({ productId, formatTempId }) => {
-  const ownerId = getProduct({ productId }).producer
+  const ownerId = getProduct({ productId }).producerId
   return `${ownerId}/${productId}/format:${Date.now()}-${formatTempId}`
 }
 
@@ -28,7 +28,7 @@ const createFormat = ({ productId, formatId, newFormat }) => {
   const format = {
     ...newFormat,
     formatId,
-    product: productId,
+    productId,
     ordersIds: [],
     ordersSummary: {
       amount: 0,

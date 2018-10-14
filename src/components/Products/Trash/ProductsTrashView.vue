@@ -1,0 +1,42 @@
+<template>
+  <q-page
+      padding
+      class="row justify-around">
+      <product-trash-card
+        v-for="(product, productId) in productsInTrash"
+        :key="productId"
+        v-bind="product" />
+      <q-btn
+        class="q-ma-lg fixed-bottom-right shadow-6"
+        icon="kitchen"
+        size="md"
+        color="primary"
+        label="Inventaire"
+        @click="jumpToInventory"
+        />
+    </q-page>
+</template>
+
+<script>
+import {mapGetters} from 'vuex'
+import ProductTrashCard from './ProductTrashCard'
+
+export default {
+  name: 'ProductsTrashView',
+  props: {
+    jumpTo: {
+      type: Function,
+      required: true
+    }
+  },
+  computed: {
+    ...mapGetters(['productsInTrash'])
+  },
+  methods: {
+    jumpToInventory () {
+      this.jumpTo('inventory')
+    }
+  },
+  components: {ProductTrashCard}
+}
+</script>

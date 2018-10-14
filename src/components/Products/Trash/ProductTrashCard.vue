@@ -1,7 +1,7 @@
 <template>
   <transition leave-active-class="animated bounceOutUp">
     <q-card
-      class="szr-product-card q-ma-sm"
+      class="product-trash-card q-ma-sm"
       v-if="isDeleted">
       <q-card-media>
         <img :src="image" alt="product image"/>
@@ -21,7 +21,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import types from '../../types'
+import types from '../../../types'
 
 export default {
   name: 'ProductTrashCard',
@@ -91,9 +91,8 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '~variables';
 
-.szr-product-card {
+.product-trash-card {
   width: 30%;
   min-width: 240px;
   max-width: 500px;

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import user from './modules/user'
+import users from './modules/users'
 import products from './modules/products'
 import formats from './modules/formats'
 import orders from './modules/orders'
@@ -19,7 +19,7 @@ export default new Vuex.Store({
   mutations: { },
   actions: { },
   modules: {
-    user,
+    users,
     products,
     formats,
     orders

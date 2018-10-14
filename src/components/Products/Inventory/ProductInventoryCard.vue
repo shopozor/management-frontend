@@ -1,38 +1,39 @@
 <template>
   <transition leave-active-class="animated bounceOutDown">
     <q-card
-      class="szr-product-card q-ma-sm"
+      class="product-inventory-card q-ma-sm"
       :class="{visibleState: isVisible, invisibleState: !isVisible}"
       v-if="!isDeleted">
-      <product-card-state-manager
-        :productId="productId"
-        :state="state"
-        :ordersSummary="ordersSummary" />
+      <q-card-actions class="row justify-between">
+        <product-visibility-manager :productId="productId" />
+        <q-btn
+          class="q-ma-sm"
+          icon="create"
+          label="Editer"
+          size="md"
+          color="primary"
+          @click="edit" />
+        <product-delete-manager :productId="productId" />
+      </q-card-actions>
+      <q-card-title>
+        {{ title }}
+        <span slot="subtitle">{{ summary }}</span>
+      </q-card-title>
       <q-card-media>
         <img :src="image" alt="product image"/>
       </q-card-media>
-      <q-card-title>
-        {{ title }}
-      </q-card-title>
-      <q-card-main>
-        <div>{{ description }}</div>
-        <br>
-        <div>{{ summary }}</div>
-      </q-card-main>
-      <q-card-actions align="center">
-        <q-btn icon="create" label="Editer" size="md" color="primary" />
-      </q-card-actions>
     </q-card>
   </transition>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import productCardStateManager from './ProductCardStateManager'
-import types from '../../types'
+import { mapActions } from 'vuex'
+import ProductDeleteManager from '../ProductDeleteManager'
+import ProductVisibilityManager from '../ProductVisibilityManager'
+import types from '../../../types'
 
 export default {
-  name: 'ProductCard',
+  name: 'ProductInventoryCard',
   props: {
     productId: {
       type: String,
@@ -82,14 +83,17 @@ export default {
     ordersSummary: {
       type: Object,
       required: true
+    },
+    jumpTo: {
+      type: Function,
+      required: true
     }
   },
   computed: {
-    ...mapGetters(['myOrdersToDeliver']),
     summary () {
-      if (this.ordersSummary.amount === 0) return 'Aucune commande en cours.'
-      else if (this.ordersSummary.amount === 1) return `Une commande de ${this.ordersSummary.customerPrice} francs en cours.`
-      else return `${this.ordersSummary.amount} commandes en cours pour un total de ${this.ordersSummary.customerPrice} francs.`
+      if (this.ordersSummary.amount === 0) return 'Aucune commande en cours'
+      else if (this.ordersSummary.amount === 1) return `Une commande: ${this.ordersSummary.customerPrice} francs`
+      else return `${this.ordersSummary.amount} commandes: ${this.ordersSummary.customerPrice} francs`
     },
     isVisible () {
       return this.state === types.productState.VISIBLE
@@ -99,10 +103,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateProduct', 'getFormatsOfProduct'])
+    ...mapActions(['updateProduct', 'getFormatsOfProduct', 'setEditedProduct', 'setEditedFormats']),
+    edit () {
+      this.setEditedProduct({productId: this.productId})
+      this.setEditedFormats({productId: this.productId})
+      this.jumpTo('edit')
+    }
   },
   components: {
-    productCardStateManager
+    ProductDeleteManager,
+    ProductVisibilityManager
   },
   created () {
     this.getFormatsOfProduct({productId: this.productId})
@@ -111,12 +121,10 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '~variables';
 
-.szr-product-card {
-  width: 30%;
-  min-width: 240px;
-  max-width: 500px;
+.product-inventory-card {
+  width: 260px;
+  height: 420px;
 }
 
 .invisibleState {

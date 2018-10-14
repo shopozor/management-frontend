@@ -17,6 +17,7 @@
         <q-toolbar-title>
           La Budzonnerie - Gestion
         </q-toolbar-title>
+        <q-btn icon="cancel" size="sm" label="clear server" color="negative" @click="clear" />
       </q-toolbar>
     </q-layout-header>
     <q-layout-drawer
@@ -40,7 +41,16 @@ export default {
       drawerOpen: this.$q.platform.is.desktop
     }
   },
-  components: {SideDrawerContent}
+  components: {SideDrawerContent},
+  methods: {
+    clear () {
+      window.localStorage.clear()
+      this.$router.push('/')
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
+    }
+  }
 }
 </script>
 

@@ -16,7 +16,7 @@ const objectsUpdatableProps = {
       'title',
       'description',
       'image',
-      'conservationDaysAfterSale',
+      'conservationDays',
       'conservationMethod',
       'aisle',
       'state',

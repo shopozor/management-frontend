@@ -30,3 +30,17 @@ export const updateFormatsOfProduct = ({ commit, getters }, { productId, formats
     .then(response => commit('storeFormatsOfProduct', { formats: response.formats }))
     .catch(error => console.log(error))
 }
+
+export const setEditedFormats = ({ commit, getters }, { productId }) => {
+  const localFormats = getters.formatsOfProduct(productId)
+  if (localFormats) commit('setEditedFormats', { formats: localFormats })
+  else {
+    request.getFormatsOfProduct({
+      userId: getters.userId,
+      token: getters.token,
+      productId
+    })
+      .then(response => commit('setEditedFormats', { formats: response.formats }))
+      .catch(error => console.log(error))
+  }
+}

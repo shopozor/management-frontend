@@ -47,6 +47,8 @@ export const initFakeServer = () => {
     }
   })
 
+  wait()
+
   createProduct({
     email: 'producteur@budzons.ch',
     newProduct: {
@@ -61,6 +63,8 @@ export const initFakeServer = () => {
       defaultCustomerPrice: 3.50
     }
   })
+
+  wait()
 
   createProduct({
     email: 'producteur@budzons.ch',
@@ -133,4 +137,11 @@ export const initFakeServer = () => {
       [formatIds[1]]: 3
     }
   })
+}
+
+const wait = () => {
+  const now = Date.now()
+  while (Date.now() === now) {
+    console.log(`waiting at ${now} before creating new product`)
+  }
 }

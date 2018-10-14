@@ -8,8 +8,8 @@ export const orderFormats = ({ customerId, formatsAmounts }) => {
 }
 
 export const orderFormat = ({ customerId, formatId, amount }) => {
-  const productId = getFormat({ formatId }).product
-  const producerId = getProduct({ productId }).producer
+  const productId = getFormat({ formatId }).productId
+  const producerId = getProduct({ productId }).producerId
   const orderId = createOrderId({ customerId, productId, formatId })
   const customerPrice = calculatePrice({ formatId, amount })
   createOrder({ orderId, customerId, producerId, formatId, amount, customerPrice })

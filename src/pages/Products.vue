@@ -4,54 +4,29 @@
     leave-active-class="animated bounceOutRight"
     mode="out-in"
   >
-    <q-page
+    <products-inventory-view
       key="inventory"
-      padding
-      class="row justify-around"
-      v-if="view === 'inventory'">
-      <product-card
-        v-for="(product, productId) in myProducts"
-        :key="productId"
-        v-bind="product" />
-      <q-btn
-        class="q-ma-lg fixed-bottom-right shadow-6"
-        icon="delete_sweep"
-        size="md"
-        color="primary"
-        label="Corbeille"
-        v-show="!isTrashEmpty"
-        @click="() => {view = 'trash'}"
-        />
-      <q-page-sticky position="bottom">
-        <q-btn class="q-ma-md shadow-12" icon="add" round color="primary" size="xl" />
-      </q-page-sticky>
-    </q-page>
-    <q-page
+      v-if="view === 'inventory'"
+      :jumpTo="jumpTo" />
+    <products-trash-view
       key="trash"
-      padding
-      class="row justify-around"
-      v-else>
-      <product-trash-card
-        v-for="(product, productId) in myProducts"
-        :key="productId"
-        v-bind="product" />
-      <q-btn
-        class="q-ma-lg fixed-bottom-right shadow-6"
-        icon="kitchen"
-        size="md"
-        color="primary"
-        label="Inventaire"
-        @click="() => {view = 'inventory'}"
-        />
-    </q-page>
+      v-else-if="view == 'trash'"
+      :jumpTo="jumpTo" />
+    <products-edit-view
+      key="edit"
+      v-else-if="view === 'edit'"
+      :jumpTo="jumpTo" />
+    <div
+      key="error"
+      v-else>Error</div>
   </transition>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
-import ProductCard from 'components/ProductCard/ProductCard'
-import ProductTrashCard from 'components/ProductCard/ProductTrashCard'
-import types from '../types'
+import {mapActions} from 'vuex'
+import ProductsInventoryView from '../components/Products/Inventory/ProductsInventoryView'
+import ProductsTrashView from '../components/Products/Trash/ProductsTrashView'
+import ProductsEditView from '../components/Products/Edit/ProductsEditView'
 
 export default {
   name: 'Products',
@@ -60,22 +35,12 @@ export default {
       view: 'inventory'
     }
   },
-  components: {ProductCard, ProductTrashCard},
-  computed: {
-    ...mapGetters(['myProducts']),
-    deletedAmount () {
-      const vm = this
-      return Object.keys(vm.myProducts).reduce((sum, productId) => {
-        if (vm.myProducts[productId].state === types.productState.DELETED) sum += 1
-        return sum
-      }, 0)
-    },
-    isTrashEmpty () {
-      return this.deletedAmount === 0
-    }
-  },
+  components: {ProductsInventoryView, ProductsTrashView, ProductsEditView},
   methods: {
-    ...mapActions(['getMyProducts'])
+    ...mapActions(['getMyProducts']),
+    jumpTo (view) {
+      this.view = view
+    }
   },
   created: function () {
     this.getMyProducts()

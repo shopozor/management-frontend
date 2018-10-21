@@ -6,7 +6,7 @@ import * as productState from './productState'
 import * as formatState from './formatState'
 import * as formatMode from './formatMode'
 import * as aisle from './aisle'
-import * as units from './units'
+import units from './units'
 import * as conservation from './conservation'
 
 export default {

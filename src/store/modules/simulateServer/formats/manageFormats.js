@@ -1,29 +1,18 @@
 import { getProduct, updateProduct, setFormat, updateFormat, delayedUpdateFormat } from '../serverAccess'
-import { formatHasNoPendingOrder } from '../validate'
+import { formatHasNoPendingOrder, filterUpdatableProps } from '../validate'
 
-export const updateFormatsOfProduct = ({ productId, formatsToCreate, formatsToUpdate }) => {
-  const summary = {
-    create: createSeveralFormats({ productId, formatsToCreate }),
-    update: updateSeveralFormats({ productId, formatsToUpdate })
-  }
-  return summary
+export const updateFormatsOfProduct = ({ productId, formats }) => {
+  Object.keys(formats).map(formatId => {
+    const filteredFormat = filterUpdatableProps({ object: formats[formatId], type: 'format' })
+    const formatAlreadyExists = getProduct({ productId }).formatsIds.some(id => formatId === id)
+    if (formatAlreadyExists) updateFormatCarefully({ formatId, newProps: filteredFormat })
+    else createFormat({ productId, formatTempId: formatId, newFormat: filteredFormat })
+  })
 }
 
 // create format
-export const createSeveralFormats = ({ productId, formatsToCreate }) => {
-  Object.keys(formatsToCreate).map(formatTempId => {
-    const newFormat = formatsToCreate[formatTempId]
-    const formatId = createFormatId({ productId, formatTempId })
-    createFormat({ productId, formatId, newFormat })
-  }, {})
-}
-
-const createFormatId = ({ productId, formatTempId }) => {
-  const ownerId = getProduct({ productId }).producerId
-  return `${ownerId}/${productId}/format:${Date.now()}-${formatTempId}`
-}
-
-const createFormat = ({ productId, formatId, newFormat }) => {
+const createFormat = ({ productId, formatTempId, newFormat }) => {
+  const formatId = createFormatId({ productId, formatTempId })
   giveFormatAccessToProduct({ productId, formatId })
   const format = {
     ...newFormat,
@@ -38,6 +27,11 @@ const createFormat = ({ productId, formatId, newFormat }) => {
   setFormat({ formatId, format })
 }
 
+const createFormatId = ({ productId, formatTempId }) => {
+  const ownerId = getProduct({ productId }).producerId
+  return `${ownerId}/${productId}/format:${Date.now()}-${formatTempId}`
+}
+
 const giveFormatAccessToProduct = ({ productId, formatId }) => {
   const formatsIds = getProduct({ productId }).formatsIds
   formatsIds.push(formatId)
@@ -45,13 +39,6 @@ const giveFormatAccessToProduct = ({ productId, formatId }) => {
 }
 
 // update format
-const updateSeveralFormats = ({ formatsToUpdate }) => {
-  Object.keys(formatsToUpdate).map(formatId => {
-    const newProps = formatsToUpdate[formatId]
-    updateFormatCarefully({ formatId, newProps })
-  })
-}
-
 const updateFormatCarefully = ({ formatId, newProps }) => {
   updateFormatAccessibilityIfNotRejected({ formatId, newProps })
   updateCarefullyFormatDescription({ formatId, newProps })
@@ -66,12 +53,6 @@ const updateFormatAccessibilityIfNotRejected = ({ formatId, newProps }) => {
 }
 
 const updateCarefullyFormatDescription = ({ formatId, newProps }) => {
-  const filteredProps = {
-    size: newProps.size,
-    unit: newProps.unit,
-    customerPrice: newProps.customerPrice,
-    mode: newProps.mode
-  }
-  if (formatHasNoPendingOrder({ formatId })) updateFormat({ formatId, newProps: filteredProps })
-  else delayedUpdateFormat({ formatId, newNextChanges: filteredProps })
+  if (formatHasNoPendingOrder({ formatId })) updateFormat({ formatId, newProps })
+  else delayedUpdateFormat({ formatId, newNextChanges: newProps })
 }

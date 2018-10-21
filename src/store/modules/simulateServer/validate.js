@@ -4,12 +4,15 @@ import types from '../../../types'
 const objectsUpdatableProps = {
   format:
     [
+      'description',
       'size',
-      'unit',
+      'sizeUnit',
       'customerPrice',
+      'customerPriceUnit',
       'mode',
       'state',
-      'amount'
+      'amount',
+      'stockUnit'
     ],
   product:
     [
@@ -125,9 +128,18 @@ export const pendingOrdersAmountDoesNotExceedFormatAmount = ({ formatId, addedOr
 }
 
 export const formatBelongsToProduct = ({ formatId, productId }) => {
-  return getFormat({ formatId }).product === productId
+  return getProduct({ productId }).formatsIds.some(id => formatId === id)
 }
 
 export const objectPropIsUpdatable = ({ prop, objectType }) => {
   return objectsUpdatableProps[objectType].includes(prop)
+}
+
+export const filterUpdatableProps = ({ object, type }) => {
+  return Object.keys(object).reduce((filteredObject, propName) => {
+    if (objectsUpdatableProps[type].some(validProp => propName === validProp)) {
+      filteredObject[propName] = object[propName]
+    }
+    return filteredObject
+  }, {})
 }

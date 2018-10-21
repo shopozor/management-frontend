@@ -56,11 +56,11 @@ export const updateProduct = ({ userId, token, productId, newProps }) => {
       rejectIf.tokenIsInvalid('updateProduct', reject, { userId, token })
       rejectIf.userDoesNotOwnProduct('updateProduct', reject, { userId, productId })
       rejectIf.userHasNotAuthorizations('updateProduct', reject, { userId, authorizations: [types.auth.PRODUCER] })
-      rejectIf.someObjectPropIsNotUpdatable('updateProduct', reject, { object: newProps, objectType: 'product', id: productId })
+      // rejectIf.someObjectPropIsNotUpdatable('updateProduct', reject, { object: newProps, objectType: 'product', id: productId })
       // TODO: pouvoir planifier le retrait d'un produit
       rejectIf.productWillDisappearAndHasPendingOrders('updateProduct', reject, { productId, newProps })
 
-      server.updateProduct({ productId, newProps })
+      manageProducts.updateProduct({ productId, newProps })
       resolve({
         message: `[updateProduct] Your product was successfully updated.`,
         myProducts: server.getProductsOfProducer({ userId })

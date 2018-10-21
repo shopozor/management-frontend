@@ -8,3 +8,4 @@ export const formatsOfProduct = (state, getters) => productId => {
   }, {})
 }
 export const editedFormats = state => state.editedFormats
+export const editedFormat = state => ({formatId, propName}) => state.editedFormats[formatId][propName]

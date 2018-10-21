@@ -1,50 +1,49 @@
 <template>
-  <q-card class="product-edit-card q-ma-xs">
+  <q-card>
     <q-card-actions class="row justify-between">
-      <product-visibility-manager :productId="productId" showLabel />
+      <product-visibility-manager :productId="editedProduct.productId" showLabel />
     </q-card-actions>
     <q-card-main>
       <q-select
         stack-label="Rayon"
         separator
-        v-model="aisle"
         :options="aisleOptions"
+        :value="editedProduct.aisle"
+        @input="updateEditedProduct({aisle: $event})"
       />
       <br>
       <q-select
         stack-label="Méthode de conservation"
         separator
-        v-model="conservationMethod"
         :options="conservationOptions"
+        :value="editedProduct.conservationMethod"
+        @input="updateEditedProduct({conservationMethod: $event})"
       />
       <br>
-      <q-field helper="jours après achat">
-        <q-input float-label="temps de conservation" v-model="conservationDays" type="number" />
+      <q-field>
+        <q-input
+          style="width: 50px"
+          float-label="temps de conservation"
+          type="number"
+          :value="editedProduct.conservationDays"
+          @input="updateEditedProduct({conservationDays: $event})"
+          orientation="horizontal"
+        />
+        jours
       </q-field>
     </q-card-main>
   </q-card>
 </template>
 
 <script>
+import {mapGetters, mapMutations} from 'vuex'
 import ProductVisibilityManager from '../ProductVisibilityManager'
 import types from '../../../types'
 
 export default {
   name: 'ProductEditType',
   computed: {
-    productId () { return this.$store.state.products.editedProduct.productId },
-    aisle: {
-      get: function () { return this.$store.state.products.editedProduct.aisle },
-      set: function (newVal) { this.$store.state.products.editedProduct.aisle = newVal }
-    },
-    conservationMethod: {
-      get: function () { return this.$store.state.products.editedProduct.conservationMethod },
-      set: function (newVal) { this.$store.state.products.editedProduct.conservationMethod = newVal }
-    },
-    conservationDays: {
-      get: function () { return this.$store.state.products.editedProduct.conservationDays },
-      set: function (newVal) { this.$store.state.products.editedProduct.conservationDays = newVal }
-    },
+    ...mapGetters(['editedProduct']),
     aisleOptions () {
       return [
         {
@@ -77,6 +76,9 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    ...mapMutations(['updateEditedProduct'])
   },
   components: {ProductVisibilityManager}
 }

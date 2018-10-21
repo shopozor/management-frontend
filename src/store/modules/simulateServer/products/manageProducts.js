@@ -1,8 +1,15 @@
-import { getUser, updateUser, setProduct } from '../serverAccess'
+import * as server from '../serverAccess'
+import { filterUpdatableProps } from '../validate'
 import types from '../../../../types'
 
+export const updateProduct = ({ productId, newProps }) => {
+  const filteredProps = filterUpdatableProps({ object: newProps, type: 'product' })
+  server.updateProduct({ productId, newProps: filteredProps })
+}
+
 export const createProduct = ({ userId, email, newProduct }) => {
-  const user = getUser({ userId, email })
+  const filteredProps = filterUpdatableProps({ object: newProduct, type: 'product' })
+  const user = server.getUser({ userId, email })
   const productId = generateProductId({ userId: user.userId })
   const product = {
     productId,
@@ -13,16 +20,16 @@ export const createProduct = ({ userId, email, newProduct }) => {
       amount: 0,
       customerPrice: 0
     },
-    ...newProduct
+    ...filteredProps
   }
-  setProduct({ productId, product })
+  server.setProduct({ productId, product })
   giveProductAccessToUser({ userId, email, productId })
 }
 
 export const giveProductAccessToUser = ({ userId, email, productId }) => {
-  const productsIds = getUser({ userId, email }).productsIds
+  const productsIds = server.getUser({ userId, email }).productsIds
   productsIds.push(productId)
-  updateUser({ userId, email, newProps: { productsIds } })
+  server.updateUser({ userId, email, newProps: { productsIds } })
 }
 
 const generateProductId = ({ userId }) => `${userId}/product:${Date.now()}`

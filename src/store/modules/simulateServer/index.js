@@ -1,7 +1,7 @@
 import { setServer, getUser, getFormats } from './serverAccess'
 import { createUser, authorize } from './users/manageUsers'
 import { createProduct } from './products/manageProducts'
-import { createSeveralFormats } from './formats/manageFormats'
+import { updateFormatsOfProduct } from './formats/manageFormats'
 import types from '../../../types'
 import { orderFormats } from './orders/manageOrders'
 
@@ -76,19 +76,19 @@ export const initFakeServer = () => {
       conservationMethod: types.conservation.BASEMENT,
       conservationDays: 365,
       defaultFormatMode: types.formatMode.FREE,
-      defaultUnit: types.units.PIECE,
+      defaultUnit: types.units.number.PIECE,
       defaultCustomerPrice: 20
     }
   })
 
   const productsIds = getUser({ email: 'producteur@budzons.ch' }).productsIds
 
-  createSeveralFormats({
+  updateFormatsOfProduct({
     productId: productsIds[0],
-    formatsToCreate: {
+    formats: {
       tempId1: {
         size: 5,
-        unit: types.units.volume.DL,
+        sizeUnit: types.units.volume.DL,
         customerPrice: 5,
         mode: types.formatMode.AUTO_UNIT,
         state: types.formatState.VISIBLE,
@@ -96,7 +96,7 @@ export const initFakeServer = () => {
       },
       tempId2: {
         size: 8,
-        unit: types.units.volume.DL,
+        sizeUnit: types.units.volume.DL,
         customerPrice: 7,
         mode: types.formatMode.AUTO_UNIT,
         state: types.formatState.VISIBLE,
@@ -105,12 +105,12 @@ export const initFakeServer = () => {
     }
   })
 
-  createSeveralFormats({
+  updateFormatsOfProduct({
     productId: productsIds[1],
-    formatsToCreate: {
+    formats: {
       tempId1: {
         size: 300,
-        unit: types.units.mass.GR,
+        sizeUnit: types.units.mass.GR,
         customerPrice: 10.50,
         mode: types.formatMode.AUTO_PRICE,
         state: types.formatState.VISIBLE,
@@ -118,11 +118,26 @@ export const initFakeServer = () => {
       },
       tempId2: {
         size: 500,
-        unit: types.units.mass.GR,
+        sizeUnit: types.units.mass.GR,
         customerPrice: 17.50,
         mode: types.formatMode.AUTO_UNIT,
         state: types.formatState.VISIBLE,
         amount: 4
+      },
+      tempId3: {
+        description: 'petite barquette',
+        customerPrice: 10.50,
+        mode: types.formatMode.FREE,
+        state: types.formatState.VISIBLE,
+        amount: 8
+      },
+      tempId4: {
+        customerPrice: 3.50,
+        customerPriceUnit: types.units.mass.HG,
+        mode: types.formatMode.BULK,
+        state: types.formatState.VISIBLE,
+        amount: 4,
+        amountUnit: types.units.mass.KG
       }
     }
   })

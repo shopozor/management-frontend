@@ -17,7 +17,7 @@
         <q-toolbar-title>
           La Budzonnerie - Gestion
         </q-toolbar-title>
-        <q-btn icon="cancel" size="sm" label="clear server" color="negative" @click="clear" />
+        <q-btn icon="cancel" size="sm" label="clear server" color="negative" @click="clear" class="no-shadow" />
       </q-toolbar>
     </q-layout-header>
     <q-layout-drawer

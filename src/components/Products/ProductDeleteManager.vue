@@ -27,7 +27,8 @@ export default {
     }
   },
   computed: {
-    ordersSummary () { return this.$store.state.products.myProducts[this.productId].ordersSummary },
+    ordersSummary () { return this.$store.getters.productsInInventory[this.productId].ordersSummary },
+    state () { return this.$store.getters.productsInInventory[this.productId].state },
     dialogs () {
       return {
         confirmDeleteWithoutOrders: {

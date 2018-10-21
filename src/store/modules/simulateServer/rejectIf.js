@@ -94,10 +94,10 @@ export const formatDoesNotBelongToProduct = (method, reject, { formatId, product
   }
 }
 
-export const someFormatAmountFallsBelowPendingOrders = (method, reject, { formatsToUpdate }) => {
-  Object.keys(formatsToUpdate).map(formatId => {
-    const newFormatAmount = formatsToUpdate[formatId].amount
-    const force = formatsToUpdate[formatId].force
+export const someFormatAmountFallsBelowPendingOrders = (method, reject, { formats }) => {
+  Object.keys(formats).map(formatId => {
+    const newFormatAmount = formats[formatId].amount
+    const force = formats[formatId].force
     formatAmountFallsBelowPendingOrders(method, reject, { formatId, newFormatAmount, force })
   })
 }
@@ -108,9 +108,9 @@ export const formatAmountFallsBelowPendingOrders = (method, reject, { formatId, 
   }
 }
 
-export const someFormatWillDisappearAndHasPendingOrders = (method, reject, { formatsToUpdate }) => {
-  Object.keys(formatsToUpdate).map(formatId => {
-    const newProps = formatsToUpdate[formatId]
+export const someFormatWillDisappearAndHasPendingOrders = (method, reject, { formats }) => {
+  Object.keys(formats).map(formatId => {
+    const newProps = formats[formatId]
     formatWillDisappearAndHasPendingOrders(method, reject, { formatId, newProps })
   })
 }

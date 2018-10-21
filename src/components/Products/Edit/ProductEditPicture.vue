@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-media>
-      <img :src="image" alt="product image">
+      <img :src="editedProductImage" alt="product image">
     </q-card-media>
     <q-card-actions align="around">
       <q-btn round size="lg" icon="camera_alt" color="primary" />
@@ -12,19 +12,12 @@
 </template>
 
 <script>
-import NO_IMAGE from '../../../assets/no_image.png'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'ProductEditPicture',
   computed: {
-    image: {
-      get: function () {
-        const image = this.$store.state.products.editedProduct.image
-        if (image && image !== '') return image
-        else return NO_IMAGE
-      },
-      set: function (newVal) { this.$store.state.products.editedProduct.image = newVal }
-    }
+    ...mapGetters(['editedProductImage'])
   }
 }
 </script>

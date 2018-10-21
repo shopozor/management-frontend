@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import ProductEditPicture from './ProductEditPicture'
 import ProductEditName from './ProductEditName'
 import ProductEditType from './ProductEditType'
@@ -32,37 +32,21 @@ export default {
     ProductEditType,
     ProductEditFormats
   },
+  computed: {
+    ...mapGetters(['editedProduct', 'editedFormats'])
+  },
   methods: {
     ...mapActions(['updateProduct', 'updateFormatsOfProduct']),
     save () {
-      const vm = this
-      const {
-        productId,
-        title,
-        description,
-        aisle,
-        conservationMethod,
-        conservationDays,
-        image,
-        defaultFormatMode,
-        defaultCustomerPrice,
-        defaultUnit
-      } = this.$store.state.products.editedProduct
       this.updateProduct({
-        productId,
-        newProps: {
-          title,
-          description,
-          aisle,
-          conservationMethod,
-          conservationDays,
-          image,
-          defaultFormatMode,
-          defaultCustomerPrice,
-          defaultUnit
-        }
+        productId: this.editedProduct.productId,
+        newProps: this.editedProduct
       })
-        .then(() => vm.jumpTo('inventory'))
+      this.updateFormatsOfProduct({
+        productId: this.editedProduct.productId,
+        formats: this.editedFormats
+      })
+        .then(() => this.jumpTo('inventory'))
     },
     cancel () { this.jumpTo('inventory') }
   }

@@ -15,20 +15,25 @@ export const getFormatsOfProduct = ({ commit, getters }, { productId }) => {
     token: getters.token,
     productId
   })
-    .then(response => commit('storeFormatsOfProduct', { formats: response.formats }))
+    .then(response => commit('storeFormats', { formats: response.formats }))
     .catch(error => console.log(error))
 }
 
-export const updateFormatsOfProduct = ({ commit, getters }, { productId, formatsToCreate, formatsToUpdate }) => {
-  request.updateFormatsOfProduct({
-    userId: getters.userId,
-    token: getters.token,
-    productId,
-    formatsToCreate,
-    formatsToUpdate
+export const updateFormatsOfProduct = ({ commit, getters }, { productId, formats }) => {
+  return new Promise((resolve, reject) => {
+    request.updateFormatsOfProduct({
+      userId: getters.userId,
+      token: getters.token,
+      productId,
+      formats
+    })
+      .then(response => {
+        commit('storeFormats', { formats: response.formats })
+        commit('clearEditedFormats')
+        resolve()
+      })
+      .catch(error => console.log(error))
   })
-    .then(response => commit('storeFormatsOfProduct', { formats: response.formats }))
-    .catch(error => console.log(error))
 }
 
 export const setEditedFormats = ({ commit, getters }, { productId }) => {

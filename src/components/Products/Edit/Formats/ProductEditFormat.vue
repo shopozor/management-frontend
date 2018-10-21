@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span>description / </span>
-    <span>prix / </span>
+    <format-description :formatId="formatId" />
+    <format-amount :formatId="formatId" />
     <span>stock / </span>
     <span>commandes</span>
     <br>
@@ -12,6 +12,9 @@
 </template>
 
 <script>
+import FormatDescription from './FormatDescription'
+import FormatAmount from './FormatAmount'
+
 export default {
   name: 'ProductEditFormat',
   props: {
@@ -19,6 +22,7 @@ export default {
       type: String,
       required: true
     }
-  }
+  },
+  components: {FormatDescription, FormatAmount}
 }
 </script>

@@ -9,7 +9,7 @@
         <div>prix et unité par défaut</div>
       </q-collapsible>
       <q-list>
-        <q-item v-for="id in editedFormatsIds" :key="id">
+        <q-item v-for="id in editedProduct.formatsIds" :key="id">
           <product-edit-format :formatId="id" />
         </q-item>
       </q-list>
@@ -18,12 +18,13 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import ProductEditFormat from './Formats/ProductEditFormat'
 
 export default {
   name: 'ProductEditFormats',
   computed: {
-    editedFormatsIds () { return Object.keys(this.$store.state.formats.editedFormats) }
+    ...mapGetters(['editedProduct'])
   },
   components: {ProductEditFormat}
 }

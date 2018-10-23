@@ -6,13 +6,6 @@
       @input="setValue"
       :style="`width: ${valueWidth}em`"
       type="number" />
-    <q-btn
-      class="q-ma-sm self-middle"
-      :icon="autoValueUpdate ? 'link' : 'link_off'"
-      size="sm"
-      round
-      flat
-      @click="autoValueUpdate = !autoValueUpdate" />
     <unit-select
       class="self-baseline"
       :unit="unit"
@@ -28,12 +21,27 @@ import UnitSelect from './UnitSelect'
 
 export default {
   name: 'UnitField',
-  data () {
-    return {
-      autoValueUpdate: true
-    }
-  },
   props: {
+    value: {
+      type: Number,
+      required: true
+    },
+    setValue: {
+      type: Function,
+      required: true
+    },
+    valueWidth: {
+      type: Number,
+      default () {
+        return 3
+      }
+    },
+    linked: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    },
     unit: {
       type: String,
       required: true
@@ -53,25 +61,11 @@ export default {
       default () {
         return 'compatible'
       }
-    },
-    value: {
-      type: Number,
-      required: true
-    },
-    setValue: {
-      type: Function,
-      required: true
-    },
-    valueWidth: {
-      type: Number,
-      default () {
-        return 3
-      }
     }
   },
   methods: {
     updateUnitAndValue (newUnit) {
-      if (this.autoValueUpdate && helpers.unitsAreCompatible({unit1: this.unit, unit2: newUnit})) {
+      if (this.linked && helpers.unitsAreCompatible({unit1: this.unit, unit2: newUnit})) {
         const newValue = helpers.convert({ startValue: this.value, startUnit: this.unit, endUnit: newUnit })
         this.setValue(newValue)
       }

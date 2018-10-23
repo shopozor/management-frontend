@@ -4,7 +4,7 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      'vuelidate'
+      { path: 'vuelidate', server: false }
     ],
     css: [
       'app.styl'

@@ -8,12 +8,14 @@ export const unitsDefinitions = {
     DAG: {
       short: '10gr',
       name: 'décagrammes',
-      weight: 10
+      weight: 10,
+      onlyPriceReferenceQuantity: true
     },
     HG: {
       short: '100gr',
       name: 'hectogrammes',
-      weight: 100
+      weight: 100,
+      onlyPriceReferenceQuantity: true
     },
     KG: {
       short: 'kg',

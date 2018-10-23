@@ -8,44 +8,25 @@ export const convert = ({ startValue, startUnit, endUnit }) => {
   }
 }
 
-export const options = ({ filter, unit }) => {
+export const options = ({ filter, unit, withPriceReferenceQuantities }) => {
   switch (filter) {
-    case 'all': return allOptions()
-    case 'warning': return warningOptions({ unit })
-    case 'compatible': return compatibleOptions({ unit })
-    default: return compatibleOptions({ unit })
+    case 'all': return allOptions({ withPriceReferenceQuantities })
+    case 'warning': return warningOptions({ unit, withPriceReferenceQuantities })
+    case 'compatible': return compatibleOptions({ unit, withPriceReferenceQuantities })
+    default: return compatibleOptions({ unit, withPriceReferenceQuantities })
   }
 }
 
-const allOptions = () => {
+const allOptions = ({ withPriceReferenceQuantities }) => {
   const opts = []
   physicalSizes.map(physicalSize => {
     Object.keys(unitsDefinitions[physicalSize]).map(unitId => {
-      const option = {
-        label: unitsDefinitions[physicalSize][unitId].short,
-        value: unitsDefinitions[physicalSize][unitId].short
-      }
-      opts.push(option)
-    })
-  })
-  return opts
-}
-
-const warningOptions = ({ unit }) => {
-  const opts = []
-  physicalSizes.map(physicalSize => {
-    Object.keys(unitsDefinitions[physicalSize]).map(unitId => {
-      const option = {
-        label: unitsDefinitions[physicalSize][unitId].short,
-        value: unitsDefinitions[physicalSize][unitId].short
-      }
-      if (physicalSize === getPhysicalSize({ unit })) {
-        option.rightIcon = 'check_circle'
-        option.rightColor = 'positive'
-        opts.unshift(option)
-      } else {
-        option.rightIcon = 'error'
-        option.rightColor = 'negative'
+      const unitInfo = unitsDefinitions[physicalSize][unitId]
+      if (withPriceReferenceQuantities || !unitInfo.onlyPriceReferenceQuantity) {
+        const option = {
+          label: unitInfo.short,
+          value: unitInfo.short
+        }
         opts.push(option)
       }
     })
@@ -53,12 +34,39 @@ const warningOptions = ({ unit }) => {
   return opts
 }
 
-const compatibleOptions = ({ unit }) => {
+const warningOptions = ({ unit, withPriceReferenceQuantities }) => {
+  const opts = []
+  physicalSizes.map(physicalSize => {
+    Object.keys(unitsDefinitions[physicalSize]).map(unitId => {
+      const unitInfo = unitsDefinitions[physicalSize][unitId]
+      if (withPriceReferenceQuantities || !unitInfo.onlyPriceReferenceQuantity) {
+        const option = {
+          label: unitInfo.short,
+          value: unitInfo.short
+        }
+        if (physicalSize === getPhysicalSize({ unit })) {
+          option.rightIcon = 'check_circle'
+          option.rightColor = 'positive'
+          opts.unshift(option)
+        } else {
+          option.rightIcon = 'error'
+          option.rightColor = 'negative'
+          opts.push(option)
+        }
+      }
+    })
+  })
+  return opts
+}
+
+const compatibleOptions = ({ unit, withPriceReferenceQuantities }) => {
   const physicalSize = getPhysicalSize({ unit })
   return Object.values(unitsDefinitions[physicalSize]).map(unitInfo => {
-    return {
-      label: unitInfo.short,
-      value: unitInfo.short
+    if (withPriceReferenceQuantities || !unitInfo.onlyPriceReferenceQuantity) {
+      return {
+        label: unitInfo.short,
+        value: unitInfo.short
+      }
     }
   })
 }

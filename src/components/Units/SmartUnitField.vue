@@ -4,6 +4,7 @@
       :unit="unit"
       :setUnit="smartSetUnit"
       :unitWidth="unitWidth"
+      linked
       :value="value"
       :setValue="setValue"
       :valueWidth="valueWidth"

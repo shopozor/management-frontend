@@ -7,7 +7,9 @@
   "author": "Softozor",
   "private": true,
   "scripts": {
+    "build": "quasar build",
     "lint": "eslint --ext .js,.vue src",
+    "start": "quasar serve dist/spa-mat",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {

@@ -32,16 +32,21 @@ export default {
     dialogs () {
       return {
         confirmDeleteWithoutOrders: {
-          title: 'Attention',
-          message: 'Vous êtes sur le point de mettre un produit à la corbeille. Il pourra être restauré pendant six mois. Passé ce délai, il sera définitvement effacé.',
-          ok: 'Jeter',
-          cancel: 'Conserver'
+          title: this.$t('dialog.warning'),
+          message: this.$t('products.warningDeleteWithoutOrders'),
+          ok: this.$t('products.throwAway'),
+          cancel: this.$t('products.keep')
         },
         consfirmDeleteWithOrders: {
-          title: 'Attention',
-          message: `Vous êtes sur le point d\`effacer un produit. Ses formats seront aussi effacés. Il pourra être restauré pendant six mois, mais sera définitivement effacé par la suite. ATTENTION: Ce produit comporte ${this.ordersSummary.amount} commandes en cours pour un total de ${this.ordersSummary.customerPrice} francs payés par les clients. Vous devrez dédommager vos clients si vous ne les livrez pas.`,
-          ok: 'Jeter',
-          cancel: 'Conserver'
+          title: this.$t('dialog.warning'),
+          message: this.$t(
+            'products.warningDeleteWithOrders',
+            {
+              amount: this.ordersSummary.amount,
+              price: this.ordersSummary.customerPrice
+            }),
+          ok: this.$t('products.throwAway'),
+          cancel: this.$t('products.keep')
         }
       }
     }

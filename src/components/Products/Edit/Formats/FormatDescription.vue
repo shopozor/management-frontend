@@ -7,24 +7,24 @@
       </q-field>
     </div>
     <div v-else-if="formatMode === formatModes.AUTO_UNIT">
+      <smart-unit-field
+        :value="editedFormats[formatId].size"
+        :setValue="updateSize"
+        :unit="editedFormats[formatId].sizeUnit"
+        :setUnit="updateSizeUnit"
+      />
       <q-field>
-        <smart-unit-field
-          :value="editedFormats[formatId].size"
-          :setValue="updateSize"
-          :unit="editedFormats[formatId].sizeUnit"
-          :setUnit="updateSizeUnit"
-        />
         <q-input :value="customerPrice" @input="updateCustomerPrice" />
       </q-field>
     </div>
     <div v-else-if="formatMode === formatModes.AUTO_PRICE">
+      <smart-unit-field
+        :value="editedFormats[formatId].size"
+        :setValue="updateSize"
+        :unit="editedFormats[formatId].sizeUnit"
+        :setUnit="updateSizeUnit"
+      />
       <q-field>
-        <smart-unit-field
-          :value="editedFormats[formatId].size"
-          :setValue="updateSize"
-          :unit="editedFormats[formatId].sizeUnit"
-          :setUnit="updateSizeUnit"
-        />
         <q-input :value="customerPrice" @input="updateCustomerPrice" />
       </q-field>
     </div>

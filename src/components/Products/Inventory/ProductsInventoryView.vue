@@ -10,7 +10,7 @@
       icon="delete_sweep"
       size="md"
       color="primary"
-      label="Corbeille"
+      :label="$t('products.trash')"
       v-show="!productsTrashIsEmpty"
       @click="jumpToTrash"
       />

@@ -9,7 +9,7 @@
               <q-input
                 v-model="email"
                 type="email"
-                float-label="e-mail" />
+                :float-label="$t('profile.email')" />
             </q-field>
           </q-item-main>
         </q-item>
@@ -21,19 +21,19 @@
                   ref="password"
                   v-model="password"
                   type="password"
-                  float-label="mot de passe"
+                  :float-label="$t('profile.password')"
                   @keyup.enter="login({email, password, stayLoggedIn})" />
               </q-field>
             </q-item-main>
         </q-item>
         <q-item class="row justify-center">
-          <q-toggle class="q-ma-md" :class="{'text-faded': !stayLoggedIn}" v-model="stayLoggedIn" label="rester connecté"></q-toggle>
+          <q-toggle class="q-ma-md" :class="{'text-faded': !stayLoggedIn}" v-model="stayLoggedIn" :label="$t('login.stayLoggedIn')"></q-toggle>
         </q-item>
         <q-item class="row justify-center">
-            <q-btn class="q-ma-md" color="primary" label="Se connecter" @click="login({email, password, stayLoggedIn})" ></q-btn>
+            <q-btn class="q-ma-md" color="primary" :label="$t('login.connect')" @click="login({email, password, stayLoggedIn})" ></q-btn>
         </q-item>
         <q-item class="row justify-center">
-          <router-link to="/confirmationEmailSent">J'ai oublié mon mot de passe</router-link>
+          <router-link to="/confirmationEmailSent">{{ $t('login.forgotPassword') }}</router-link>
         </q-item>
       </q-list>
     </div>
@@ -45,7 +45,7 @@
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'Login',
+  name: 'PageLogin',
   data () {
     return {
       email: '',

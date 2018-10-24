@@ -4,7 +4,8 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      { path: 'vuelidate', server: false }
+      'vuelidate',
+      'vue-i18n'
     ],
     css: [
       'app.styl'
@@ -30,6 +31,16 @@ module.exports = function (ctx) {
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules|quasar)/
+        })
+
+        // config for using embedded <i18n> template components
+        // https://quasar-framework.org/components/internationalization.html#Setting-up-Translation-Blocks-in-your-SFCs
+        cfg.module.rules.push({
+          resourceQuery: /blockType=i18n/,
+          use: [
+            {loader: '@kazupon/vue-i18n-loader'},
+            {loader: 'yaml-loader'}
+          ]
         })
       }
     },
@@ -81,7 +92,9 @@ module.exports = function (ctx) {
         'Dialog'
       ]
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
-      // i18n: 'de' // Quasar language
+
+      // Will be used only if necessary. We prefer stick to vue-i18n for further VST compatibility
+      // i18n: 'fr' // Quasar language
     },
     // animations: 'all' --- includes all animations
     animations: [],

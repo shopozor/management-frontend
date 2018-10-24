@@ -5,8 +5,8 @@
     <product-edit-type class="product-edit-card q-ma-sm" />
     <product-edit-formats class="q-ma-sm q-mb-xl" />
     <q-page-sticky position="bottom-right">
-      <q-btn class="q-ma-md" size="md" icon="cancel" label="Annuler" color="negative" @click="cancel" />
-      <q-btn class="q-ma-md" size="md" icon="save" label="Enregistrer" color="positive" @click="save" />
+      <q-btn class="q-ma-md" size="md" icon="cancel" :label="$t('actions.cancel')" color="negative" @click="cancel" />
+      <q-btn class="q-ma-md" size="md" icon="save" :label="$t('actions.save')" color="positive" @click="save" />
     </q-page-sticky>
   </div>
 </template>

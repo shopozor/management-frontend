@@ -95,8 +95,6 @@ export default {
   },
   methods: {
     smartSetUnit (newUnit) {
-      // TODO: si le unit-field n'a pas coché la fonctionnalité auto-update, ne rien faire
-      // virer le auto-update ? toujours auto-update ? paramétrer dans les préférences utilisateur ?
       if (this.unitIsCompatible({newUnit})) {
         this.setUnit(newUnit)
       } else {

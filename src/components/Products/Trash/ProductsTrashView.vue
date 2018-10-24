@@ -11,7 +11,7 @@
         icon="kitchen"
         size="md"
         color="primary"
-        label="Inventaire"
+        :label="$t('products.inventory')"
         @click="jumpToInventory"
         />
     </q-page>

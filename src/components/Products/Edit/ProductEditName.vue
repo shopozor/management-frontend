@@ -3,7 +3,7 @@
     <q-card-main>
       <q-field>
         <q-input
-          float-label="Nom du produit"
+          :float-label="$t('products.name')"
           :value="editedProduct.title"
           @input="updateEditedProduct({title: $event})"
         ></q-input>
@@ -11,7 +11,7 @@
       <br >
       <q-field>
         <q-input
-        float-label="Description du produit"
+        :float-label="$t('products.description')"
         type="textarea"
         :max-height="190"
         rows="8"

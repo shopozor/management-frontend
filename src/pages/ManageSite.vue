@@ -1,12 +1,11 @@
 <template>
   <q-page>
-    {{ $t('welcome') }}
+    Manage Site
   </q-page>
 </template>
 
 <script>
-
 export default {
-  name: 'PageHome'
+  name: 'PageManageSite'
 }
 </script>

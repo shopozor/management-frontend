@@ -18,57 +18,63 @@ export const options = ({ filter, unit, withPriceReferenceQuantities }) => {
 }
 
 const allOptions = ({ withPriceReferenceQuantities }) => {
-  const opts = []
-  physicalSizes.map(physicalSize => {
-    Object.keys(unitsDefinitions[physicalSize]).map(unitId => {
-      const unitInfo = unitsDefinitions[physicalSize][unitId]
-      if (withPriceReferenceQuantities || !unitInfo.onlyPriceReferenceQuantity) {
-        const option = {
-          label: unitInfo.short,
-          value: unitInfo.short
-        }
-        opts.push(option)
-      }
-    })
+  return generateOptions({
+    withPriceReferenceQuantities,
+    generationFunction: ({ optionsArrayToGenerate, candidateOption }) => {
+      optionsArrayToGenerate.push(candidateOption)
+    }
   })
-  return opts
 }
 
 const warningOptions = ({ unit, withPriceReferenceQuantities }) => {
-  const opts = []
+  return generateOptions({
+    unit,
+    withPriceReferenceQuantities,
+    generationFunction: ({ referenceUnit, physicalSizeOfCandidate, optionsArrayToGenerate, candidateOption }) => {
+      if (physicalSizeOfCandidate === getPhysicalSize({ unit: referenceUnit })) {
+        candidateOption.rightIcon = 'check_circle'
+        candidateOption.rightColor = 'positive'
+        optionsArrayToGenerate.unshift(candidateOption)
+      } else {
+        candidateOption.rightIcon = 'error'
+        candidateOption.rightColor = 'negative'
+        optionsArrayToGenerate.push(candidateOption)
+      }
+    }
+  })
+}
+
+const compatibleOptions = ({ unit, withPriceReferenceQuantities }) => {
+  return generateOptions({
+    unit,
+    withPriceReferenceQuantities,
+    generationFunction: ({ referenceUnit, physicalSizeOfCandidate, optionsArrayToGenerate, candidateOption }) => {
+      if (physicalSizeOfCandidate === getPhysicalSize({ unit: referenceUnit })) optionsArrayToGenerate.push(candidateOption)
+    }
+  })
+}
+// TODO: foreach
+const generateOptions = ({ unit, withPriceReferenceQuantities, generationFunction }) => {
+  const optionsArrayToGenerate = []
   physicalSizes.map(physicalSize => {
     Object.keys(unitsDefinitions[physicalSize]).map(unitId => {
       const unitInfo = unitsDefinitions[physicalSize][unitId]
       if (withPriceReferenceQuantities || !unitInfo.onlyPriceReferenceQuantity) {
-        const option = {
+        const candidateOption = {
           label: unitInfo.short,
           value: unitInfo.short
         }
-        if (physicalSize === getPhysicalSize({ unit })) {
-          option.rightIcon = 'check_circle'
-          option.rightColor = 'positive'
-          opts.unshift(option)
-        } else {
-          option.rightIcon = 'error'
-          option.rightColor = 'negative'
-          opts.push(option)
-        }
+        generationFunction({
+          referenceUnit: unit,
+          physicalSizeOfCandidate: physicalSize,
+          unitIdOfCandidate: unitId,
+          optionsArrayToGenerate,
+          candidateOption
+        })
       }
     })
   })
-  return opts
-}
-
-const compatibleOptions = ({ unit, withPriceReferenceQuantities }) => {
-  const physicalSize = getPhysicalSize({ unit })
-  return Object.values(unitsDefinitions[physicalSize]).map(unitInfo => {
-    if (withPriceReferenceQuantities || !unitInfo.onlyPriceReferenceQuantity) {
-      return {
-        label: unitInfo.short,
-        value: unitInfo.short
-      }
-    }
-  })
+  return optionsArrayToGenerate
 }
 
 export const unitsAreCompatible = ({ unit1, unit2 }) => getPhysicalSize({ unit: unit1 }) === getPhysicalSize({ unit: unit2 })

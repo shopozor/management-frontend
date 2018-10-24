@@ -38,16 +38,21 @@ export default {
     state () { return this.$store.state.products.myProducts[this.productId].state },
     ordersSummary () { return this.$store.state.products.myProducts[this.productId].ordersSummary },
     visibilityLabel () {
-      if (this.state === types.productState.VISIBLE && this.showLabel) return 'Produit en vente'
-      else if (this.showLabel) return 'Produit caché'
+      if (this.state === types.productState.VISIBLE && this.showLabel) return this.$t('products.visible')
+      else if (this.showLabel) return this.$t('products.hidden')
       else return ''
     },
     confirmHideWithOrders () {
       return {
-        title: 'Attention',
-        message: `Vous êtes sur le point de cacher un produit avec ${this.ordersSummary.amount} commandes en cours pour un total de ${this.ordersSummary.customerPrice} francs payés par les clients. Vous devrez dédommager vos clients si vous ne les livrez pas.`,
-        ok: 'Cacher',
-        cancel: 'Laisser visible'
+        title: this.$t('dialog.warning'),
+        message: this.$t(
+          'products.warningHide',
+          {
+            amount: this.ordersSummary.amount,
+            price: this.ordersSummary.customerPrice
+          }),
+        ok: this.$t('products.hide'),
+        cancel: this.$t('products.letVisible')
       }
     }
   },

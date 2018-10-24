@@ -1,5 +1,15 @@
 import * as links from '../types/links'
 
+export const generatePage = (link, { withLabel }) => {
+  return {
+    path: `/${link}`,
+    component: () => import(`pages/${firstUpperCase(link)}.vue`),
+    label: withLabel ? link : ''
+  }
+}
+
+export const firstUpperCase = string => string.charAt(0).toUpperCase() + string.slice(1)
+
 /**
  * A page that can be reached from the burger menu must have a label
  *
@@ -13,70 +23,19 @@ export default {
   [links.HOME]: {
     path: '/',
     component: () => import('pages/Home.vue'),
-    label: 'Accueil'
+    label: links.HOME
   },
-  [links.SIGNUP]: {
-    path: `/${links.SIGNUP}`,
-    component: () => import('pages/Signup.vue'),
-    label: "S'inscrire"
-  },
-  [links.CONFIRMATION_EMAIL_SENT]: {
-    path: `/${links.CONFIRMATION_EMAIL_SENT}`,
-    component: () => import('pages/ConfirmationEmailSent.vue')
-  },
-  [links.LOGIN]: {
-    path: `/${links.LOGIN}`,
-    component: () => import('pages/Login.vue'),
-    label: 'Se connecter'
-  },
-  [links.LOGOUT]: {
-    path: `/${links.LOGOUT}`,
-    component: () => import('pages/Logout.vue'),
-    label: 'Se déconnecter'
-  },
-  [links.PROFILE]: {
-    path: `/${links.PROFILE}`,
-    component: () => import('pages/Home.vue'),
-    label: 'Profil'
-  },
-  [links.CALENDAR]: {
-    path: `/${links.CALENDAR}`,
-    component: () => import('pages/Calendar.vue'),
-    label: 'Calendrier'
-  },
-  [links.PRODUCTS]: {
-    path: `/${links.PRODUCTS}`,
-    component: () => import('pages/Products.vue'),
-    label: 'Produits'
-  },
-  [links.MY_SHOP]: {
-    path: `/${links.MY_SHOP}`,
-    component: () => import('pages/Home.vue'),
-    label: 'Ma Budzonnerie'
-  },
-  [links.MANAGE_SHOPS]: {
-    path: `/${links.MANAGE_SHOPS}`,
-    component: () => import('pages/Home.vue'),
-    label: 'Gestion des Budzonneries'
-  },
-  [links.MANAGE_SITE]: {
-    path: `/${links.MANAGE_SITE}`,
-    component: () => import('pages/Home.vue'),
-    label: 'Gestion du Site'
-  },
-  [links.MAP]: {
-    path: `/${links.MAP}`,
-    component: () => import('pages/Map.vue'),
-    label: 'Carte'
-  },
-  [links.ORDERS]: {
-    path: `/${links.ORDERS}`,
-    component: () => import('pages/Home.vue'),
-    label: 'Commandes'
-  },
-  [links.FAKE_SHOP]: {
-    path: `/${links.FAKE_SHOP}`,
-    component: () => import('pages/Home.vue'),
-    label: 'Boutique Test'
-  }
+  [links.SIGNUP]: generatePage(links.SIGNUP, { withLabel: true }),
+  [links.CONFIRMATION_EMAIL_SENT]: generatePage(links.CONFIRMATION_EMAIL_SENT, { withLabel: false }),
+  [links.LOGIN]: generatePage(links.LOGIN, { withLabel: true }),
+  [links.LOGOUT]: generatePage(links.LOGOUT, { withLabel: true }),
+  [links.PROFILE]: generatePage(links.PROFILE, { withLabel: true }),
+  [links.CALENDAR]: generatePage(links.CALENDAR, { withLabel: true }),
+  [links.PRODUCTS]: generatePage(links.PRODUCTS, { withLabel: true }),
+  [links.MY_SHOP]: generatePage(links.MY_SHOP, { withLabel: true }),
+  [links.MANAGE_SHOPS]: generatePage(links.MANAGE_SHOPS, { withLabel: true }),
+  [links.MANAGE_SITE]: generatePage(links.MANAGE_SITE, { withLabel: true }),
+  [links.MAP]: generatePage(links.MAP, { withLabel: true }),
+  [links.ORDERS]: generatePage(links.ORDERS, { withLabel: true }),
+  [links.FAKE_SHOP]: generatePage(links.FAKE_SHOP, { withLabel: true })
 }

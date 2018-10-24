@@ -11,7 +11,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'Logout',
+  name: 'PageLogout',
   created () {
     this.logout({userId: this.userId, token: this.token})
   },

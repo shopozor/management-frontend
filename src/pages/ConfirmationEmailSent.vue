@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'ConfirmationEmailSent',
+  name: 'PageConfirmationEmailSent',
   methods: {
     home () { this.$router.push('/') }
   }

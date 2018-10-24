@@ -31,6 +31,7 @@ Vue.use(VueGoogleMaps, {
 })
 
 export default {
+  name: 'PageMap',
   data () {
     return {
       icon: budzi,

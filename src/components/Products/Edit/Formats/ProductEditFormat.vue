@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-start">
+  <div>
     <format-description :formatId="formatId" />
     <format-amount :formatId="formatId" />
     <span>stock / </span>

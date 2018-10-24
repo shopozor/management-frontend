@@ -29,7 +29,7 @@ import ProductsTrashView from '../components/Products/Trash/ProductsTrashView'
 import ProductsEditView from '../components/Products/Edit/ProductsEditView'
 
 export default {
-  name: 'Products',
+  name: 'PageProducts',
   data () {
     return {
       view: 'inventory'

@@ -1,12 +1,11 @@
 <template>
   <q-page>
-    {{ $t('welcome') }}
+    Profile
   </q-page>
 </template>
 
 <script>
-
 export default {
-  name: 'PageHome'
+  name: 'PageProfile'
 }
 </script>

@@ -18,7 +18,7 @@ require('vue-simple-calendar/static/css/default.css')
 require('vue-simple-calendar/static/css/holidays-us.css')
 
 export default {
-  name: 'Calendar',
+  name: 'PageCalendar',
   data () {
     return { showDate: new Date() }
   },

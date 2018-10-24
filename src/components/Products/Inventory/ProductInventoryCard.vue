@@ -9,7 +9,7 @@
         <q-btn
           class="q-ma-sm"
           icon="create"
-          label="Editer"
+          :label="$t('products.edit')"
           size="md"
           color="primary"
           @click="edit" />
@@ -91,9 +91,14 @@ export default {
   },
   computed: {
     summary () {
-      if (this.ordersSummary.amount === 0) return 'Aucune commande en cours'
-      else if (this.ordersSummary.amount === 1) return `Une commande: ${this.ordersSummary.customerPrice} francs`
-      else return `${this.ordersSummary.amount} commandes: ${this.ordersSummary.customerPrice} francs`
+      return this.$tc(
+        'products.ordersSummary',
+        this.ordersSummary.amount,
+        {
+          amount: this.ordersSummary.amount,
+          price: this.ordersSummary.customerPrice
+        }
+      )
     },
     isVisible () {
       return this.state === types.productState.VISIBLE

@@ -3,7 +3,7 @@
       :class="{'bg-primary text-white': actualPath === path}"
       v-if="label !== undefined"
       @click.native="() => $router.push({path})">
-        <q-item-main :label="label" />
+        <q-item-main :label="$t(`links.${label}`)" />
     </q-item>
 </template>
 

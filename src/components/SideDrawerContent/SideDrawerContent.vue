@@ -53,7 +53,7 @@ export default {
     },
     user () {
       if (this.isAuthorized) return this.email
-      else return 'non connecté'
+      else return this.$t('layout.notConnected')
     }
   },
   components: {

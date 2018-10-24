@@ -5,7 +5,7 @@
     </q-card-actions>
     <q-card-main>
       <q-select
-        stack-label="Rayon"
+        :stack-label="$t('products.aisle')"
         separator
         :options="aisleOptions"
         :value="editedProduct.aisle"
@@ -13,7 +13,7 @@
       />
       <br>
       <q-select
-        stack-label="Méthode de conservation"
+        :stack-label="$t('products.conservationMethod')"
         separator
         :options="conservationOptions"
         :value="editedProduct.conservationMethod"
@@ -23,13 +23,13 @@
       <q-field>
         <q-input
           style="width: 50px"
-          float-label="temps de conservation"
+          :float-label="$t('products.conservationTime')"
           type="number"
           :value="editedProduct.conservationDays"
           @input="updateEditedProduct({conservationDays: $event})"
           orientation="horizontal"
         />
-        jours
+        {{ $tc('products.day', editedProduct.conservationDays)}}
       </q-field>
     </q-card-main>
   </q-card>

@@ -10,7 +10,7 @@
               <q-input
                 v-model="email"
                 type="email"
-                float-label="e-mail"
+                :float-label="$t('profile.email')"
                 @blur="$v.email.$touch"
                 @keyup.enter="focusPassword"
                 :error="$v.email.$error" />
@@ -30,7 +30,7 @@
                   ref="password"
                   v-model="password"
                   type="password"
-                  float-label="mot de passe"
+                  :float-label="$t('profile.password')"
                   @blur="$v.password.$touch"
                   @keyup.enter="focusConfirmPassword"
                   :error="$v.password.$error" />
@@ -50,7 +50,7 @@
                   ref="confirmPassword"
                   v-model="confirmPassword"
                   type="password"
-                  float-label="répétez votre mot de passe"
+                  :float-label="$t('signup.repeatPassword')"
                   @blur="$v.confirmPassword.$touch"
                   @keyup.enter="submit"
                   :error="$v.confirmPassword.$error" />
@@ -61,7 +61,7 @@
           </q-item-side>
         </q-item>
         <q-item class="row justify-center">
-            <q-btn class="q-ma-md" color="primary" label="Créer mon compte" @click="submit" ></q-btn>
+            <q-btn class="q-ma-md" color="primary" :label="$t('signup.createAccount')" @click="submit" ></q-btn>
         </q-item>
       </q-list>
     </div>
@@ -72,7 +72,7 @@
 import {required, email, minLength, sameAs} from 'vuelidate/lib/validators'
 
 export default {
-  name: 'Signup',
+  name: 'PageSignup',
   data () {
     return {
       email: '',
@@ -93,16 +93,16 @@ export default {
   },
   computed: {
     emailHelper: function () {
-      if (!this.$v.email.$error) return 'ceci sera votre nom de budzon'
-      else return 'veuillez entrer un email valide'
+      if (!this.$v.email.$error) return this.$t('signup.emailHelper.valid')
+      else return this.$t('signup.emailHelper.invalid')
     },
     passwordHelper: function () {
-      if (!this.$v.password.$error) return '6 caractères ou plus'
-      else return `il manque ${6 - this.password.length} caractère${this.password.length < 5 ? 's' : ''}`
+      if (!this.$v.password.$error) return this.$t('signup.passwordHelper.valid')
+      else return this.$tc('signup.passwordHelper.invalid', 6 - this.password.length, {count: 6 - this.password.length})
     },
     confirmPasswordHelper: function () {
-      if (!this.$v.confirmPassword.$error) return 'pour éviter les erreurs de frappe'
-      else return 'les deux mots de passe sont différents'
+      if (!this.$v.confirmPassword.$error) return this.$t('signup.confirmPasswordHelper.valid')
+      else return this.$t('signup.confirmPasswordHelper.invalid')
     }
   },
   methods: {
@@ -116,7 +116,7 @@ export default {
       this.$v.$touch()
 
       if (this.$v.$error) {
-        this.$q.notify('Veuillez corriger les erreurs.')
+        this.$q.notify(this.$t('signup.correctErrors'))
       } else {
         this.$store.dispatch('signup', {email: this.email, password: this.password})
       }

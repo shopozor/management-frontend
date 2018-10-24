@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "animate.css": "^3.7.0",
+    "vue-i18n": "^8.2.1",
     "vue-simple-calendar": "^4.0.2",
     "vue2-google-maps": "^0.10.2",
     "vuelidate": "^0.7.4"

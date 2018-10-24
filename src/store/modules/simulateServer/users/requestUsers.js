@@ -1,5 +1,6 @@
 import * as manageUsers from './manageUsers'
 import * as rejectIf from '../rejectIf'
+import { tokenIsValid } from '../validate'
 import types from '../../../../types'
 
 const delayInMs = 200
@@ -35,15 +36,20 @@ export const login = ({ email, password }) => {
 export const getAuthorizations = ({ userId, token }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      rejectIf.tokenIsInvalid('getAuthorizations', reject, { userId, token })
-
-      resolve({
-        message: `[getAuthorizations] Your token is valid.`,
-        email: manageUsers.getEmail({ userId }),
-        userId,
-        token,
-        authorizations: manageUsers.getAuthorizations({ userId })
-      })
+      if (tokenIsValid({ userId, token })) {
+        resolve({
+          message: `[getAuthorizations] Your token is valid.`,
+          email: manageUsers.getEmail({ userId }),
+          userId,
+          token,
+          authorizations: manageUsers.getAuthorizations({ userId })
+        })
+      } else {
+        resolve({
+          message: `[getAuthorizations] Your token is invalid.`,
+          authorizations: [types.auth.NOT_CONNECTED]
+        })
+      }
     }, delayInMs)
   })
 }

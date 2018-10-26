@@ -56,7 +56,7 @@ export default {
 <style lang="stylus">
 
 .product-edit-card {
-  width: 240px;
+  width: 260px;
   height: 320px;
 }
 </style>

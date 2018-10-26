@@ -28,6 +28,18 @@ export default {
     [types.links.MANAGE_SHOPS]: 'Budzonneries Management',
     [types.links.MANAGE_SITE]: 'Website Management'
   },
+  aisle: {
+    [types.aisle.DAIRY]: 'dairy products',
+    [types.aisle.MEAT]: 'meat',
+    [types.aisle.FRUITS]: 'fruits',
+    [types.aisle.VEGETABLES]: 'vegetables',
+    [types.aisle.GROCERY]: 'grocery'
+  },
+  conservation: {
+    [types.conservation.BASEMENT]: 'in the basement',
+    [types.conservation.FRIDGE]: 'in the fridge',
+    [types.conservation.FREEZER]: 'in the freezer'
+  },
   profile: {
     email: 'e-mail',
     password: 'password'

@@ -22,14 +22,13 @@
       <br>
       <q-field>
         <q-input
-          style="width: 50px"
           :float-label="$t('products.conservationTime')"
           type="number"
           :value="editedProduct.conservationDays"
           @input="updateEditedProduct({conservationDays: $event})"
           orientation="horizontal"
+          :suffix="$tc('products.day', editedProduct.conservationDays)"
         />
-        {{ $tc('products.day', editedProduct.conservationDays)}}
       </q-field>
     </q-card-main>
   </q-card>
@@ -45,36 +44,20 @@ export default {
   computed: {
     ...mapGetters(['editedProduct']),
     aisleOptions () {
-      return [
-        {
-          value: types.aisle.DAIRY,
-          label: 'Produits laitiers'
-        },
-        {
-          value: types.aisle.MEAT,
-          label: 'Viande'
-        },
-        {
-          value: types.aisle.FRUITS,
-          label: 'Fruits'
+      return Object.keys(types.aisle).map(aisle => {
+        return {
+          value: aisle,
+          label: this.$t(`aisle.${aisle}`)
         }
-      ]
+      })
     },
     conservationOptions () {
-      return [
-        {
-          value: types.conservation.BASEMENT,
-          label: 'à la cave'
-        },
-        {
-          value: types.conservation.FRIDGE,
-          label: 'au frigo'
-        },
-        {
-          value: types.conservation.FREEZER,
-          label: 'au congélateur'
+      return Object.keys(types.conservation).map(conservation => {
+        return {
+          value: conservation,
+          label: this.$t(`conservation.${conservation}`)
         }
-      ]
+      })
     }
   },
   methods: {

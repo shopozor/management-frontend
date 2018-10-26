@@ -27,6 +27,18 @@ export default {
     [types.links.MANAGE_SHOPS]: 'Gestion des Budzonneries',
     [types.links.MANAGE_SITE]: 'Gestion du Site'
   },
+  aisle: {
+    [types.aisle.DAIRY]: 'produits laitiers',
+    [types.aisle.MEAT]: 'viande',
+    [types.aisle.FRUITS]: 'fruits',
+    [types.aisle.VEGETABLES]: 'légumes',
+    [types.aisle.GROCERY]: 'épicerie'
+  },
+  conservation: {
+    [types.conservation.BASEMENT]: 'à la cave',
+    [types.conservation.FRIDGE]: 'au frigo',
+    [types.conservation.FREEZER]: 'au congélateur'
+  },
   profile: {
     email: 'e-mail',
     password: 'mot de passe'

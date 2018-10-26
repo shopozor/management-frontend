@@ -1,7 +1,7 @@
 <template>
   <q-page
       padding
-      class="row justify-around">
+      class="flex flex-center">
       <product-trash-card
         v-for="(product, productId) in productsInTrash"
         :key="productId"

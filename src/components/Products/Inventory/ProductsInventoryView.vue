@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row justify-around">
+  <q-page class="flex flex-center">
     <product-inventory-card
       v-for="(product, productId) in productsInInventory"
       :key="productId"

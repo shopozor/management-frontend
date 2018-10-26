@@ -1,5 +1,5 @@
 <template>
-  <q-page padding class="q-pa-md row justify-center">
+  <q-page padding class="q-pa-md flex flex-center">
     <div style="width: 500px; max-width: 90vw;">
       <q-list>
         <q-item>

@@ -4,7 +4,7 @@ import * as orderState from './orderState'
 import * as userState from './userState'
 import * as productState from './productState'
 import * as formatState from './formatState'
-import * as formatMode from './formatMode'
+import * as formatUI from './formatUI'
 import * as aisle from './aisle'
 import units from './units'
 import * as conservation from './conservation'
@@ -16,7 +16,7 @@ export default {
   userState,
   productState,
   formatState,
-  formatMode,
+  formatUI,
   aisle,
   units,
   conservation

@@ -58,7 +58,7 @@ export default {
       type: String,
       required: true
     },
-    defaultFormatMode: {
+    defaultFormatUI: {
       type: String
     },
     defaultCustomerPrice: {

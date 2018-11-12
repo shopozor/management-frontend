@@ -1,20 +1,15 @@
 <template>
-  <q-card class="formats-edit-card">
-    <q-card-title>
-      Formats du produit et stock
-    </q-card-title>
-    <q-card-main>
-      <q-collapsible icon="settings" label="Paramètres">
+  <q-list class="formats-edit-list">
+    <q-list-header>
+      <q-collapsible icon="settings" label="Formats du produit et stock">
         <div>interface par défaut</div>
         <div>prix et unité par défaut</div>
       </q-collapsible>
-      <q-list>
-        <q-item v-for="id in editedProduct.formatsIds" :key="id">
-          <product-edit-format :formatId="id" />
-        </q-item>
-      </q-list>
-    </q-card-main>
-  </q-card>
+    </q-list-header>
+    <q-item v-for="id in editedProduct.formatsIds" :key="id">
+      <product-edit-format :formatId="id" />
+    </q-item>
+  </q-list>
 </template>
 
 <script>
@@ -31,7 +26,7 @@ export default {
 </script>
 
 <style lang="stylus">
-.formats-edit-card{
+.formats-edit-list{
   width: 100%
 }
 </style>

@@ -10,7 +10,7 @@ export const updateEditedFormat = (state, { formatId, newProps }) => {
 }
 
 export const createEditedFormat = (state, { props }) => {
-  const defaultMode = state.editedProduct.defaultFormatMode
+  const defaultFormatUI = state.editedProduct.defaultFormatUI
   const defaultUnit = state.editedProduct.defaultUnit
   const formatId = Date.now()
   const newFormat = {
@@ -20,7 +20,7 @@ export const createEditedFormat = (state, { props }) => {
     sizeUnit: defaultUnit,
     customerPrice: 0,
     customerPriceUnit: defaultUnit,
-    mode: defaultMode,
+    formatUI: defaultFormatUI,
     state: types.formatState.VISIBLE,
     amount: 0,
     stockUnit: defaultUnit,

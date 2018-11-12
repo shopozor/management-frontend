@@ -39,6 +39,12 @@ export default {
     [types.conservation.FRIDGE]: 'au frigo',
     [types.conservation.FREEZER]: 'au congélateur'
   },
+  formatUI: {
+    [types.formatUI.FREE]: 'texte',
+    [types.formatUI.AUTO_UNIT]: 'taille + unité',
+    [types.formatUI.AUTO_PRICE]: 'automatique',
+    [types.formatUI.BULK]: 'vrac'
+  },
   profile: {
     email: 'e-mail',
     password: 'mot de passe'
@@ -87,6 +93,8 @@ export default {
     aisle: 'Rayon',
     conservationMethod: 'Méthode de conservation',
     conservationTime: 'Durée de conservation',
-    day: 'jour | jour | jours'
+    day: 'jour | jour | jours',
+    ordered: 'commandé | commandé | commandés',
+    available: 'disponible | disponible | disponibles'
   }
 }

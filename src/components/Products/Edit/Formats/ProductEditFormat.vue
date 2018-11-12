@@ -1,19 +1,20 @@
 <template>
-  <div>
-    <format-description :formatId="formatId" />
-    <format-amount :formatId="formatId" />
-    <span>stock / </span>
-    <span>commandes</span>
-    <br>
-    <span>toggle interface / </span>
-    <span>toggle visibility / </span>
-    <span>delete</span>
-  </div>
+  <q-card flat inline style="width: 100%">
+    <q-card-main>
+      <format-description :formatId="formatId" />
+      <span>format-customer-price</span>
+      <format-amount :formatId="formatId" />
+      <br>
+      <span>toggle visibility / </span>
+      <span>delete</span>
+    </q-card-main>
+  </q-card>
 </template>
 
 <script>
 import FormatDescription from './FormatDescription'
 import FormatAmount from './FormatAmount'
+import FormatUISelect from './FormatUISelect'
 
 export default {
   name: 'ProductEditFormat',
@@ -23,6 +24,6 @@ export default {
       required: true
     }
   },
-  components: {FormatDescription, FormatAmount}
+  components: {FormatDescription, FormatAmount, FormatUISelect}
 }
 </script>

@@ -41,7 +41,7 @@ export const initFakeServer = () => {
       aisle: types.aisle.DAIRY,
       conservationMethod: types.conservation.FRIDGE,
       conservationDays: 7,
-      defaultFormatMode: types.formatMode.AUTO_UNIT,
+      defaultFormatUI: types.formatUI.AUTO_UNIT,
       defaultUnit: types.units.volume.DL,
       defaultCustomerPrice: 1
     }
@@ -58,7 +58,7 @@ export const initFakeServer = () => {
       aisle: types.aisle.MEAT,
       conservationMethod: types.conservation.FRIDGE,
       conservationDays: 7,
-      defaultFormatMode: types.formatMode.AUTO_PRICE,
+      defaultFormatUI: types.formatUI.AUTO_PRICE,
       defaultUnit: types.units.mass.HG,
       defaultCustomerPrice: 3.50
     }
@@ -75,7 +75,7 @@ export const initFakeServer = () => {
       aisle: types.aisle.GROCERY,
       conservationMethod: types.conservation.BASEMENT,
       conservationDays: 365,
-      defaultFormatMode: types.formatMode.FREE,
+      defaultFormatUI: types.formatUI.FREE,
       defaultUnit: types.units.number.PIECE,
       defaultCustomerPrice: 20
     }
@@ -90,7 +90,7 @@ export const initFakeServer = () => {
         size: 5,
         sizeUnit: types.units.volume.DL,
         customerPrice: 5,
-        mode: types.formatMode.AUTO_UNIT,
+        formatUI: types.formatUI.AUTO_UNIT,
         state: types.formatState.VISIBLE,
         amount: 12
       },
@@ -98,7 +98,7 @@ export const initFakeServer = () => {
         size: 8,
         sizeUnit: types.units.volume.DL,
         customerPrice: 7,
-        mode: types.formatMode.AUTO_UNIT,
+        formatUI: types.formatUI.AUTO_UNIT,
         state: types.formatState.VISIBLE,
         amount: 9
       }
@@ -112,7 +112,7 @@ export const initFakeServer = () => {
         size: 300,
         sizeUnit: types.units.mass.GR,
         customerPrice: 10.50,
-        mode: types.formatMode.AUTO_PRICE,
+        formatUI: types.formatUI.AUTO_PRICE,
         state: types.formatState.VISIBLE,
         amount: 8
       },
@@ -120,21 +120,21 @@ export const initFakeServer = () => {
         size: 500,
         sizeUnit: types.units.mass.GR,
         customerPrice: 17.50,
-        mode: types.formatMode.AUTO_UNIT,
+        formatUI: types.formatUI.AUTO_UNIT,
         state: types.formatState.VISIBLE,
         amount: 4
       },
       tempId3: {
         description: 'petite barquette',
         customerPrice: 10.50,
-        mode: types.formatMode.FREE,
+        formatUI: types.formatUI.FREE,
         state: types.formatState.VISIBLE,
         amount: 8
       },
       tempId4: {
         customerPrice: 3.50,
         customerPriceUnit: types.units.mass.HG,
-        mode: types.formatMode.BULK,
+        formatUI: types.formatUI.BULK,
         state: types.formatState.VISIBLE,
         amount: 4,
         amountUnit: types.units.mass.KG

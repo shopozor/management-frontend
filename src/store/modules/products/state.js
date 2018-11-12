@@ -9,7 +9,7 @@ export default {
     aisle: '',
     conservationMethod: '',
     conservationDaysAfterSale: 0,
-    defaultFormatMode: '',
+    defaultFormatUI: '',
     defaultCustomerPrice: 0,
     defaultUnit: ''
   }

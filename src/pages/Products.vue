@@ -37,13 +37,14 @@ export default {
   },
   components: {ProductsInventoryView, ProductsTrashView, ProductsEditView},
   methods: {
-    ...mapActions(['getMyProducts']),
+    ...mapActions(['getMyProducts', 'getMyOrdersToDeliver']),
     jumpTo (view) {
       this.view = view
     }
   },
   created: function () {
     this.getMyProducts()
+    this.getMyOrdersToDeliver()
   }
 }
 </script>

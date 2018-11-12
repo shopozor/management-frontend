@@ -9,10 +9,11 @@ const objectsUpdatableProps = {
       'sizeUnit',
       'customerPrice',
       'customerPriceUnit',
-      'mode',
+      'formatUI',
       'state',
       'amount',
-      'stockUnit'
+      'stockUnit',
+      'densities'
     ],
   product:
     [
@@ -24,7 +25,7 @@ const objectsUpdatableProps = {
       'aisle',
       'state',
       'force',
-      'defaultFormatMode',
+      'defaultFormatUI',
       'defaultCustomerPrice',
       'defaultUnit'
     ]

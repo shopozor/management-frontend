@@ -24,6 +24,7 @@
           :setUnit="newUnit => startConversionUnit = newUnit"
           :value="startConversionValue"
           :setValue="newValue => startConversionValue = newValue"
+          :linked="true"
         />
         <span class="q-mx-lg self-center">correspond à</span>
         <unit-field
@@ -31,6 +32,7 @@
           :setUnit="newUnit => endConversionUnit = newUnit"
           :value="endConversionValue"
           :setValue="newValue => endConversionValue = newValue"
+          :linked="true"
         />
       </div>
       <div slot="buttons" slot-scope="props">
@@ -86,6 +88,22 @@ export default {
       default () {
         return 4
       }
+    },
+    densities: {
+      type: Object,
+      default () {
+        return {
+          kg2lt: 1,
+          kg2piece: 1,
+          lt2piece: 1
+        }
+      }
+    },
+    updateDensities: {
+      type: Function,
+      default () {
+        console.warn('updateDensities(newDensity) function not set. Density will not be saved.')
+      }
     }
   },
   computed: {
@@ -100,9 +118,13 @@ export default {
       } else {
         this.targetUnit = newUnit
         this.startConversionValue = 1
-        this.startConversionUnit = helpers.defaultUnit({unit: this.unit}).short
-        this.endConversionValue = 1
-        this.endConversionUnit = helpers.defaultUnit({unit: newUnit}).short
+        this.startConversionUnit = helpers.mainUnit({unit: this.unit}).short
+        this.endConversionValue = helpers.getPhysicalSizesConversionFactor({
+          startPhysicalSize: helpers.getPhysicalSize({ unit: this.unit }),
+          endPhysicalSize: helpers.getPhysicalSize({ unit: newUnit }),
+          densities: this.densities
+        })
+        this.endConversionUnit = helpers.mainUnit({unit: newUnit}).short
         this.askAboutConversion = true
       }
     },
@@ -113,6 +135,14 @@ export default {
       const startWeight = helpers.convert({ startValue: this.startConversionValue, startUnit: this.startConversionUnit, endUnit: this.unit })
       const endWeight = helpers.convert({ startValue: this.endConversionValue, startUnit: this.endConversionUnit, endUnit: this.targetUnit })
       const newValue = this.value * endWeight / startWeight
+      const newDensity = helpers.generateDensityProp({
+        startValue: this.startConversionValue,
+        startUnit: this.startConversionUnit,
+        endValue: this.endConversionValue,
+        endUnit: this.endConversionUnit
+      })
+      console.log(newDensity)
+      this.updateDensities({newDensity})
       this.setValue(newValue)
       this.setUnit(this.targetUnit)
     },

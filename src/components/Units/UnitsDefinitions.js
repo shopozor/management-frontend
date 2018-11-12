@@ -53,3 +53,9 @@ export const unitsDefinitions = {
     }
   }
 }
+
+export const physicalSizesRank = {
+  mass: 0,
+  volume: 1,
+  number: 2
+}

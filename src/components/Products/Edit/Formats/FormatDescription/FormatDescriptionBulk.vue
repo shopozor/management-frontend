@@ -1,22 +1,38 @@
 <template>
   <q-card inline class="format-description">
     <q-card-main>
-      <format-description-free
-        v-if="formatUI === formatUIs.FREE"
-        :formatId="formatId" />
-      <format-description-size-unit
-        v-else-if="formatUI === formatUIs.AUTO_UNIT"
-        :formatId="formatId" />
-      <format-description-auto
-        v-else-if="formatUI === formatUIs.AUTO_PRICE"
-        :formatId="formatId" />
-      <!-- <div v-else-if="formatUI === formatUIs.BULK">
+      <format-description-free v-if="formatUI === formatUIs.FREE" :formatId="formatId" />
+      <div v-else-if="formatUI === formatUIs.AUTO_UNIT">
+        description - auto-unit
+        <smart-unit-field
+          :value="editedFormats[formatId].size"
+          :setValue="updateSize"
+          :unit="editedFormats[formatId].sizeUnit"
+          :setUnit="updateSizeUnit"
+        />
+        <q-field>
+          <q-input :value="customerPrice" @input="updateCustomerPrice" />
+        </q-field>
+      </div>
+      <div v-else-if="formatUI === formatUIs.AUTO_PRICE">
+        description - auto-price
+        <smart-unit-field
+          :value="editedFormats[formatId].size"
+          :setValue="updateSize"
+          :unit="editedFormats[formatId].sizeUnit"
+          :setUnit="updateSizeUnit"
+        />
+        <q-field>
+          <q-input :value="customerPrice" @input="updateCustomerPrice" />
+        </q-field>
+      </div>
+      <div v-else-if="formatUI === formatUIs.BULK">
         description - vrac
         <q-field>
           <q-input :value="customerPrice" @input="updateCustomerPrice" />
           <q-input :value="customerPriceUnit" @input="updateCustomerPriceUnit" />
         </q-field>
-      </div> -->
+      </div>
     </q-card-main>
     <q-card-actions>
       <format-u-i-select :formatId="formatId" />
@@ -27,16 +43,15 @@
 <script>
 import {mapGetters, mapMutations} from 'vuex'
 import types from '../../../../types'
+import SmartUnitField from '../../../Units/SmartUnitField'
 import FormatDescriptionFree from './FormatDescription/FormatDescriptionFree'
-import FormatDescriptionSizeUnit from './FormatDescription/FormatDescriptionSizeUnit'
-import FormatDescriptionAuto from './FormatDescription/FormatDescriptionAuto'
 import FormatUISelect from './FormatUISelect'
 
 export default {
   name: 'FormatDescription',
   data () {
     return {
-      formatUIs: types.formatUI
+      formatUIs: {...types.formatUI}
     }
   },
   props: {
@@ -54,7 +69,7 @@ export default {
     customerPrice () { return this.editedFormats[this.formatId]['customerPrice'] },
     customerPriceUnit () { return this.editedFormats[this.formatId]['customerPriceUnit'] }
   },
-  components: {FormatDescriptionFree, FormatDescriptionSizeUnit, FormatDescriptionAuto, FormatUISelect},
+  components: {SmartUnitField, FormatDescriptionFree, FormatUISelect},
   methods: {
     ...mapMutations(['updateEditedFormat']),
     update (propName, value) {

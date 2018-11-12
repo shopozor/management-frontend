@@ -1,18 +1,18 @@
 <template>
-  <smart-unit-field
+  <unit-field
     :value="editedFormats[formatId].size"
     :setValue="updateSize"
     :unit="editedFormats[formatId].sizeUnit"
     :setUnit="updateSizeUnit"
-    :densities="densities"
-    :updateDensities="updateDensities"
+    :linked="true"
+    filter="compatible"
   />
 </template>
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import SmartUnitField from '../../../../Units/SmartUnitField'
-import {smartConvert} from '../../../../Units/UnitsHelpers'
+import UnitField from '../../../../Units/UnitField'
+import {convert} from '../../../../Units/UnitsHelpers'
 
 export default {
   name: 'FormatDescriptionAuto',
@@ -27,11 +27,10 @@ export default {
     size () { return this.editedFormats[this.formatId].size },
     sizeUnit () { return this.editedFormats[this.formatId].sizeUnit },
     customerPrice () { return this.editedFormats[this.formatId].customerPrice },
-    densities () { return this.editedFormats[this.formatId].densities },
     defaultCustomerPrice () { return this.editedProduct.defaultCustomerPrice },
     defaultUnit () { return this.editedProduct.defaultUnit }
   },
-  components: {SmartUnitField},
+  components: {UnitField},
   methods: {
     ...mapMutations(['updateEditedFormat']),
     update (propName, value) {
@@ -39,17 +38,12 @@ export default {
     },
     updateSize (value) {
       this.update('size', value)
-      const newPrice = smartConvert({
+      const newPrice = convert({
         startValue: this.defaultCustomerPrice,
         startUnit: this.defaultUnit,
-        endUnit: this.sizeUnit,
-        densities: this.densities
+        endUnit: this.sizeUnit
       })
       this.update('customerPrice', newPrice)
-    },
-    updateDensities (newDensity) {
-      const densities = {...this.densities, ...newDensity}
-      this.updateEditedFormat({ formatId: this.formatId, newProps: {densities} })
     },
     updateSizeUnit (newUnit) { this.update('sizeUnit', newUnit) }
   }

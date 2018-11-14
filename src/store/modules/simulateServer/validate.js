@@ -22,7 +22,7 @@ const objectsUpdatableProps = {
       'image',
       'conservationDays',
       'conservationMethod',
-      'aisle',
+      'categories',
       'state',
       'force',
       'defaultFormatUI',

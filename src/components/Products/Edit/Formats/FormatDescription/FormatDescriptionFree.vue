@@ -1,6 +1,9 @@
 <template>
   <q-field>
-    <q-input float-label="description" :value="description" @input="updateDescription" />
+    <q-input
+      :float-label="$t('products.formatDescription')"
+      :value="description"
+      @input="updateDescription" />
   </q-field>
 </template>
 

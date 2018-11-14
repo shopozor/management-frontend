@@ -2,8 +2,10 @@
   <unit-field
     :value="editedFormats[formatId].size"
     :setValue="updateSize"
+    valueWidth="50%"
     :unit="editedFormats[formatId].sizeUnit"
     :setUnit="updateSizeUnit"
+    unitWidth="50%"
     :linked="true"
     filter="compatible"
   />

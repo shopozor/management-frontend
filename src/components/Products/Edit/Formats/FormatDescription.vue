@@ -1,5 +1,5 @@
 <template>
-  <q-card inline class="format-description">
+  <q-card inline class="format-description q-ma-sm">
     <q-card-main>
       <format-description-free
         v-if="formatUI === formatUIs.FREE"
@@ -10,17 +10,11 @@
       <format-description-auto
         v-else-if="formatUI === formatUIs.AUTO_PRICE"
         :formatId="formatId" />
-      <!-- <div v-else-if="formatUI === formatUIs.BULK">
-        description - vrac
-        <q-field>
-          <q-input :value="customerPrice" @input="updateCustomerPrice" />
-          <q-input :value="customerPriceUnit" @input="updateCustomerPriceUnit" />
-        </q-field>
-      </div> -->
+      <format-description-bulk
+        v-else-if="formatUI === formatUIs.BULK"
+        :formatId="formatId" />
+      <format-u-i-select :formatId="formatId" style="width: 100%" />
     </q-card-main>
-    <q-card-actions>
-      <format-u-i-select :formatId="formatId" />
-    </q-card-actions>
   </q-card>
 </template>
 
@@ -30,6 +24,7 @@ import types from '../../../../types'
 import FormatDescriptionFree from './FormatDescription/FormatDescriptionFree'
 import FormatDescriptionSizeUnit from './FormatDescription/FormatDescriptionSizeUnit'
 import FormatDescriptionAuto from './FormatDescription/FormatDescriptionAuto'
+import FormatDescriptionBulk from './FormatDescription/FormatDescriptionBulk'
 import FormatUISelect from './FormatUISelect'
 
 export default {
@@ -54,7 +49,6 @@ export default {
     customerPrice () { return this.editedFormats[this.formatId]['customerPrice'] },
     customerPriceUnit () { return this.editedFormats[this.formatId]['customerPriceUnit'] }
   },
-  components: {FormatDescriptionFree, FormatDescriptionSizeUnit, FormatDescriptionAuto, FormatUISelect},
   methods: {
     ...mapMutations(['updateEditedFormat']),
     update (propName, value) {
@@ -65,12 +59,19 @@ export default {
     updateSizeUnit (newUnit) { this.update('sizeUnit', newUnit) },
     updateCustomerPrice (value) { this.update('customerPrice', value) },
     updateCustomerPriceUnit (value) { this.update('customerPriceUnit', value) }
+  },
+  components: {
+    FormatDescriptionFree,
+    FormatDescriptionSizeUnit,
+    FormatDescriptionAuto,
+    FormatDescriptionBulk,
+    FormatUISelect
   }
 }
 </script>
 
 <style lang="stylus">
 .format-description {
-  width: 300px;
+  width: 260px;
 }
 </style>

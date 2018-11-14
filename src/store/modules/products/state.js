@@ -6,7 +6,7 @@ export default {
     title: '',
     description: '',
     image: '',
-    aisle: '',
+    categories: [],
     conservationMethod: '',
     conservationDaysAfterSale: 0,
     defaultFormatUI: '',

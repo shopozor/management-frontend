@@ -1,17 +1,6 @@
 <template>
   <q-card>
-    <q-card-actions class="row justify-between">
-      <product-visibility-manager :productId="editedProduct.productId" showLabel />
-    </q-card-actions>
     <q-card-main>
-      <q-select
-        :stack-label="$t('products.aisle')"
-        separator
-        :options="aisleOptions"
-        :value="editedProduct.aisle"
-        @input="updateEditedProduct({aisle: $event})"
-      />
-      <br>
       <q-select
         :stack-label="$t('products.conservationMethod')"
         separator
@@ -30,24 +19,34 @@
           :suffix="$tc('products.day', editedProduct.conservationDays)"
         />
       </q-field>
+      <br>
+      <q-select
+        :stack-label="$t('products.categories')"
+        multiple
+        chips
+        separator
+        :options="categoriesOptions"
+        :value="editedProduct.categories"
+        @input="updateEditedProduct({categories: $event})"
+      />
     </q-card-main>
   </q-card>
 </template>
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import ProductVisibilityManager from '../ProductVisibilityManager'
+// import ProductVisibilityManager from '../ProductVisibilityManager'
 import types from '../../../types'
 
 export default {
   name: 'ProductEditType',
   computed: {
     ...mapGetters(['editedProduct']),
-    aisleOptions () {
-      return Object.keys(types.aisle).map(aisle => {
+    categoriesOptions () {
+      return Object.keys(types.categories).map(categories => {
         return {
-          value: aisle,
-          label: this.$t(`aisle.${aisle}`)
+          value: categories,
+          label: this.$t(`categories.${categories}`)
         }
       })
     },
@@ -62,7 +61,6 @@ export default {
   },
   methods: {
     ...mapMutations(['updateEditedProduct'])
-  },
-  components: {ProductVisibilityManager}
+  }
 }
 </script>

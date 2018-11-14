@@ -1,7 +1,7 @@
 import types from '../../../types'
 
 export const storeFormats = (state, { formats }) => {
-  state.formats = {...state.formats, ...formats}
+  state.formats = { ...state.formats, ...formats }
 }
 
 export const updateEditedFormat = (state, { formatId, newProps }) => {
@@ -14,6 +14,7 @@ export const createEditedFormat = (state, { props }) => {
   const defaultUnit = state.editedProduct.defaultUnit
   const formatId = Date.now()
   const newFormat = {
+    isNew: true,
     formatId,
     description: '',
     size: 0,

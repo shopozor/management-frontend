@@ -4,7 +4,7 @@
     @input="updateFormatUI"
     :options="options" /> -->
   <q-select
-    float-label="Type de description"
+    float-label="Type de conditionnement"
     :value="UI"
     @input="updateFormatUI"
     :options="options" />

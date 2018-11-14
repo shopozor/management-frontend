@@ -1,10 +1,13 @@
 <template>
-  <div :style="`width: ${width}em`">
+  <q-field
+    :style="`width: ${width}`"
+    :label="label">
     <q-select
-        :value="unit"
-        @input="setUnit"
-        :options="options" />
-  </div>
+      :float-label="$t('products.unit')"
+      :value="unit"
+      @input="setUnit"
+      :options="options" />
+  </q-field>
 </template>
 
 <script>
@@ -28,9 +31,15 @@ export default {
       }
     },
     width: {
-      type: Number,
+      type: String,
       default () {
-        return 4
+        return '100%'
+      }
+    },
+    label: {
+      type: String,
+      default () {
+        return ''
       }
     }
   },

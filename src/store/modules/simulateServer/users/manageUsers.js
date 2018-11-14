@@ -32,7 +32,7 @@ export const createUser = ({ email, password }) => {
     ordersToReceiveIds: [],
     ordersToDeliverIds: [],
     productsIds: [],
-    authorizations: [types.auth.CONSUMER],
+    authorizations: [types.auth.CUSTOMER],
     state: types.userState.ACTIVE
   }
   setUser({ userId, user })

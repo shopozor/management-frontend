@@ -59,7 +59,7 @@ export default {
     conservationMethod: {
       type: String
     },
-    aisle: {
+    categories: {
       type: String,
       required: true
     },

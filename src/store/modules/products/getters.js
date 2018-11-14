@@ -34,7 +34,7 @@ export const editedProductImage = state => {
 }
 export const editedProductTitle = state => state.editedProduct.title
 export const editedProductDescription = state => state.editedProduct.description
-export const editedProductAisle = state => state.editedProduct.aisle
+export const editedProductcategories = state => state.editedProduct.categories
 export const editedProductConservationMethod = state => state.editedProduct.conservationMathod
 export const editedProductConservationDays = state => state.editedProduct.conservationDays
 export const editedProductDefaultFormatUI = state => state.editedProduct.defaultFormatUI

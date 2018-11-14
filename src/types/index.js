@@ -5,7 +5,7 @@ import * as userState from './userState'
 import * as productState from './productState'
 import * as formatState from './formatState'
 import * as formatUI from './formatUI'
-import * as aisle from './aisle'
+import * as categories from './categories'
 import units from './units'
 import * as conservation from './conservation'
 
@@ -17,7 +17,7 @@ export default {
   productState,
   formatState,
   formatUI,
-  aisle,
+  categories,
   units,
   conservation
 }

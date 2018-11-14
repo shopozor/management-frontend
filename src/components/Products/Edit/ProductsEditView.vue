@@ -3,10 +3,13 @@
     <product-edit-picture class="product-edit-card q-ma-sm" />
     <product-edit-name class="product-edit-card q-ma-sm" />
     <product-edit-type class="product-edit-card q-ma-sm" />
-    <product-edit-formats class="q-ma-sm q-mb-xl" />
+    <product-edit-formats class="q-ma-sm q-my-md" />
     <q-page-sticky position="bottom-right">
       <q-btn class="q-ma-md" size="md" icon="cancel" :label="$t('actions.cancel')" color="negative" @click="cancel" />
       <q-btn class="q-ma-md" size="md" icon="save" :label="$t('actions.save')" color="positive" @click="save" />
+    </q-page-sticky>
+    <q-page-sticky position="bottom-left">
+      <product-toggle-non-trivial-changes class="q-ma-md" />
     </q-page-sticky>
   </div>
 </template>
@@ -17,6 +20,7 @@ import ProductEditPicture from './ProductEditPicture'
 import ProductEditName from './ProductEditName'
 import ProductEditType from './ProductEditType'
 import ProductEditFormats from './ProductEditFormats'
+import ProductToggleNonTrivialChanges from './ProductToggleNonTrivialChanges'
 
 export default {
   name: 'ProductsEditView',
@@ -30,7 +34,8 @@ export default {
     ProductEditPicture,
     ProductEditName,
     ProductEditType,
-    ProductEditFormats
+    ProductEditFormats,
+    ProductToggleNonTrivialChanges
   },
   computed: {
     ...mapGetters(['editedProduct', 'editedFormats'])

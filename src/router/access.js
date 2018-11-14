@@ -19,7 +19,7 @@ const access = {
     // last
     [links.LOGOUT]: false
   },
-  [auth.CONSUMER]: {
+  [auth.CUSTOMER]: {
     // user
     [links.LOGIN]: false,
     [links.SIGNUP]: false,

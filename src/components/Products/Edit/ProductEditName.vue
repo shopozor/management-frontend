@@ -11,7 +11,7 @@
       <br >
       <q-field>
         <q-input
-        :float-label="$t('products.description')"
+        :float-label="$t('products.productDescription')"
         type="textarea"
         :max-height="190"
         rows="8"

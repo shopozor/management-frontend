@@ -1,8 +1,5 @@
 <template>
-  <q-card inline class="format-amount">
-    <q-card-title>
-      Stock
-    </q-card-title>
+  <q-card inline class="format-amount q-ma-sm">
     <q-card-main>
       <div class="row justify-center">
         <q-btn
@@ -24,13 +21,13 @@
           round
           color="primary" />
       </div>
-      <div class="row justify-center">
-        <div>{{$tc('products.ordered', pendingOrdersAmount)}} : </div>
-        <div class="q-ml-md">{{pendingOrdersAmount}}</div>
-      </div>
-      <div class="row justify-center">
-        <div>{{$tc('products.available', amount - pendingOrdersAmount)}} : </div>
-        <div class="q-ml-md">{{amount - pendingOrdersAmount}}</div>
+      <div class="row justify-between q-mt-md">
+        <div>
+          <div>{{$tc('products.ordered', pendingOrdersAmount)}}: {{pendingOrdersAmount}}</div>
+          <br>
+          <div>{{$tc('products.available', amount - pendingOrdersAmount)}}: {{amount - pendingOrdersAmount}}</div>
+        </div>
+        <format-state-manager class="q-mt-sm" :formatId="formatId" />
       </div>
     </q-card-main>
   </q-card>
@@ -38,6 +35,7 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
+import FormatStateManager from './FormatStateManager'
 
 export default {
   name: 'FormatAmount',
@@ -89,6 +87,9 @@ export default {
       }
     }
   },
+  components: {
+    FormatStateManager
+  },
   created () {
     console.log(
       Object.values(
@@ -101,6 +102,6 @@ export default {
 
 <style lang="stylus">
 .format-amount {
-  width: 220px;
+  width: 260px;
 }
 </style>

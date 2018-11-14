@@ -27,12 +27,12 @@ export default {
     [types.links.MANAGE_SHOPS]: 'Gestion des Budzonneries',
     [types.links.MANAGE_SITE]: 'Gestion du Site'
   },
-  aisle: {
-    [types.aisle.DAIRY]: 'produits laitiers',
-    [types.aisle.MEAT]: 'viande',
-    [types.aisle.FRUITS]: 'fruits',
-    [types.aisle.VEGETABLES]: 'légumes',
-    [types.aisle.GROCERY]: 'épicerie'
+  categories: {
+    [types.categories.DAIRY]: 'produits laitiers',
+    [types.categories.MEAT]: 'viande',
+    [types.categories.FRUITS]: 'fruits',
+    [types.categories.VEGETABLES]: 'légumes',
+    [types.categories.GROCERY]: 'épicerie'
   },
   conservation: {
     [types.conservation.BASEMENT]: 'à la cave',
@@ -40,10 +40,10 @@ export default {
     [types.conservation.FREEZER]: 'au congélateur'
   },
   formatUI: {
-    [types.formatUI.FREE]: 'texte',
-    [types.formatUI.AUTO_UNIT]: 'taille + unité',
-    [types.formatUI.AUTO_PRICE]: 'automatique',
-    [types.formatUI.BULK]: 'vrac'
+    [types.formatUI.FREE]: 'description libre (texte)',
+    [types.formatUI.AUTO_UNIT]: 'taille et unité (300 gr)',
+    [types.formatUI.AUTO_PRICE]: 'calcul du prix automatique',
+    [types.formatUI.BULK]: 'vente en vrac'
   },
   profile: {
     email: 'e-mail',
@@ -89,11 +89,18 @@ export default {
     keep: 'Conserver',
     ordersSummary: 'Aucune commande en cours | Une commande: {price} francs | {amount} commandes: {price} francs',
     name: 'Nom du produit',
-    description: 'Description du produit',
-    aisle: 'Rayon',
+    productDescription: 'Description du produit',
+    categories: 'Catégories',
     conservationMethod: 'Méthode de conservation',
     conservationTime: 'Durée de conservation',
     day: 'jour | jour | jours',
+    formatDescription: 'description',
+    size: 'taille',
+    unit: 'unité',
+    bulk: 'Vente en vrac. Prix au ',
+    formatType: 'type de conditionnement',
+    customerPays: 'le client paie',
+    iGet: 'je reçois',
     ordered: 'commandé | commandé | commandés',
     available: 'disponible | disponible | disponibles'
   }

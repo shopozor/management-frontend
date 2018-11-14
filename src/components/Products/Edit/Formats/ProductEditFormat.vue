@@ -1,29 +1,41 @@
 <template>
-  <q-card flat inline style="width: 100%">
-    <q-card-main>
+  <transition-group leave-active-class="animated bounceOutLeft">
+    <div class="row justify-center" key="cards" v-if="show">
       <format-description :formatId="formatId" />
-      <span>format-customer-price</span>
+      <format-price :formatId="formatId" />
       <format-amount :formatId="formatId" />
-      <br>
-      <span>toggle visibility / </span>
-      <span>delete</span>
-    </q-card-main>
-  </q-card>
+    </div>
+    <div class="q-my-md" key="margin" v-if="show" />
+  </transition-group>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import FormatDescription from './FormatDescription'
+import FormatPrice from './FormatPrice'
 import FormatAmount from './FormatAmount'
-import FormatUISelect from './FormatUISelect'
+import types from '../../../../types'
 
 export default {
   name: 'ProductEditFormat',
+  data () {
+    return {
+      state: types.formatState
+    }
+  },
   props: {
     formatId: {
       type: String,
       required: true
     }
   },
-  components: {FormatDescription, FormatAmount, FormatUISelect}
+  computed: {
+    ...mapGetters(['editedFormats']),
+    show () {
+      const state = this.editedFormats[this.formatId].state
+      return state === this.state.VISIBLE || state === this.state.INVISIBLE
+    }
+  },
+  components: {FormatDescription, FormatAmount, FormatPrice}
 }
 </script>

@@ -1,15 +1,15 @@
 <template>
-  <q-list class="formats-edit-list">
-    <q-list-header>
-      <q-collapsible icon="settings" label="Formats du produit et stock">
-        <div>interface par défaut</div>
-        <div>prix et unité par défaut</div>
-      </q-collapsible>
-    </q-list-header>
-    <q-item v-for="id in editedProduct.formatsIds" :key="id">
-      <product-edit-format :formatId="id" />
-    </q-item>
-  </q-list>
+  <div>
+    <q-collapsible icon="settings" label="Conditionnements du produit et stock">
+      <div>interface par défaut</div>
+      <div>prix et unité par défaut</div>
+    </q-collapsible>
+    <product-edit-format
+      v-for="id in editedProduct.formatsIds"
+      :key="id"
+      :formatId="id"
+    />
+  </div>
 </template>
 
 <script>

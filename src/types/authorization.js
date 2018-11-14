@@ -1,5 +1,5 @@
 export const NOT_CONNECTED = 'NOT_CONNECTED'
-export const CONSUMER = 'CONSUMER'
+export const CUSTOMER = 'CUSTOMER'
 export const PRODUCER = 'PRODUCER'
 export const SHOP_MANAGER = 'SHOP_MANAGER'
 export const TOP_MANAGER = 'TOP_MANAGER'

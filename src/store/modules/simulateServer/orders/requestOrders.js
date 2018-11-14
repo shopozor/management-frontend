@@ -9,7 +9,7 @@ export const orderFormats = ({ userId, token, orders }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       rejectIf.tokenIsInvalid('orderFormats', reject, { userId, token })
-      rejectIf.userHasNotAuthorizations('orderFormats', reject, { userId, authorizations: [types.auth.CONSUMER] })
+      rejectIf.userHasNotAuthorizations('orderFormats', reject, { userId, authorizations: [types.auth.CUSTOMER] })
       rejectIf.somePendingOrdersAmountExceedsFormatAmount('orderFormats', reject, { orders })
 
       manageOrders.orderFormats({ customerId: userId, orders })

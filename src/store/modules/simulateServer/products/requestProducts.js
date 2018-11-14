@@ -40,7 +40,7 @@ export const getProducts = ({ userId, token }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       rejectIf.tokenIsInvalid('getProducts', reject, { userId, token })
-      rejectIf.userHasNotAuthorizations('getProducts', reject, { userId, authorizations: [types.auth.CONSUMER] })
+      rejectIf.userHasNotAuthorizations('getProducts', reject, { userId, authorizations: [types.auth.CUSTOMER] })
 
       resolve({
         message: `[getProducts] The products successfully received.`,

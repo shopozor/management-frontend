@@ -1,11 +1,14 @@
 <template>
   <div class="row no-wrap justify-center">
-    <q-input
-      class="self-baseline"
-      :value="value"
-      @input="setValue"
-      :style="`width: ${valueWidth}em`"
-      type="number" />
+    <q-field
+      :style="`width: ${valueWidth}`">
+      <q-input
+        class="self-baseline"
+        :value="value"
+        @input="setValue"
+        type="number"
+        :float-label="$t('products.size')" />
+    </q-field>
     <unit-select
       class="self-baseline"
       :unit="unit"
@@ -31,9 +34,9 @@ export default {
       required: true
     },
     valueWidth: {
-      type: Number,
+      type: String,
       default () {
-        return 3
+        return '100%'
       }
     },
     linked: {
@@ -51,9 +54,9 @@ export default {
       required: true
     },
     unitWidth: {
-      type: Number,
+      type: String,
       default () {
-        return 3
+        return '100%'
       }
     },
     filter: {

@@ -28,12 +28,12 @@ export default {
     [types.links.MANAGE_SHOPS]: 'Budzonneries Management',
     [types.links.MANAGE_SITE]: 'Website Management'
   },
-  aisle: {
-    [types.aisle.DAIRY]: 'dairy products',
-    [types.aisle.MEAT]: 'meat',
-    [types.aisle.FRUITS]: 'fruits',
-    [types.aisle.VEGETABLES]: 'vegetables',
-    [types.aisle.GROCERY]: 'grocery'
+  categories: {
+    [types.categories.DAIRY]: 'dairy products',
+    [types.categories.MEAT]: 'meat',
+    [types.categories.FRUITS]: 'fruits',
+    [types.categories.VEGETABLES]: 'vegetables',
+    [types.categories.GROCERY]: 'grocery'
   },
   conservation: {
     [types.conservation.BASEMENT]: 'in the basement',
@@ -85,7 +85,7 @@ export default {
     ordersSummary: 'No pending orders | One pending order: {price} francs | {amount} pending orders: {price} francs',
     name: 'Product name',
     description: 'product description',
-    aisle: 'Aisle',
+    categories: 'categories',
     conservationMethod: 'Conservation method',
     conservationTime: 'Conservation duration',
     day: 'day | days'

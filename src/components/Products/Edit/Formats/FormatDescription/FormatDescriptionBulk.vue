@@ -13,7 +13,7 @@ import {mapGetters, mapMutations} from 'vuex'
 import UnitSelect from '../../../../Units/UnitSelect'
 
 export default {
-  name: 'FormatDescriptionSizeUnit',
+  name: 'FormatDescriptionBulk',
   props: {
     formatId: {
       type: String,

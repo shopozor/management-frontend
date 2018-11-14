@@ -11,7 +11,7 @@
 import {mapGetters, mapMutations} from 'vuex'
 
 export default {
-  name: 'ProductEditType',
+  name: 'ProductToggleNonTrivialChanges',
   computed: {
     ...mapGetters(['editedProduct']),
     allowNonTrivialChanges () { return this.editedProduct.allowNonTrivialChanges }

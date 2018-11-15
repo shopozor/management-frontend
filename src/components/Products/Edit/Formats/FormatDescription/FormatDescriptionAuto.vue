@@ -28,7 +28,6 @@ export default {
     ...mapGetters(['editedFormats', 'editedProduct']),
     size () { return this.editedFormats[this.formatId].size },
     sizeUnit () { return this.editedFormats[this.formatId].sizeUnit },
-    customerPrice () { return this.editedFormats[this.formatId].customerPrice },
     defaultCustomerPrice () { return this.editedProduct.defaultCustomerPrice },
     defaultUnit () { return this.editedProduct.defaultUnit }
   },
@@ -38,16 +37,23 @@ export default {
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },
+    updateSizeUnit (newUnit) { this.update('sizeUnit', newUnit) },
     updateSize (value) {
       this.update('size', value)
-      const newPrice = convert({
-        startValue: this.defaultCustomerPrice,
+      this.updateCustomerPrice()
+    },
+    updateCustomerPrice () {
+      const newPricePerUnit = 1 / convert({
+        startValue: 1 / this.defaultCustomerPrice,
         startUnit: this.defaultUnit,
         endUnit: this.sizeUnit
       })
-      this.update('customerPrice', newPrice)
-    },
-    updateSizeUnit (newUnit) { this.update('sizeUnit', newUnit) }
+      this.update('customerPrice', newPricePerUnit * this.size)
+    }
+  },
+  mounted () {
+    if (!this.defaultCustomerPrice || !this.defaultUnit) console.log('à définir')
+    else this.updateCustomerPrice()
   }
 }
 </script>

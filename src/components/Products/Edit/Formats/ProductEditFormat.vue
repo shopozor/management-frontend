@@ -11,8 +11,8 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import FormatDescription from './FormatDescription'
-import FormatPrice from './FormatPrice'
+import FormatDescription from './FormatDescription/FormatDescription'
+import FormatPrice from './FormatPrice/FormatPrice'
 import FormatAmount from './FormatAmount'
 import types from '../../../../types'
 

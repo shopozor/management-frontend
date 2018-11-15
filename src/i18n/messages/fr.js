@@ -97,7 +97,7 @@ export default {
     formatDescription: 'description',
     size: 'taille',
     unit: 'unité',
-    bulk: 'Vente en vrac. Prix au ',
+    bulk: 'Vrac. Prix par ',
     formatType: 'type de conditionnement',
     customerPays: 'le client paie',
     iGet: 'je reçois',

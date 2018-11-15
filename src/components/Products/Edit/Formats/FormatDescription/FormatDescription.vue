@@ -20,11 +20,11 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import types from '../../../../types'
-import FormatDescriptionFree from './FormatDescription/FormatDescriptionFree'
-import FormatDescriptionSizeUnit from './FormatDescription/FormatDescriptionSizeUnit'
-import FormatDescriptionAuto from './FormatDescription/FormatDescriptionAuto'
-import FormatDescriptionBulk from './FormatDescription/FormatDescriptionBulk'
+import types from '../../../../../types'
+import FormatDescriptionFree from './FormatDescriptionFree'
+import FormatDescriptionSizeUnit from './FormatDescriptionSizeUnit'
+import FormatDescriptionAuto from './FormatDescriptionAuto'
+import FormatDescriptionBulk from './FormatDescriptionBulk'
 import FormatUISelect from './FormatUISelect'
 
 export default {

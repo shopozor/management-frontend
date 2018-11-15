@@ -60,7 +60,7 @@ export default {
       type: String
     },
     categories: {
-      type: String,
+      type: Array,
       required: true
     },
     state: {

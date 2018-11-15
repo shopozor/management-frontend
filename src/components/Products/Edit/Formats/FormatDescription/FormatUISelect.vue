@@ -12,7 +12,7 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import * as formatUI from '../../../../types/formatUI'
+import * as formatUI from '../../../../../types/formatUI'
 
 export default {
   name: 'FormatUISelect',
@@ -37,7 +37,6 @@ export default {
   methods: {
     ...mapMutations(['updateEditedFormat']),
     updateFormatUI (value) {
-      console.log(value)
       this.updateEditedFormat({formatId: this.formatId, newProps: {formatUI: value}})
     }
   }

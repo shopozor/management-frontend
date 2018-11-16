@@ -1,26 +1,17 @@
 <template>
-  <q-card-main>
-      <q-field>
-        <q-input
-          :float-label="$t('products.customerPays')"
-          :value="customerPrice"
-          suffix="CHF"
-          readonly
-        />
-      </q-field>
-      <q-field>
-        <q-input
-          :float-label="$t('products.iGet')"
-          :value="producerPrice"
-          suffix="CHF"
-          readonly
-        />
-      </q-field>
-  </q-card-main>
+  <price-input
+    :customerPrice="customerPrice"
+    :setCustomerPrice="() => {}"
+    :producerRatio="0.85"
+    :customer="customer"
+    :producer="producer"
+    :shop="shop"
+    :readonly="true" />
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import PriceInput from './PriceInput'
 
 export default {
   name: 'FormatPriceAuto',
@@ -28,14 +19,30 @@ export default {
     formatId: {
       type: String,
       required: true
+    },
+    customer: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    },
+    producer: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    },
+    shop: {
+      type: Boolean,
+      default () {
+        return false
+      }
     }
   },
   computed: {
     ...mapGetters(['editedFormats']),
-    customerPrice () { return (this.editedFormats[this.formatId].customerPrice / 100).toFixed(2) },
-    producerPrice () { return (this.customerPrice * 0.85).toFixed(2) },
-    shopPrice () { return (this.customerPrice * 0.15).toFixed(2) },
-    formatUI () { return this.editedFormats[this.formatId].formatUI }
-  }
+    customerPrice () { return this.editedFormats[this.formatId].customerPrice }
+  },
+  components: {PriceInput}
 }
 </script>

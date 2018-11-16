@@ -1,7 +1,15 @@
 <template>
   <q-card inline class="format-price q-ma-sm">
-    <format-price-auto v-if="autoPrice" :formatId="formatId" />
-    <format-price-free v-else :formatId="formatId" />
+    <format-price-auto
+      v-if="autoPrice"
+      :formatId="formatId"
+      customer
+      producer />
+    <format-price-free
+      v-else
+      :formatId="formatId"
+      customer
+      producer />
   </q-card>
 </template>
 

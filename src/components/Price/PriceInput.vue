@@ -2,6 +2,7 @@
   <q-card-main>
     <q-field v-if="customer">
       <q-input
+        :style="`width: ${width}`"
         :float-label="$t('products.customerPays')"
         :value="readonly ? computedCustomerPrice : tempCustomerPrice"
         @blur="updateCustomerPrice"
@@ -12,6 +13,7 @@
     </q-field>
     <q-field v-if="producer">
       <q-input
+        :style="`width: ${width}`"
         :float-label="$t('products.iGet')"
         :value="readonly ? computedProducerPrice : tempProducerPrice"
         @blur="updateCustomerPrice"
@@ -22,6 +24,7 @@
     </q-field>
     <q-field v-if="shop">
       <q-input
+        :style="`width: ${width}`"
         :float-label="$t('products.shopGets')"
         :value="readonly ? computedShopPrice : tempShopPrice"
         @blur="updateCustomerPrice"
@@ -78,6 +81,12 @@ export default {
       type: Boolean,
       default () {
         return false
+      }
+    },
+    width: {
+      type: String,
+      default () {
+        return '100%'
       }
     }
   },

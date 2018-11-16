@@ -41,10 +41,22 @@ export default {
       default () {
         return ''
       }
+    },
+    withPriceReferenceQuantities: {
+      type: Boolean,
+      default () {
+        return false
+      }
     }
   },
   computed: {
-    options () { return helpers.options({filter: this.filter, unit: this.unit}) }
+    options () {
+      return helpers.options({
+        filter: this.filter,
+        unit: this.unit,
+        withPriceReferenceQuantities: this.withPriceReferenceQuantities
+      })
+    }
   }
 }
 </script>

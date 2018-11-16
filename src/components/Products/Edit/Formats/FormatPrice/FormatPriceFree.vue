@@ -10,7 +10,7 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import PriceInput from './PriceInput'
+import PriceInput from '../../../../Price/PriceInput'
 
 export default {
   name: 'FormatPriceFree',

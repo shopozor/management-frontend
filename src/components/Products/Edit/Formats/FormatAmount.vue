@@ -89,13 +89,6 @@ export default {
   },
   components: {
     FormatStateManager
-  },
-  created () {
-    console.log(
-      Object.values(
-        this.ordersPropsOfFilterPropValue({arrayOfPropsKeys: ['amount'], filterKey: 'formatId', filterValue: this.formatId})
-      )[0].amount
-    )
   }
 }
 </script>

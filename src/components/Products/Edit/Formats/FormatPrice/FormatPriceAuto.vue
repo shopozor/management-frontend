@@ -11,7 +11,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import PriceInput from './PriceInput'
+import PriceInput from '../../../../Price/PriceInput'
 
 export default {
   name: 'FormatPriceAuto',

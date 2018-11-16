@@ -99,6 +99,7 @@ export default {
     unit: 'unité',
     bulk: 'Vrac. Prix par ',
     formatType: 'type de conditionnement',
+    defineDefaultPricePerUnit: 'Veuillez indiquer le prix à l\'unité de ce produit',
     customerPays: 'le client paie',
     iGet: 'je reçois',
     ordered: 'commandé | commandé | commandés',

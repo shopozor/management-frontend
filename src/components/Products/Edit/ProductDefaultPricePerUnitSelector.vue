@@ -25,20 +25,25 @@
 import {mapGetters, mapMutations} from 'vuex'
 import PriceInput from '../../Price/PriceInput'
 import UnitSelect from '../../Units/UnitSelect'
-// import { defaultUnit } from '../../Units/UnitsHelpers';
+import types from '../../../types'
 
 export default {
   name: 'DefaultPricePerUnitSelector',
   computed: {
     ...mapGetters(['editedProduct']),
-    defaultCustomerPrice () { return this.editedProduct.defaultCustomerPrice },
-    defaultUnit () { return this.editedProduct.defaultUnit }
+    defaultCustomerPrice () {
+      if (!this.editedProduct.defaultCustomerPrice) this.setDefaultCustomerPrice(0)
+      return this.editedProduct.defaultCustomerPrice
+    },
+    defaultUnit () {
+      if (!this.editedProduct.defaultUnit) this.setDefaultUnit(types.units.mass.KG)
+      return this.editedProduct.defaultUnit
+    }
   },
   methods: {
     ...mapMutations(['updateEditedProduct']),
     setDefaultCustomerPrice (value) {
       this.updateEditedProduct({ defaultCustomerPrice: value })
-      console.log(this.defaultCustomerPrice, this.defaultUnit)
     },
     setDefaultUnit (value) {
       this.updateEditedProduct({ defaultUnit: value })

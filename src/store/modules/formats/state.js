@@ -1,4 +1,4 @@
 export default {
   formats: {},
-  editedFormats: []
+  editedFormats: {}
 }

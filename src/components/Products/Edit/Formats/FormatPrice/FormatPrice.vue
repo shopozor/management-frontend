@@ -17,6 +17,7 @@
 import types from '../../../../../types'
 import FormatPriceAuto from './FormatPriceAuto'
 import FormatPriceFree from './FormatPriceFree'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'FormatPrice',
@@ -27,9 +28,9 @@ export default {
     }
   },
   computed: {
-    // mapGetters fait buguer. Pourquoi ????
+    ...mapGetters(['editedFormats']),
     autoPrice () {
-      const formatUI = this.$store.state.formats.editedFormats[this.formatId].formatUI
+      const formatUI = this.editedFormats[this.formatId].formatUI
       return formatUI === types.formatUI.AUTO_PRICE
     }
   },

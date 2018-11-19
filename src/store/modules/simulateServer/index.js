@@ -75,9 +75,7 @@ export const initFakeServer = () => {
       categories: [types.categories.GROCERY],
       conservationMethod: types.conservation.BASEMENT,
       conservationDays: 365,
-      defaultFormatUI: types.formatUI.FREE,
-      defaultUnit: types.units.number.PIECE,
-      defaultCustomerPrice: 2000
+      defaultFormatUI: types.formatUI.FREE
     }
   })
 
@@ -138,6 +136,20 @@ export const initFakeServer = () => {
         state: types.formatState.VISIBLE,
         amount: 4,
         amountUnit: types.units.mass.KG
+      }
+    }
+  })
+
+  updateFormatsOfProduct({
+    productId: productsIds[2],
+    formats: {
+      tempId1: {
+        size: 300,
+        sizeUnit: types.units.mass.GR,
+        customerPrice: 1000,
+        formatUI: types.formatUI.AUTO_UNIT,
+        state: types.formatState.VISIBLE,
+        amount: 20
       }
     }
   })

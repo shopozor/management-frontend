@@ -8,7 +8,7 @@
       :setUnit="updateSizeUnit"
       unitWidth="50%"
       :linked="true"
-      filter="compatible"
+      :filter="physicalSize"
     />
     <q-dialog
       v-model="defineDefaultValues"
@@ -27,7 +27,7 @@
 import {mapGetters, mapMutations} from 'vuex'
 import UnitField from '../../../../Units/UnitField'
 import ProductDefaultPricePerUnitSelector from '../../ProductDefaultPricePerUnitSelector'
-import {convert, unitsAreCompatible, mainUnit} from '../../../../Units/UnitsHelpers'
+import {convert, unitsAreCompatible, mainUnit, getPhysicalSize} from '../../../../Units/UnitsHelpers'
 
 export default {
   name: 'FormatDescriptionAuto',
@@ -47,14 +47,18 @@ export default {
     size () { return this.editedFormats[this.formatId].size },
     sizeUnit () { return this.editedFormats[this.formatId].sizeUnit },
     defaultCustomerPrice () { return this.editedProduct.defaultCustomerPrice },
-    defaultUnit () { return this.editedProduct.defaultUnit }
+    defaultUnit () { return this.editedProduct.defaultUnit },
+    physicalSize () { return getPhysicalSize({ unit: this.defaultUnit }) }
   },
   methods: {
     ...mapMutations(['updateEditedFormat']),
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },
-    updateSizeUnit (newUnit) { this.update('sizeUnit', newUnit) },
+    updateSizeUnit (newUnit) {
+      this.update('sizeUnit', newUnit)
+      this.updateCustomerPrice()
+    },
     updateSize (value) {
       this.update('size', value)
       this.updateCustomerPrice()
@@ -68,9 +72,13 @@ export default {
       this.update('customerPrice', newPricePerUnit * this.size)
     }
   },
+  watch: {
+    defaultUnit (newUnit, oldUnit) { this.updateCustomerPrice() },
+    defaultCustomerPrice (newPrice, oldPrice) { this.updateCustomerPrice() }
+  },
   components: { UnitField, ProductDefaultPricePerUnitSelector },
   mounted () {
-    if (!this.defaultCustomerPrice || !this.defaultUnit || this.defaultUnit) {
+    if (this.defaultCustomerPrice === 0 || this.defaultUnit === '') {
       this.defineDefaultValues = true
     } else if (unitsAreCompatible({unit1: this.sizeUnit, unit2: this.defaultUnit})) {
       this.updateCustomerPrice()

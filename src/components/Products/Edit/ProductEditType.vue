@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <q-card class="width-md height-md">
     <q-card-main>
       <q-select
         :stack-label="$t('products.conservationMethod')"

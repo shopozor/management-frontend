@@ -1,7 +1,7 @@
 <template>
   <transition leave-active-class="animated bounceOutDown">
     <q-card
-      class="product-inventory-card q-ma-sm"
+      class="width-md height-lg q-ma-sm"
       :class="{visibleState: isVisible, invisibleState: !isVisible}"
       v-if="!isDeleted">
       <q-card-actions class="row justify-between">
@@ -126,12 +126,6 @@ export default {
 </script>
 
 <style lang="stylus">
-
-.product-inventory-card {
-  width: 260px;
-  height: 420px;
-}
-
 .invisibleState {
   opacity: 0.5;
   transition: opacity 0.5s;

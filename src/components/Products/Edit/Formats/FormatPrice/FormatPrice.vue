@@ -1,5 +1,5 @@
 <template>
-  <q-card inline class="format-price q-ma-sm">
+  <q-card inline class="width-md q-ma-sm">
     <format-price-auto
       v-if="autoPrice"
       :formatId="formatId"
@@ -37,9 +37,3 @@ export default {
   components: { FormatPriceAuto, FormatPriceFree }
 }
 </script>
-
-<style lang="stylus">
-.format-price {
-  width: 260px;
-}
-</style>

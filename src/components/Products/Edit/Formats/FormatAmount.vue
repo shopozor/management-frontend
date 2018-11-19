@@ -1,5 +1,5 @@
 <template>
-  <q-card inline class="format-amount q-ma-sm">
+  <q-card inline class="width-md q-ma-sm">
     <q-card-main>
       <div class="row justify-center">
         <q-btn
@@ -92,9 +92,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-.format-amount {
-  width: 260px;
-}
-</style>

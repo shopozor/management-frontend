@@ -1,8 +1,8 @@
 <template>
   <div class="row justify-center">
-    <product-edit-picture class="product-edit-card q-ma-sm" />
-    <product-edit-name class="product-edit-card q-ma-sm" />
-    <product-edit-type class="product-edit-card q-ma-sm" />
+    <product-edit-picture class="q-ma-sm" />
+    <product-edit-name class="q-ma-sm" />
+    <product-edit-type class="q-ma-sm" />
     <product-edit-formats class="q-ma-sm q-my-md" />
     <q-page-sticky position="bottom-right">
       <q-btn class="q-ma-md" size="md" icon="cancel" :label="$t('actions.cancel')" color="negative" @click="cancel" />
@@ -57,11 +57,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-
-.product-edit-card {
-  width: 260px;
-  height: 320px;
-}
-</style>

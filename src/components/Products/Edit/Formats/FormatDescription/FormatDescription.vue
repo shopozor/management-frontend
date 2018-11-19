@@ -1,5 +1,5 @@
 <template>
-  <q-card inline class="format-description q-ma-sm">
+  <q-card inline class="width-md q-ma-sm">
     <q-card-main>
       <format-description-free
         v-if="formatUI === formatUIs.FREE"
@@ -69,9 +69,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-.format-description {
-  width: 260px;
-}
-</style>

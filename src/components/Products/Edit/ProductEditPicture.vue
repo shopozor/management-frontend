@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <q-card class="width-md height-md">
     <q-card-media>
       <img class="q-px-md q-pb-sm" :src="editedProductImage" alt="product image">
     </q-card-media>

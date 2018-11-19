@@ -1,9 +1,10 @@
 <template>
   <unit-select
-    :unit="editedFormats[formatId].sizeUnit"
+    :unit="sizeUnit"
     :setUnit="updateSizeUnit"
     width="100%"
     filter="all"
+    withPriceReferenceQuantities
     :label="$t('products.bulk')"
   />
 </template>
@@ -22,7 +23,11 @@ export default {
   },
   computed: {
     ...mapGetters(['editedFormats']),
-    sizeUnit () { return this.editedFormats[this.formatId].sizeUnit }
+    sizeUnit () {
+      const sizeUnit = this.editedFormats[this.formatId].sizeUnit
+      if (sizeUnit) return sizeUnit
+      else return ''
+    }
   },
   components: {UnitSelect},
   methods: {

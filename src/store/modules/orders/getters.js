@@ -49,11 +49,11 @@ const summarizeOrders = (orders) => {
 
 export const pendingOrdersOfFormatSummary = (state, getters) => ({ formatId }) => {
   const paidOrders = getters.ordersOfFormatByState({ formatId, orderState: types.orderState.PENDING_PAID })
-  const paidSummary = summarizeOrders(paidOrders)
+  const paid = summarizeOrders(paidOrders)
   const notPaidOrders = getters.ordersOfFormatByState({ formatId, orderState: types.orderState.PENDING_NOT_PAID })
-  const notPaidSummary = summarizeOrders(notPaidOrders)
+  const notPaid = summarizeOrders(notPaidOrders)
   return {
-    paidSummary,
-    notPaidSummary
+    paid,
+    notPaid
   }
 }

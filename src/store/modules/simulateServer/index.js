@@ -3,7 +3,7 @@ import { createUser, authorize } from './users/manageUsers'
 import { createProduct } from './products/manageProducts'
 import { updateFormatsOfProduct } from './formats/manageFormats'
 import types from '../../../types'
-import { orderFormats } from './orders/manageOrders'
+import { orderFormats, payOrder } from './orders/manageOrders'
 
 export const initFakeServer = () => {
   setServer({
@@ -164,11 +164,25 @@ export const initFakeServer = () => {
       [formatIds[1]]: 3
     }
   })
+
+  wait()
+
+  orderFormats({
+    customerId,
+    formatsAmounts: {
+      [formatIds[0]]: 4,
+      [formatIds[1]]: 2
+    }
+  })
+
+  const ordersIds = getUser({ userId: customerId }).ordersToReceiveIds
+  payOrder({ orderId: ordersIds[0] })
+  payOrder({ orderId: ordersIds[3] })
 }
 
 const wait = () => {
   const now = Date.now()
   while (Date.now() === now) {
-    console.log(`waiting at ${now} before creating new product`)
+    console.log(`waiting at ${now} before next action`)
   }
 }

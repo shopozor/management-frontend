@@ -7,14 +7,16 @@
         :value="value"
         @input="setValue"
         type="number"
-        :float-label="$t('products.size')" />
+        :float-label="$t('products.size')"
+        :readonly="readonly" />
     </q-field>
     <unit-select
       class="self-baseline"
       :unit="unit"
       :setUnit="updateUnitAndValue"
       :filter="filter"
-      :width="unitWidth" />
+      :width="unitWidth"
+      :readonly="readonly" />
   </div>
 </template>
 
@@ -63,6 +65,12 @@ export default {
       type: String,
       default () {
         return 'compatible'
+      }
+    },
+    readonly: {
+      type: Boolean,
+      default () {
+        return false
       }
     }
   },

@@ -6,15 +6,18 @@
     filter="all"
     withPriceReferenceQuantities
     :label="$t('products.bulk')"
+    :readonly="!isUpdatable"
   />
 </template>
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
 import UnitSelect from '../../../../Units/UnitSelect'
+import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatDescriptionBulk',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,

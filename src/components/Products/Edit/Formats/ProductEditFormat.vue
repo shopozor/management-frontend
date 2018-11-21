@@ -1,9 +1,10 @@
 <template>
   <transition leave-active-class="animated bounceOutLeft">
-    <q-card class="row justify-center height-sm" key="cards" v-if="show">
+    <q-card class="row justify-center relative-position" key="cards" v-if="show">
       <format-description :formatId="formatId" />
       <format-price :formatId="formatId" />
       <format-amount :formatId="formatId" />
+      <format-state-manager :formatId="formatId" />
     </q-card>
   </transition>
 </template>
@@ -13,12 +14,13 @@ import {mapGetters} from 'vuex'
 import FormatDescription from './FormatDescription/FormatDescription'
 import FormatPrice from './FormatPrice/FormatPrice'
 import FormatAmount from './FormatAmount'
-import FormatIsUpdatableMixin from './FormatIsUpdatableMixin.js'
+import FormatStateManager from './FormatStateManager'
+import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
 import types from '../../../../types'
 
 export default {
   name: 'ProductEditFormat',
-  mixins: [FormatIsUpdatableMixin],
+  mixins: [FormatCriticalValuesMixin],
   data () {
     return {
       state: types.formatState
@@ -37,6 +39,6 @@ export default {
       return state === this.state.VISIBLE || state === this.state.INVISIBLE
     }
   },
-  components: {FormatDescription, FormatAmount, FormatPrice}
+  components: {FormatDescription, FormatAmount, FormatPrice, FormatStateManager}
 }
 </script>

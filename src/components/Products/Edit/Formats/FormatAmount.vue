@@ -6,7 +6,8 @@
           @click="remove"
           icon="remove"
           round
-          color="primary" />
+          color="primary"
+          :disable="disableRemove" />
         <q-field
           class="q-mx-md"
           style="width: 4em">
@@ -23,11 +24,12 @@
       </div>
       <div class="row justify-between q-mt-md">
         <div>
-          <div>{{$tc('products.ordered', pendingOrdersAmount)}}: {{pendingOrdersAmount}}</div>
+          <div>{{$tc('products.ordered', pendingOrdersSummary.paid.amount)}}: {{pendingOrdersSummary.paid.amount}}</div>
           <br>
-          <div>{{$tc('products.available', amount - pendingOrdersAmount)}}: {{amount - pendingOrdersAmount}}</div>
+          <div>{{$tc('products.available', amount - pendingOrdersSummary.paid.amount)}}: {{amount - pendingOrdersSummary.paid.amount}}</div>
+          <br>
+          <div>dans un panier : {{pendingOrdersSummary.notPaid.amount}}</div>
         </div>
-        <format-state-manager class="q-mt-sm" :formatId="formatId" />
       </div>
     </q-card-main>
   </q-card>
@@ -35,10 +37,11 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import FormatStateManager from './FormatStateManager'
+import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatAmount',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,
@@ -50,15 +53,9 @@ export default {
     amount () {
       return this.editedFormats[this.formatId].amount
     },
-    pendingOrdersAmount () {
-      const ordersOfFormat = this.ordersPropsOfFilterPropValue({
-        arrayOfPropsKeys: ['amount'],
-        filterKey: 'formatId',
-        filterValue: this.formatId
-      })
-      return Object.values(ordersOfFormat).reduce((totalAmount, actualOrder) => {
-        return totalAmount + actualOrder.amount
-      }, 0)
+    disableRemove () {
+      const noMore = this.amount <= this.pendingOrdersSummary.paid.amount
+      return noMore && !this.isUpdatable
     }
   },
   methods: {
@@ -70,7 +67,7 @@ export default {
       this.updateAmount(this.amount - 1)
     },
     updateAmount (value) {
-      if (value >= this.pendingOrdersAmount) {
+      if (value >= this.pendingOrdersSummary.paid.amount || this.isUpdatable) {
         this.updateEditedFormat({formatId: this.formatId, newProps: {amount: value}})
       } else {
         this.$q.notify({
@@ -86,9 +83,6 @@ export default {
         })
       }
     }
-  },
-  components: {
-    FormatStateManager
   }
 }
 </script>

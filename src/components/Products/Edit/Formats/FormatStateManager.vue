@@ -1,29 +1,26 @@
 <template>
   <q-btn
+    class="absolute-bottom-right"
     icon="close"
-    round
     color="negative"
-    :disable="!isNew && !allowNonTrivialChanges"
+    :disable="!isUpdatable"
     @click="del"
   />
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapMutations} from 'vuex'
 import types from '../../../../types'
+import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatStateManager',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,
       required: true
     }
-  },
-  computed: {
-    ...mapGetters(['editedFormats', 'editedProduct']),
-    isNew () { return this.editedFormats[this.formatId].isNew },
-    allowNonTrivialChanges () { return this.editedProduct.allowNonTrivialChanges }
   },
   methods: {
     ...mapMutations(['updateEditedFormat']),

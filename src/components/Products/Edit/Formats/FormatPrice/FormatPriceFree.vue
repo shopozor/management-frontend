@@ -5,15 +5,18 @@
     :producerRatio="0.85"
     :customer="customer"
     :producer="producer"
-    :shop="shop" />
+    :shop="shop"
+    :readonly="!isUpdatable" />
 </template>
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
 import PriceInput from '../../../../Price/PriceInput'
+import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatPriceFree',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,

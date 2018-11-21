@@ -9,6 +9,7 @@
       unitWidth="50%"
       :linked="true"
       :filter="physicalSize"
+      :readonly="!isUpdatable"
     />
     <q-dialog
       v-model="defineDefaultValues"
@@ -28,9 +29,11 @@ import {mapGetters, mapMutations} from 'vuex'
 import UnitField from '../../../../Units/UnitField'
 import ProductDefaultPricePerUnitSelector from '../../ProductDefaultPricePerUnitSelector'
 import {convert, unitsAreCompatible, mainUnit, getPhysicalSize} from '../../../../Units/UnitsHelpers'
+import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatDescriptionAuto',
+  mixins: [FormatCriticalValuesMixin],
   data () {
     return {
       defineDefaultValues: false

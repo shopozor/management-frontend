@@ -55,7 +55,7 @@ export default {
     },
     disableRemove () {
       const noMore = this.amount <= this.pendingOrdersSummary.paid.amount
-      return noMore && !this.isUpdatable
+      return (noMore && !this.isUpdatable) || this.amount <= 0
     }
   },
   methods: {
@@ -67,11 +67,23 @@ export default {
       this.updateAmount(this.amount - 1)
     },
     updateAmount (value) {
-      if (value >= this.pendingOrdersSummary.paid.amount || this.isUpdatable) {
+      if ((value >= this.pendingOrdersSummary.paid.amount || this.isUpdatable) && value >= 0) {
         this.updateEditedFormat({formatId: this.formatId, newProps: {amount: value}})
-      } else {
+      } else if (value >= 0) {
         this.$q.notify({
           message: 'Vous ne pouvez pas baisser votre stock en-dessous du nombre de commandes.',
+          icon: 'warning',
+          timeout: 5000,
+          position: 'top',
+          actions: [
+            {
+              icon: 'close'
+            }
+          ]
+        })
+      } else {
+        this.$q.notify({
+          message: 'Votre stock ne peut pas être inférieur à 0.',
           icon: 'warning',
           timeout: 5000,
           position: 'top',

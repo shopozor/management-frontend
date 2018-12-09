@@ -42,6 +42,8 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
 
-    'object-curly-spacing': 'off'
+    'object-curly-spacing': 'off',
+
+    'vue/no-use-v-if-with-v-for': 0
   }
 }

@@ -20,4 +20,6 @@ yarn.lock
 *.njsproj
 *.sln
 
+doc
 generateDoc.txt
+cypress/fixtures/users.json

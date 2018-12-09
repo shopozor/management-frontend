@@ -1,4 +1,4 @@
-import { Given, When } from 'cypress-cucumber-preprocessor/steps'
+import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
 import checkUserUndefined from './UserDefinitionHelpers'
 
@@ -58,12 +58,13 @@ when(
 then("sa session s'ouvre", () => {
   // Write code here that turns the phrase above into concrete actions
   pending()
-})
+})*/
 
-then(
+Then(
   "il obtient un message d'erreur stipulant que ses identifiants sont incorrects",
   () => {
-    // Write code here that turns the phrase above into concrete actions
-    pending()
+    cy.get('.incorrectIdentifiers')
+      .should('exist')
+      .and('be.visible')
   }
-)*/
+)

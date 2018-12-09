@@ -21,14 +21,13 @@ Fonctionnalité: Identifier un utilisateur
     Lorsqu'un utilisateur s'identifie avec un e-mail et un mot de passe invalides
     Alors il obtient un message d'erreur stipulant que ses identifiants sont incorrects
 
-  # Scénario: L'utilisateur est enregistré mais entre un mot de passe erroné
-  #   Lorsqu'un utilisateur s'identifie avec un e-mail valide et un mot de passe invalide
-  #   Alors il obtient un message d'erreur stipulant que ses identifiants sont incorrects
+  Scénario: L'utilisateur est enregistré mais entre un mot de passe erroné
+    Lorsqu'un utilisateur s'identifie avec un e-mail valide et un mot de passe invalide
+    Alors il obtient un message d'erreur stipulant que ses identifiants sont incorrects
 
-  # Scénario: L'utilisateur est enregistré et connaît son mot de passe
-  #   Lorsqu'un utilisateur s'identifie avec un e-mail et un mot de passe valides
-  #   Alors sa session s'ouvre
+  Scénario: L'utilisateur est enregistré et connaît son mot de passe
+    Lorsqu'un utilisateur s'identifie avec un e-mail et un mot de passe valides
+    Alors sa session s'ouvre pour 1 mois
+    Et il ne peut plus accéder à l'interface d'identification
 
   # Double-check that the session cookie is there with correct expiry date
-
-  # It is not possible to browse the /login page again after the login succeeded

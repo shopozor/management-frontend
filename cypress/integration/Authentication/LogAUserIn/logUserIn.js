@@ -1,6 +1,6 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
-import checkUserUndefined from './UserDefinitionHelpers'
+import { connectWithUserCredentials } from './Helpers'
 
 before(() => {
   cy.log(
@@ -28,37 +28,37 @@ When(
   "un utilisateur s'identifie avec un e-mail et un mot de passe invalides",
   () => {
     cy.fixture('users.json').then(data => {
-      checkUserUndefined(data.users, data.invalidUser)
-      cy.get('input[type=email]').type(data.invalidUser.email)
-      cy.get('input[type=password]').type(data.invalidUser.password)
-      cy.get('button[type=button]')
-        .contains('se connecter')
-        .click()
+      const user = data.invalidUser
+      connectWithUserCredentials(user.email, user.password)
     })
   }
 )
 
-/*
-when(
+When(
   "un utilisateur s'identifie avec un e-mail et un mot de passe valides",
   () => {
-    // Write code here that turns the phrase above into concrete actions
-    pending()
+    cy.fixture('users.json').then(data => {
+      const user = data.users[0]
+      connectWithUserCredentials(user.email, user.password)
+    })
   }
 )
 
-when(
+When(
   "un utilisateur s'identifie avec un e-mail valide et un mot de passe invalide",
-  function() {
-    // Write code here that turns the phrase above into concrete actions
-    pending()
+  () => {
+    cy.fixture('users.json').then(data => {
+      let user = data.users[0]
+      connectWithUserCredentials(user.email, user.password + 'a')
+    })
   }
 )
 
-then("sa session s'ouvre", () => {
-  // Write code here that turns the phrase above into concrete actions
-  pending()
-})*/
+// TODO: use the custom types for this duration:
+Then("sa session s'ouvre pour {string}", duration => {
+  cy.log(`durée = ${duration}`)
+  cy.getCookie('user_session').should('exist')
+})
 
 Then(
   "il obtient un message d'erreur stipulant que ses identifiants sont incorrects",
@@ -68,3 +68,8 @@ Then(
       .and('be.visible')
   }
 )
+
+Then("il ne peut plus accéder à l'interface d'identification", () => {
+  cy.visit('/login')
+  cy.url().should('not.match', '/login')
+})

@@ -27,7 +27,5 @@ Fonctionnalité: Identifier un utilisateur
 
   Scénario: L'utilisateur est enregistré et connaît son mot de passe
     Lorsqu'un utilisateur s'identifie avec un e-mail et un mot de passe valides
-    Alors sa session s'ouvre pour 1 mois
+    Alors sa session sécurisée s'ouvre pour 1 mois
     Et il ne peut plus accéder à l'interface d'identification
-
-  # Double-check that the session cookie is there with correct expiry date

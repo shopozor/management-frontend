@@ -1,6 +1,8 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
+const moment = require('moment')
 
 import { connectWithUserCredentials } from './Helpers'
+import './SessionDurationType'
 
 before(() => {
   cy.log(
@@ -15,9 +17,12 @@ beforeEach(() => {
   cy.fixture('remoteFixtures.json').then(data =>
     cy.request(data.users).then(json => {
       cy.writeFile('cypress/fixtures/users.json', json.body)
+      cy.fixture('users.json').as('users')
     })
   )
 })
+
+let loginMoment
 
 Given("un utilisateur non identifié sur l'interface d'identification", () => {
   cy.visit('/login')
@@ -26,38 +31,43 @@ Given("un utilisateur non identifié sur l'interface d'identification", () => {
 
 When(
   "un utilisateur s'identifie avec un e-mail et un mot de passe invalides",
-  () => {
-    cy.fixture('users.json').then(data => {
-      const user = data.invalidUser
-      connectWithUserCredentials(user.email, user.password)
-    })
+  function() {
+    const user = this.users.invalidUser
+    connectWithUserCredentials(user.email, user.password)
   }
 )
 
 When(
   "un utilisateur s'identifie avec un e-mail et un mot de passe valides",
-  () => {
-    cy.fixture('users.json').then(data => {
-      const user = data.users[0]
-      connectWithUserCredentials(user.email, user.password)
-    })
+  function() {
+    const user = this.users.users[0]
+    connectWithUserCredentials(user.email, user.password)
+    loginMoment = moment()
   }
 )
 
 When(
   "un utilisateur s'identifie avec un e-mail valide et un mot de passe invalide",
-  () => {
-    cy.fixture('users.json').then(data => {
-      let user = data.users[0]
-      connectWithUserCredentials(user.email, user.password + 'a')
-    })
+  function() {
+    const user = this.users.users[0]
+    connectWithUserCredentials(user.email, user.password + 'a')
   }
 )
 
-// TODO: use the custom types for this duration:
-Then("sa session s'ouvre pour {string}", duration => {
-  cy.log(`durée = ${duration}`)
-  cy.getCookie('user_session').should('exist')
+Then("sa session sécurisée s'ouvre pour {SessionDuration}", duration => {
+  const cookie = cy.getCookie('user_session')
+  console.log('cookie = ', cookie.expiry)
+  cookie
+    .should('exist')
+    .and('have.property', 'httpOnly', true)
+    .and('have.property', 'secure', true)
+    .and('have.property', 'expiry')
+  if (cookie.expiry !== undefined) {
+    const expiryDate = moment(cookie.expiry)
+    expect(
+      moment.duration(expiryDate.diff(loginMoment)).asSeconds()
+    ).to.be.closeTo(duration.asSeconds(), 60)
+  }
 })
 
 Then(

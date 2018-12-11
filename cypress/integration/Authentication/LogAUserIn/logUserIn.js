@@ -40,7 +40,7 @@ When(
 When(
   "un utilisateur s'identifie avec un e-mail et un mot de passe valides",
   function() {
-    const user = this.users.users[0]
+    const user = this.users.producers[0]
     connectWithUserCredentials(user.email, user.password)
     loginMoment = moment()
   }
@@ -49,7 +49,7 @@ When(
 When(
   "un utilisateur s'identifie avec un e-mail valide et un mot de passe invalide",
   function() {
-    const user = this.users.users[0]
+    const user = this.users.producers[0]
     connectWithUserCredentials(user.email, user.password + 'a')
   }
 )

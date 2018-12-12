@@ -10,7 +10,8 @@
     "build": "quasar build",
     "lint": "eslint --ext .js,.vue src",
     "start": "quasar serve dist/spa-mat",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "e2e": "cypress open"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true

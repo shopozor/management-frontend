@@ -10,6 +10,7 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
 
 # Editor directories and files
 .idea
@@ -18,3 +19,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+doc
+generateDoc.txt
+cypress/fixtures/users.json

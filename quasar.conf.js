@@ -1,9 +1,9 @@
 // Configuration for your app
 
-module.exports = function(ctx) {
+module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
-    plugins: ['vuelidate', 'vue-i18n'],
+    plugins: ['vuelidate', 'vue-i18n', 'apollo'],
     css: ['app.styl'],
     extras: [
       ctx.theme.mat ? 'roboto-font' : null,
@@ -20,7 +20,7 @@ module.exports = function(ctx) {
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
-      extendWebpack(cfg) {
+      extendWebpack (cfg) {
         cfg.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -137,7 +137,7 @@ module.exports = function(ctx) {
     },
     electron: {
       // bundler: 'builder', // or 'packager'
-      extendWebpack(cfg) {
+      extendWebpack (cfg) {
         // do something with Electron process Webpack cfg
       },
       packager: {

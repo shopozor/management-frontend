@@ -1,4 +1,7 @@
 import * as request from '../simulateServer/users/requestUsers'
+import { apolloClient } from '../../../plugins/apollo'
+
+import gql from 'graphql-tag'
 
 export function signup ({ commit }, { email, password }) {
   request
@@ -10,13 +13,30 @@ export function signup ({ commit }, { email, password }) {
 }
 
 export function login ({ commit }, { email, password, stayLoggedIn }) {
-  request
-    .login({ email, password })
+  // if this doesn't work, follow https://markus.oberlehner.net/blog/combining-graphql-and-vuex/
+  // this follows https://akryum.github.io/vue-apollo/api/
+  // TODO: the mutation needs to go to a separate file!
+  apolloClient
+    .mutate({
+      mutation: gql`
+        mutation LogIn($email: String!, $password: String!) {
+          tokenCreate(email: $email, password: $password) {
+            id
+            token
+          }
+        }
+      `,
+      variables: {
+        email,
+        password
+      }
+    })
     .then(response => {
+      console.log('login response = ', response)
       commit('storeAuthorizations', {
         email,
         token: response.token,
-        userId: response.userId,
+        userId: response.id,
         authorizations: response.authorizations
       })
       stayLoggedIn ? saveToken(response.userId, response.token) : removeToken()

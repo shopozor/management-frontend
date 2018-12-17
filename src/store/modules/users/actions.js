@@ -21,8 +21,16 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
       mutation: gql`
         mutation LogIn($email: String!, $password: String!) {
           tokenCreate(email: $email, password: $password) {
-            id
             token
+            errors {
+              field
+              message
+            }
+            user {
+              id
+              email
+              isStaff
+            }
           }
         }
       `,
@@ -33,13 +41,15 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
     })
     .then(response => {
       console.log('login response = ', response)
+      const token = response.data.tokenCreate.token
+      const userId = response.data.tokenCreate.user.id
       commit('storeAuthorizations', {
         email,
-        token: response.token,
-        userId: response.id,
-        authorizations: response.authorizations
+        token,
+        userId
+        // authorizations: response.authorizations
       })
-      stayLoggedIn ? saveToken(response.userId, response.token) : removeToken()
+      stayLoggedIn ? saveToken(userId, token) : removeToken()
       this.$router.back()
     })
     .catch(error => commit('error', error))

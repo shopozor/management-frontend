@@ -6,7 +6,7 @@ import { createHttpLink } from 'apollo-link-http'
 
 // TODO: get that server address from an environment variable or the config
 const httpLink = createHttpLink({
-  uri: 'http://saleor-test.hidora.com/graphql',
+  uri: 'http://localhost:8000/graphql/',
   fetch: fetch
 })
 

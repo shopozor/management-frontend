@@ -46,8 +46,8 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
       commit('storeAuthorizations', {
         email,
         token,
-        userId
-        // authorizations: response.authorizations
+        userId,
+        authorizations: ['PRODUCER']
       })
       stayLoggedIn ? saveToken(userId, token) : removeToken()
       this.$router.back()

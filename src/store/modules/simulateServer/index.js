@@ -88,7 +88,7 @@ export const initFakeServer = () => {
         size: 5,
         sizeUnit: types.units.volume.DL,
         customerPrice: 500,
-        formatUI: types.formatUI.AUTO_UNIT,
+        formatUI: types.formatUI.AUTO_PRICE,
         state: types.formatState.VISIBLE,
         amount: 12
       },

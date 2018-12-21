@@ -3,6 +3,8 @@ import NO_IMAGE from '../../../assets/no_image.png'
 
 export const products = state => state.products
 
+export const myProducts = state => state.myProducts
+
 export const productsInInventory = state => {
   const myProducts = state.myProducts
   return Object.keys(myProducts).reduce((inventory, productId) => {

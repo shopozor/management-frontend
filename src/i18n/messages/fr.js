@@ -88,7 +88,7 @@ export default {
     throwAway: 'Jeter',
     keep: 'Conserver',
     ordersSummary: 'Aucune commande en cours | Une commande: {price} francs | {amount} commandes: {price} francs',
-    name: 'Nom du produit',
+    title: 'Nom du produit',
     productDescription: 'Description du produit',
     categories: 'Catégories',
     conservationMethod: 'Méthode de conservation',

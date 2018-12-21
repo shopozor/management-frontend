@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import ProductDeleteManager from '../ProductDeleteManager'
 import ProductVisibilityManager from '../ProductVisibilityManager'
 import types from '../../../types'
@@ -90,13 +90,15 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['pendingOrdersOfProductSummary']),
     summary () {
+      const paid = this.pendingOrdersOfProductSummary({ productId: this.productId }).paid
       return this.$tc(
         'products.ordersSummary',
-        this.ordersSummary.amount,
+        paid.amount,
         {
-          amount: this.ordersSummary.amount,
-          price: this.ordersSummary.customerPrice
+          amount: paid.amount,
+          price: (paid.customerPrice / 100).toFixed(2)
         }
       )
     },

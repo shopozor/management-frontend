@@ -37,3 +37,11 @@ pipenv run ./resetDB.sh
 ## Run the frontend
 
 1. Run `quasar dev`
+
+## Run e2e tests
+
+Run
+
+```
+npm run e2e
+``` 

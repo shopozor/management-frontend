@@ -1,41 +1,52 @@
 import * as links from '../types/links'
+import access from './access'
+import store from '../store'
 
-export const generatePage = (link, { withLabel }) => {
+export const generatePage = (link) => {
   return {
     path: `/${link}`,
     component: () => import(`pages/${firstUpperCase(link)}.vue`),
-    label: withLabel ? link : ''
+    beforeEnter: (to, from, next) => {
+      if (userCanAccess(link)) {
+        next()
+      } else {
+        next(from)
+      }
+    }
   }
+}
+
+function userCanAccess (link) {
+  return access(store.getters.authorizations)[link]
 }
 
 export const firstUpperCase = string => string.charAt(0).toUpperCase() + string.slice(1)
 
 /**
- * A page that can be reached from the burger menu must have a label
- *
- * To add a new menu reachable page:
- *  1) add its type to types/links.js
+ * To add a new page:
+ *  1) add its type to types/links.js.
+ *     It must match the component file name : ConfirmationEmailSent.js -> confirmationEmailSent)
  *  2) authorize and return access in router/access.js
- *  3) add a path, component and label here
+ *  3) generate the new page below
+ *
+ *  4) If the page must be reachable from the burger menu,
+ *     make it accessible in the SideDrawerContent component.
+ *     Write its name in data > orderedLinks
  **/
 
 export default {
-  [links.HOME]: {
-    path: '/',
-    component: () => import('pages/Home.vue'),
-    label: links.HOME
-  },
-  [links.SIGNUP]: generatePage(links.SIGNUP, { withLabel: true }),
-  [links.CONFIRMATION_EMAIL_SENT]: generatePage(links.CONFIRMATION_EMAIL_SENT, { withLabel: false }),
-  [links.LOGIN]: generatePage(links.LOGIN, { withLabel: true }),
-  [links.LOGOUT]: generatePage(links.LOGOUT, { withLabel: true }),
-  [links.PROFILE]: generatePage(links.PROFILE, { withLabel: true }),
-  [links.CALENDAR]: generatePage(links.CALENDAR, { withLabel: true }),
-  [links.PRODUCTS]: generatePage(links.PRODUCTS, { withLabel: true }),
-  [links.MY_SHOP]: generatePage(links.MY_SHOP, { withLabel: true }),
-  [links.MANAGE_SHOPS]: generatePage(links.MANAGE_SHOPS, { withLabel: true }),
-  [links.MANAGE_SITE]: generatePage(links.MANAGE_SITE, { withLabel: true }),
-  [links.MAP]: generatePage(links.MAP, { withLabel: true }),
-  [links.ORDERS]: generatePage(links.ORDERS, { withLabel: true }),
-  [links.FAKE_SHOP]: generatePage(links.FAKE_SHOP, { withLabel: true })
+  [links.HOME]: { path: '/', component: () => import('pages/Home.vue') },
+  [links.SIGNUP]: generatePage(links.SIGNUP),
+  [links.CONFIRMATION_EMAIL_SENT]: generatePage(links.CONFIRMATION_EMAIL_SENT),
+  [links.LOGIN]: generatePage(links.LOGIN),
+  [links.LOGOUT]: generatePage(links.LOGOUT),
+  [links.PROFILE]: generatePage(links.PROFILE),
+  [links.CALENDAR]: generatePage(links.CALENDAR),
+  [links.PRODUCTS]: generatePage(links.PRODUCTS),
+  [links.MY_SHOP]: generatePage(links.MY_SHOP),
+  [links.MANAGE_SHOPS]: generatePage(links.MANAGE_SHOPS),
+  [links.MANAGE_SITE]: generatePage(links.MANAGE_SITE),
+  [links.MAP]: generatePage(links.MAP),
+  [links.ORDERS]: generatePage(links.ORDERS),
+  [links.FAKE_SHOP]: generatePage(links.FAKE_SHOP)
 }

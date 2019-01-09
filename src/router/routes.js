@@ -1,7 +1,11 @@
 import pages from './pages'
 
 const links = Object.keys(pages).map(key => {
-  return { path: pages[key].path, component: pages[key].component }
+  return {
+    path: pages[key].path,
+    component: pages[key].component,
+    beforeEnter: pages[key].beforeEnter
+  }
 })
 
 const routes = [

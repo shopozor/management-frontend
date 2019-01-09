@@ -8,25 +8,16 @@
     {{ user }}
   </q-list-header>
     <page-link
-      v-for="(value, key) in access.user"
-      v-if="value"
-      :key="pages[key].path"
-      :path="pages[key].path"
-      :label="pages[key].label" />
+      v-for="value in userManagementLinks"
+      :key="pages[value].path"
+      :path="pages[value].path"
+      :label="value" />
     <q-item-separator />
     <page-link
-      v-for="(value, key) in access.pages"
-      v-if="value"
-      :key="pages[key].path"
-      :path="pages[key].path"
-      :label="pages[key].label" />
-    <q-item-separator />
-    <page-link
-      v-for="(value, key) in access.last"
-      v-if="value"
-      :key="pages[key].path"
-      :path="pages[key].path"
-      :label="pages[key].label" />
+      v-for="value in navigationLinks"
+      :key="pages[value].path"
+      :path="pages[value].path"
+      :label="value" />
   </q-list>
 </template>
 
@@ -42,18 +33,50 @@ export default {
   data () {
     return {
       pages,
-      separator: types.links.SEPARATOR
+      separator: types.links.SEPARATOR,
+      labels: types.links,
+      orderedLinks: {
+        userManagement: [
+          types.links.SIGNUP,
+          types.links.LOGIN,
+          types.links.PROFILE,
+          types.links.LOGOUT
+        ],
+        navigation: [
+          types.links.HOME,
+          types.links.FAKE_SHOP,
+          types.links.MAP,
+          types.links.CALENDAR,
+          types.links.ORDERS,
+          types.links.PRODUCTS,
+          types.links.MY_SHOP,
+          types.links.MANAGE_SHOPS,
+          types.links.MANAGE_SITE
+        ]
+      }
     }
   },
   props: { drawerOpen: Boolean },
   computed: {
     ...mapGetters(['email', 'authorizations', 'isAuthorized']),
-    access: function () {
-      return access(this.authorizations)
+    userManagementLinks: function () {
+      return this.filterAccessibleLinks(this.orderedLinks.userManagement)
+    },
+    navigationLinks () {
+      return this.filterAccessibleLinks(this.orderedLinks.navigation)
     },
     user () {
       if (this.isAuthorized) return this.email
       else return this.$t('layout.notConnected')
+    }
+  },
+  methods: {
+    filterAccessibleLinks (filterKeys) {
+      const accessList = access(this.authorizations)
+      const accessibleLinks = filterKeys.filter(key => {
+        return accessList[key]
+      })
+      return accessibleLinks
     }
   },
   components: {

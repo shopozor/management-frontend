@@ -5,7 +5,7 @@ const access = {
   [auth.NOT_CONNECTED]: {
     // user
     [links.LOGIN]: true,
-    [links.SIGNUP]: true,
+    [links.SIGNUP]: false,
     [links.PROFILE]: false,
     // pages
     [links.HOME]: true,

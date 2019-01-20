@@ -1,3 +1,5 @@
+import { responseStub } from './stubHelpers'
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,3 +25,18 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('fakeServer', handler => {
+  cy.on('window:before:load', (win) => {
+    const originalFunction = win.fetch
+
+    function fetch (path, { body, method }) {
+      if (path.includes('/graphql/') && method === 'POST') {
+        return responseStub(handler(JSON.parse(body)))
+      }
+      return originalFunction.apply(this, arguments)
+    }
+
+    cy.stub(win, 'fetch', fetch).as('fakeServerStub')
+  })
+})

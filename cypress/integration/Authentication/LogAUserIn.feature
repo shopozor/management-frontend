@@ -3,19 +3,12 @@
 @initial-release @login
 Fonctionnalité: Identifier un membre du staff
 
-  En tant qu'utilisateur enregistré dans le Shopozor avec des droits de gestion (i.e. "membre du staff"),  
+  En tant que membre du staff enregistré dans le Shopozor
   je veux pouvoir m'identifier avec un e-mail et un mot de passe,  
   afin d'obtenir les droits d'accès liés à mon compte. 
-  
-  Les utilisateurs suivants sont membres du "staff" (**TODO: ajouter lien vers le glossaire!**):
-
-    * Producteur
-    * Responsable
-    * Rex
-    * Softozor
 
   Contexte: L'utilisateur n'est pas identifié
-    Etant donné un utilisateur non identifié sur l'interface d'identification
+    Etant donné un utilisateur non identifié
 
   Scénario: Le membre du staff n'est pas encore enregistré
     Lorsqu'un utilisateur s'identifie avec un e-mail et un mot de passe invalides
@@ -34,7 +27,7 @@ Fonctionnalité: Identifier un membre du staff
 
   Plan du Scénario: Le membre du staff est enregistré et connaît son mot de passe
     Lorsqu'un <membre> s'identifie avec un e-mail et un mot de passe valides
-    Alors sa session sécurisée s'ouvre pour 1 mois
+    Alors sa session s'ouvre
     Et il ne peut plus accéder à l'interface d'identification
 
     Exemples: 

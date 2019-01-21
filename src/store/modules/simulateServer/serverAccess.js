@@ -1,11 +1,14 @@
 // get objects of owner, filtering by states
 export const getOrdersAmountsOfFormat = ({ formatId, requiredStates }) => {
   const orders = getOrdersOfFormat({ formatId, requiredStates })
-  return Object.keys(orders).reduce((amount, orderId) => amount + orders[orderId].amount, 0)
+  const amount = Object.keys(orders).reduce((amount, orderId) => amount + orders[orderId].amount, 0)
+  return amount
 }
 
 export const getOrdersOfFormat = ({ formatId, requiredStates }) => {
-  const owned = getFormat({ formatId }).ordersIds
+  const format = getFormat({ formatId })
+  if (!format) return {}
+  const owned = format.ordersIds
   return owned.reduce((ownedOrders, orderId) => {
     const order = getOrders()[orderId]
     if (!requiredStates || requiredStates.includes(order.state)) {

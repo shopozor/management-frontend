@@ -22,11 +22,6 @@ const createFormat = ({ productId, formatTempId, newFormat }) => {
     ordersSummary: {
       amount: 0,
       customerPrice: 0
-    },
-    densities: {
-      kg2lt: 1,
-      kg2piece: 2,
-      lt2piece: 2
     }
   }
   setFormat({ formatId, format })

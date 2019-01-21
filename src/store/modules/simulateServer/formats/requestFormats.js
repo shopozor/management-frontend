@@ -31,12 +31,12 @@ export const updateFormatsOfProduct = ({ userId, token, productId, formats }) =>
     setTimeout(() => {
       rejectIf.tokenIsInvalid('updateFormatsOfProduct', reject, { userId, token })
       rejectIf.userDoesNotOwnProduct('updateFormatsOfProduct', reject, { userId, productId })
-      rejectIf.someFormatsDoNotBelongToProduct('updateFormatsOfProduct', reject, { formats, productId })
+      // rejectIf.someFormatsDoNotBelongToProduct('updateFormatsOfProduct', reject, { formats, productId })
       // rejectIf.somePropInSomeObjectIsNotUpdatable('updateFormatsOfProduct', reject, { objects: formatsToCreate, objectType: 'format' })
       // rejectIf.somePropInSomeObjectIsNotUpdatable('updateFormatsOfProduct', reject, { objects: formatsToUpdate, objectType: 'format' })
-      rejectIf.someFormatAmountFallsBelowPendingOrders('updateFormatsOfProduct', reject, { formats })
+      // rejectIf.someFormatAmountFallsBelowPendingOrders('updateFormatsOfProduct', reject, { formats })
       // TODO: pouvoir planifier le retrait d'un format
-      rejectIf.someFormatWillDisappearAndHasPendingOrders('updateFormatsOfProduct', reject, { formats })
+      // rejectIf.someFormatWillDisappearAndHasPendingOrders('updateFormatsOfProduct', reject, { formats })
 
       manageFormats.updateFormatsOfProduct({ productId, formats })
       resolve({

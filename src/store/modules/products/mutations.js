@@ -1,8 +1,10 @@
 import types from '../../../types'
 
-export const storeProducts = (state, products) => { state.products = products }
-export const storeMyProducts = (state, myProducts) => { state.myProducts = myProducts }
-export const setEditedProduct = (state, product) => {
+export const storeProducts = (state, products) => {
+  state.products = { ...state.products, ...products }
+}
+
+export const setEditedProduct = (state, { product }) => {
   state.editedProduct = {
     productId: '',
     title: '',
@@ -17,9 +19,9 @@ export const setEditedProduct = (state, product) => {
     ...product,
     allowNonTrivialChanges: false
   }
-  // TODO: importer depuis state. Problème: Ce sont les getters et setters qui sont importés.
 }
-export const updateEditedProduct = (state, newProps) => {
+
+export const updateEditedProduct = (state, { newProps }) => {
   Object.entries(newProps).forEach(entry => {
     state.editedProduct[entry[0]] = entry[1]
   })
@@ -38,7 +40,7 @@ export const updateEditedFormats = (state, { newFormats }) => {
   state.editedFormats = { ...state.editedFormats, ...newFormats }
 }
 
-export const clearEditedProduct = (state) => {
+export const clearEdition = (state) => {
   state.editedProduct = {}
   state.editedFormats = {}
 }
@@ -64,10 +66,8 @@ export const createEditedFormat = (state) => {
     amount: 0,
     stockUnit: defaultUnit
   }
-  console.log(newFormat)
   updateEditedFormats(state, { newFormats: { [formatId]: newFormat } })
 
   const formatsIds = [...state.editedProduct.formatsIds, formatId]
   updateEditedProduct(state, { formatsIds })
-  console.log(state.editedProduct.formatsIds)
 }

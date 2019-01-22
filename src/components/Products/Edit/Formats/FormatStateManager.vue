@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
 import types from '../../../../types'
 import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
 
@@ -23,7 +23,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     del () {
       this.updateEditedFormat({formatId: this.formatId, newProps: {state: types.formatState.DELETED}})
     }

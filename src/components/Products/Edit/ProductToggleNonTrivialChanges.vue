@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'ProductToggleNonTrivialChanges',
@@ -17,7 +17,7 @@ export default {
     allowNonTrivialChanges () { return this.editedProduct.allowNonTrivialChanges }
   },
   methods: {
-    ...mapMutations(['updateEditedProduct']),
+    ...mapActions(['updateEditedProduct']),
     toggleNonTrivialChanges () {
       this.updateEditedProduct({allowNonTrivialChanges: !this.allowNonTrivialChanges})
     }

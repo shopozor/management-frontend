@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import types from '../../../../../types'
 import FormatDescriptionFree from './FormatDescriptionFree'
 import FormatDescriptionSizeUnit from './FormatDescriptionSizeUnit'
@@ -50,7 +50,7 @@ export default {
     customerPriceUnit () { return this.editedFormats[this.formatId]['customerPriceUnit'] }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },

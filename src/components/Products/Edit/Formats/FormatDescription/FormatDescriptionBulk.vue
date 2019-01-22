@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import UnitSelect from '../../../../Units/UnitSelect'
 import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
@@ -34,7 +34,7 @@ export default {
   },
   components: {UnitSelect},
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },

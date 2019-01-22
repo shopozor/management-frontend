@@ -15,7 +15,7 @@ export const getMyProducts = ({ commit, getters }) => {
     userId: getters.userId,
     token: getters.token
   })
-    .then(response => { commit('storeMyProducts', response.myProducts) })
+    .then(response => { commit('storeProducts', response.myProducts) })
     .catch(error => { console.log(error) })
 }
 
@@ -25,7 +25,7 @@ export const createProduct = ({ commit, getters }, { newProduct }) => {
     token: getters.token,
     newProduct
   })
-    .then(response => { commit('storeMyProducts', response.myProducts) })
+    .then(response => { commit('storeProducts', response.myProducts) })
     .catch(error => { console.log(error) })
 }
 
@@ -36,21 +36,8 @@ export const updateProduct = ({ commit, getters }, { productId, newProps }) => {
     productId,
     newProps
   })
-    .then(response => { commit('storeMyProducts', response.myProducts) })
+    .then(response => { commit('storeProducts', response.myProducts) })
     .catch(error => console.log(error))
-}
-
-export const setEditedProduct = ({ commit, getters }, { productId }) => {
-  const localProduct = getters.productsInInventory[productId]
-  if (localProduct) commit('setEditedProduct', localProduct)
-  else {
-    requestProduct.getMyProducts({
-      userId: getters.userId,
-      token: getters.token
-    })
-      .then(response => commit('setEditedProduct', response.myProducts[productId]))
-      .catch(error => console.log(error))
-  }
 }
 
 export const getFormats = ({ commit, getters }) => {
@@ -88,6 +75,31 @@ export const updateFormatsOfProduct = ({ commit, getters }, { productId, formats
   })
 }
 
+export const createEditedProduct = ({ commit }) => {
+  commit('createEditedProduct')
+}
+
+export const setEditedProduct = ({ commit, getters }, { productId }) => {
+  const localProduct = getters.productsInInventory[productId]
+  if (localProduct) commit('setEditedProduct', { product: localProduct })
+  else {
+    requestProduct.getMyProducts({
+      userId: getters.userId,
+      token: getters.token
+    })
+      .then(response => commit('setEditedProduct', { product: response.myProducts[productId] }))
+      .catch(error => console.log(error))
+  }
+}
+
+export const updateEditedProduct = ({ commit }, { newProps }) => {
+  commit('updateEditedProduct', { newProps })
+}
+
+export const createEditedFormat = ({ commit }) => {
+  commit('createEditedFormat')
+}
+
 export const setEditedFormats = ({ commit, getters }, { productId }) => {
   const localFormats = getters.formatsOfProduct(productId)
   if (localFormats) commit('setEditedFormats', { formats: localFormats })
@@ -97,7 +109,15 @@ export const setEditedFormats = ({ commit, getters }, { productId }) => {
       token: getters.token,
       productId
     })
-      .then(response => commit('setEditedFormats', { formats: response.formats }))
+      .then(response => commit('setEditedFormats', { formats: response.formatsOfProduct }))
       .catch(error => console.log(error))
   }
+}
+
+export const updateEditedFormat = ({ commit }, { formatId, newProps }) => {
+  commit('updateEditedFormat', { formatId, newProps })
+}
+
+export const clearEdition = ({ commit }) => {
+  commit('clearEdition')
 }

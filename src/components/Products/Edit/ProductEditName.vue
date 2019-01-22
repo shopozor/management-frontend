@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'ProductEditName',
@@ -36,14 +36,14 @@ export default {
       return this.editedProduct.productId
     },
     productTitle () {
-      return this.myProducts[this.productId].title
+      return this.editedProduct.title
     },
     productDescription () {
-      return this.myProducts[this.productId].description
+      return this.editedProduct.description
     }
   },
   methods: {
-    ...mapMutations(['updateEditedProduct'])
+    ...mapActions(['updateEditedProduct'])
   }
 }
 

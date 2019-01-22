@@ -5,7 +5,7 @@
       :class="{visibleState: isVisible, invisibleState: !isVisible}"
       v-if="!isDeleted">
       <q-card-actions class="row justify-between">
-        <product-visibility-manager :productId="productId" />
+        <!-- <product-visibility-manager :productId="productId" /> -->
         <q-btn
           class="q-ma-sm"
           icon="create"
@@ -29,7 +29,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import ProductDeleteManager from '../ProductDeleteManager'
-import ProductVisibilityManager from '../ProductVisibilityManager'
+// import ProductVisibilityManager from '../ProductVisibilityManager'
 import types from '../../../types'
 
 export default {
@@ -118,8 +118,8 @@ export default {
     }
   },
   components: {
-    ProductDeleteManager,
-    ProductVisibilityManager
+    ProductDeleteManager
+    // ProductVisibilityManager
   },
   created () {
     this.getFormatsOfProduct({productId: this.productId})

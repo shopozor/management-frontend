@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
 
 export default {
@@ -59,7 +59,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     add () {
       this.updateAmount(this.amount + 1)
     },

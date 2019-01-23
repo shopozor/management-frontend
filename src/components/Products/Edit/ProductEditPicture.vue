@@ -1,7 +1,7 @@
 <template>
   <q-card class="width-md height-md">
     <q-card-media>
-      <img class="q-px-md q-pb-sm" :src="editedProductImage" alt="product image">
+      <img class="q-px-md q-pb-sm" :src="editedProduct.image" alt="product image">
     </q-card-media>
     <q-card-actions align="around">
       <q-btn round size="lg" icon="camera_alt" color="primary" />
@@ -17,7 +17,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'ProductEditPicture',
   computed: {
-    ...mapGetters(['editedProductImage'])
+    ...mapGetters(['editedProduct'])
   }
 }
 </script>

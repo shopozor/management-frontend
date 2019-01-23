@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'NewFormat',
   methods: {
-    ...mapMutations(['createEditedFormat']),
+    ...mapActions(['createEditedFormat']),
     createFormat () {
       this.createEditedFormat()
     }

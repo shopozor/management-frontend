@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import PriceInput from '../../Price/PriceInput'
 import UnitSelect from '../../Units/UnitSelect'
 import types from '../../../types'
@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateEditedProduct']),
+    ...mapActions(['updateEditedProduct']),
     setDefaultCustomerPrice (value) {
       this.updateEditedProduct({ defaultCustomerPrice: value })
     },

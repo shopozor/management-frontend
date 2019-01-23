@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 // import ProductVisibilityManager from '../ProductVisibilityManager'
 import types from '../../../types'
 
@@ -60,7 +60,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateEditedProduct'])
+    ...mapActions(['updateEditedProduct'])
   }
 }
 </script>

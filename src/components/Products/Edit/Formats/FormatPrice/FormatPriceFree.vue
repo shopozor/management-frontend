@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import PriceInput from '../../../../Price/PriceInput'
 import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
@@ -46,7 +46,7 @@ export default {
     customerPrice () { return this.editedFormats[this.formatId].customerPrice }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     setCustomerPrice (value) {
       this.updateEditedFormat({
         formatId: this.formatId,

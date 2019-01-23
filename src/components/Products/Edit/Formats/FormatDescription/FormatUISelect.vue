@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import * as formatUI from '../../../../../types/formatUI'
 import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
@@ -38,7 +38,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     updateFormatUI (value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {formatUI: value}})
     }

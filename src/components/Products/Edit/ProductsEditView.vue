@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {mapActions, mapMutations, mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import ProductEditPicture from './ProductEditPicture'
 import ProductEditName from './ProductEditName'
 import ProductEditType from './ProductEditType'
@@ -41,8 +41,7 @@ export default {
     ...mapGetters(['editedProduct', 'editedFormats'])
   },
   methods: {
-    ...mapActions(['updateProduct', 'updateFormatsOfProduct']),
-    ...mapMutations(['clearEditedProduct']),
+    ...mapActions(['updateProduct', 'updateFormatsOfProduct', 'clearEditedProduct']),
     back () {
       this.jumpTo('inventory')
       this.clearEditedProduct()

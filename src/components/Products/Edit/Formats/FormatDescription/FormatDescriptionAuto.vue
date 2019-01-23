@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import UnitField from '../../../../Units/UnitField'
 import ProductDefaultPricePerUnitSelector from '../../ProductDefaultPricePerUnitSelector'
 import {convert, unitsAreCompatible, mainUnit, getPhysicalSize} from '../../../../Units/UnitsHelpers'
@@ -54,7 +54,7 @@ export default {
     physicalSize () { return getPhysicalSize({ unit: this.defaultUnit }) }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },

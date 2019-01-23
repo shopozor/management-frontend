@@ -21,7 +21,7 @@
 <script>
 import * as VueGoogleMaps from 'vue2-google-maps'
 import Vue from 'vue'
-import budzi from '../assets/budzi.png'
+import { SHOP_LOCATION } from '../assets/images'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -34,7 +34,7 @@ export default {
   name: 'PageMap',
   data () {
     return {
-      icon: budzi,
+      icon: SHOP_LOCATION,
       center: {lat: 46.67, lng: 6.8},
       markers: [{
         position: { lat: 46.775670, lng: 7.037666 }

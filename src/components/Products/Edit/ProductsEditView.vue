@@ -41,10 +41,10 @@ export default {
     ...mapGetters(['editedProduct', 'editedFormats'])
   },
   methods: {
-    ...mapActions(['updateProduct', 'updateFormatsOfProduct', 'clearEditedProduct']),
+    ...mapActions(['updateProduct', 'updateFormatsOfProduct', 'clearEdition']),
     back () {
       this.jumpTo('inventory')
-      this.clearEditedProduct()
+      this.clearEdition()
     },
     save () {
       this.updateProduct({

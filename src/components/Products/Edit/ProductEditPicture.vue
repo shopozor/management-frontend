@@ -13,11 +13,16 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import { NO_IMAGE } from 'assets/images'
 
 export default {
   name: 'ProductEditPicture',
   computed: {
-    ...mapGetters(['editedProduct'])
+    ...mapGetters(['editedProduct']),
+    image () {
+      if (this.product.image && this.product.image.length > 0) return this.product.image
+      else return NO_IMAGE
+    }
   }
 }
 </script>

@@ -32,6 +32,7 @@ export default {
   computed: {
     ...mapGetters(['editedProduct']),
     defaultCustomerPrice () {
+      console.log(this.editedProduct)
       if (!this.editedProduct.defaultCustomerPrice) this.setDefaultCustomerPrice(0)
       return this.editedProduct.defaultCustomerPrice
     },

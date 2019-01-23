@@ -1,7 +1,6 @@
 <template>
   <transition leave-active-class="animated bounceOutLeft">
     <q-card class="row justify-center relative-position" key="cards" v-if="show">
-      <div>{{formatId}}</div>
       <format-description :formatId="formatId" />
       <format-price :formatId="formatId" />
       <format-amount :formatId="formatId" />

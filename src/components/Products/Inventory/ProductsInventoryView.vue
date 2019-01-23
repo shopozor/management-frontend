@@ -40,9 +40,6 @@ export default {
     jumpToTrash () {
       this.jumpTo('trash')
     }
-  },
-  created () {
-    console.log(this.productsInInventory)
   }
 }
 </script>

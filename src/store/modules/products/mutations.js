@@ -53,9 +53,11 @@ export const createEditedFormat = (state) => {
   const defaultFormatUI = state.editedProduct.defaultFormatUI
   const defaultUnit = state.editedProduct.defaultUnit
   const formatId = Date.now().toString()
+  const productId = state.editedProduct.productId
   const newFormat = {
     isNew: true,
     formatId,
+    productId,
     description: '',
     size: 0,
     sizeUnit: defaultUnit,
@@ -69,5 +71,5 @@ export const createEditedFormat = (state) => {
   updateEditedFormats(state, { newFormats: { [formatId]: newFormat } })
 
   const formatsIds = [...state.editedProduct.formatsIds, formatId]
-  updateEditedProduct(state, { formatsIds })
+  updateEditedProduct(state, { newProps: { formatsIds } })
 }

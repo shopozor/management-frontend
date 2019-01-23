@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapMutations, mapGetters} from 'vuex'
 import ProductEditPicture from './ProductEditPicture'
 import ProductEditName from './ProductEditName'
 import ProductEditType from './ProductEditType'
@@ -42,6 +42,11 @@ export default {
   },
   methods: {
     ...mapActions(['updateProduct', 'updateFormatsOfProduct']),
+    ...mapMutations(['clearEditedProduct']),
+    back () {
+      this.jumpTo('inventory')
+      this.clearEditedProduct()
+    },
     save () {
       this.updateProduct({
         productId: this.editedProduct.productId,
@@ -51,9 +56,9 @@ export default {
         productId: this.editedProduct.productId,
         formats: this.editedFormats
       })
-        .then(() => this.jumpTo('inventory'))
+        .then(() => this.back())
     },
-    cancel () { this.jumpTo('inventory') }
+    cancel () { this.back() }
   }
 }
 </script>

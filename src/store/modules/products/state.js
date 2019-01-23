@@ -12,5 +12,7 @@ export default {
     defaultFormatUI: '',
     defaultCustomerPrice: 0,
     defaultUnit: ''
-  }
+  },
+  formats: {},
+  editedFormats: {}
 }

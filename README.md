@@ -2,6 +2,15 @@
 
 > WIP
 
+## VSCode configuration
+
+Make sure you run the script
+
+```
+.vscode/install-extensions.sh
+```
+
+
 ## Test identifiers
 
 * client@budzons.ch

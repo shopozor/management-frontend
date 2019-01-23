@@ -1,7 +1,6 @@
 <template>
   <transition leave-active-class="animated bounceOutLeft">
     <q-card class="row justify-center relative-position" key="cards" v-if="show">
-      <div>{{formatId}}</div>
       <format-description :formatId="formatId" />
       <format-price :formatId="formatId" />
       <format-amount :formatId="formatId" />
@@ -17,7 +16,7 @@ import FormatPrice from './FormatPrice/FormatPrice'
 import FormatAmount from './FormatAmount'
 import FormatStateManager from './FormatStateManager'
 import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
-import types from '../../../../types'
+import types from 'src/types'
 
 export default {
   name: 'ProductEditFormat',

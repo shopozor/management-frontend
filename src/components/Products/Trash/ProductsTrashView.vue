@@ -5,7 +5,7 @@
       <product-trash-card
         v-for="(product, productId) in productsInTrash"
         :key="productId"
-        v-bind="product" />
+        :productId="productId" />
       <q-btn
         class="q-ma-lg fixed-bottom-right shadow-6"
         icon="kitchen"
@@ -37,6 +37,9 @@ export default {
       this.jumpTo('inventory')
     }
   },
-  components: {ProductTrashCard}
+  components: {ProductTrashCard},
+  created () {
+    console.log(this.productsInTrash)
+  }
 }
 </script>

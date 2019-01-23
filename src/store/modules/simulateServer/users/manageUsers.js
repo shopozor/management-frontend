@@ -1,5 +1,5 @@
 import { getUser, updateUser, setUser } from '../serverAccess'
-import types from '../../../../types'
+import types from 'src/types'
 
 export const generateToken = ({ userId, email }) => {
   const user = getUser({ userId, email })

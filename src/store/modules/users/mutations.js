@@ -1,4 +1,4 @@
-import types from '../../../types'
+import types from 'src/types'
 
 export function storeAuthorizations (state, payload) {
   state.email = payload.email

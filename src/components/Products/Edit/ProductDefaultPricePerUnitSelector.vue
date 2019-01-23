@@ -25,10 +25,10 @@
 import {mapGetters, mapActions} from 'vuex'
 import PriceInput from '../../Price/PriceInput'
 import UnitSelect from '../../Units/UnitSelect'
-import types from '../../../types'
+import types from 'src/types'
 
 export default {
-  name: 'DefaultPricePerUnitSelector',
+  name: 'ProductDefaultPricePerUnitSelector',
   computed: {
     ...mapGetters(['editedProduct']),
     defaultCustomerPrice () {
@@ -43,10 +43,10 @@ export default {
   methods: {
     ...mapActions(['updateEditedProduct']),
     setDefaultCustomerPrice (value) {
-      this.updateEditedProduct({ defaultCustomerPrice: value })
+      this.updateEditedProduct({ newProps: { defaultCustomerPrice: value } })
     },
     setDefaultUnit (value) {
-      this.updateEditedProduct({ defaultUnit: value })
+      this.updateEditedProduct({ newProps: { defaultUnit: value } })
     }
   },
   components: {PriceInput, UnitSelect}

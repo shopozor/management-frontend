@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import types from '../../../../../types'
+import types from 'src/types'
 import FormatPriceAuto from './FormatPriceAuto'
 import FormatPriceFree from './FormatPriceFree'
 import { mapGetters } from 'vuex'

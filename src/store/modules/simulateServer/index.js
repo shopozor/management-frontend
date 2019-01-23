@@ -2,7 +2,7 @@ import { setServer, getUser, getFormats } from './serverAccess'
 import { createUser, authorize } from './users/manageUsers'
 import { createProduct } from './products/manageProducts'
 import { updateFormatsOfProduct } from './formats/manageFormats'
-import types from '../../../types'
+import types from 'src/types'
 import { orderFormats, payOrder } from './orders/manageOrders'
 
 export const initFakeServer = () => {

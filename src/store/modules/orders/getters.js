@@ -1,4 +1,4 @@
-import types from '../../../types'
+import types from 'src/types'
 
 export const myOrdersToReceive = state => state.myOrdersToReceive
 export const myOrdersToDeliver = state => state.myOrdersToDeliver

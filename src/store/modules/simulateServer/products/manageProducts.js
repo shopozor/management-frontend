@@ -1,6 +1,6 @@
 import * as server from '../serverAccess'
 import { filterUpdatableProps } from '../validate'
-import types from '../../../../types'
+import types from 'src/types'
 
 export const updateProduct = ({ productId, newProps }) => {
   const filteredProps = filterUpdatableProps({ object: newProps, type: 'product' })

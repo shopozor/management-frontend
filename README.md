@@ -50,7 +50,7 @@ npx cypress open -e TAGS='@focus'
 It is pretty handy to get the skeleton code for each step of a feature file. That can be reached with the following command for the `LogAUserIn` feature
 
 ```
-npx cucumber-js cypress/integration/Authentication/LogAUserIn/LogAUserIn.feature
+npx cucumber-js cypress/integration/Authentication/LogAUserIn.feature
 ```
 
 which outputs for example

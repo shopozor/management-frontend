@@ -1,9 +1,10 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
-const moment = require( 'moment' )
+const moment = require('moment')
 
-import { connectWithUserCredentials, personaToUserData } from './Helpers'
+import { connectWithUserCredentials } from './Helpers'
 import './SessionDurationType'
 import './PersonaType'
+import { injectResponseFixtureIfFaked } from '../../common/fakeServer'
 
 before(() => {
   cy.log(
@@ -15,6 +16,8 @@ beforeEach(() => {
   cy.log('This will run before every scenario of LogAUserIn.feature test, but NEVER for other feature files')
 })
 
+let loginMoment
+
 Given('un utilisateur non identifié', () => {
   cy.getCookie('user_session').should('not.exist')
 })
@@ -22,47 +25,34 @@ Given('un utilisateur non identifié', () => {
 When(
   "un utilisateur s'identifie avec un e-mail et un mot de passe invalides",
   function () {
-    cy.fakeServer(({ operationName, variables }) => {
-      return { 
-        data:  {
-          tokenCreate: {
-            token: null,
-            user: null,
-            errors: {
-              field: null,
-              message: "Please, enter valid credentials"
-            } 
-          }
-        }
-      }
-    })
+    injectResponseFixtureIfFaked('Authentication/LogAUserIn/Responses/InvalidCredentials')
     cy.visit('/login')
-    const user = {
-      email: 'invalid@shopozor.ch',
-      password: 'password'
-    }
-    connectWithUserCredentials(user.email, user.password)
+    cy.fixture('Authentication/LogAUserIn/Credentials/InvalidEmailAndPassword')
+      .then(user => connectWithUserCredentials(user.email, user.password))
   }
 )
 
 When(
-  "un {Persona} s'identifie avec un e-mail et un mot de passe valides",
+  "un {PersonaType} s'identifie avec un e-mail et un mot de passe valides",
   function (persona) {
-    const user = personaToUserData(this.users, persona)
-    connectWithUserCredentials(user.email, user.password)
+    injectResponseFixtureIfFaked(`Authentication/LogAUserIn/Responses/${persona}`)
+    cy.fixture(`Authentication/LogAUserIn/Credentials/${persona}`)
+      .then(user => connectWithUserCredentials(user.email, user.password))
     loginMoment = moment()
   }
 )
 
 When(
-  "un {Persona} s'identifie avec un e-mail valide et un mot de passe invalide",
+  "un {PersonaType} s'identifie avec un e-mail valide et un mot de passe invalide",
   function (persona) {
-    const user = personaToUserData(this.users, persona)
-    connectWithUserCredentials(user.email, user.password + 'a')
+    injectResponseFixtureIfFaked('Authentication/LogAUserIn/Responses/InvalidCredentials')
+    cy.fixture(`Authentication/LogAUserIn/Credentials/${persona}`)
+      .then(user => connectWithUserCredentials(user.email, user.password + 'a'))
   }
 )
 
 Then("sa session s'ouvre", () => {
+  // TODO: decode the token and get the expiry!
   const cookie = cy.getCookie('user_session')
   console.log('cookie = ', cookie.expiry)
   cookie

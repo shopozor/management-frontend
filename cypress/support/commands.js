@@ -26,17 +26,26 @@ import { responseStub } from './stubHelpers'
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('fakeServer', handler => {
+const isGraphQL = (path, method) => path.includes('/graphql/') && method === 'POST'
+
+Cypress.Commands.add('fakeGraphqlResponse', response => {
   cy.on('window:before:load', (win) => {
     const originalFunction = win.fetch
 
     function fetch (path, { body, method }) {
-      if (path.includes('/graphql/') && method === 'POST') {
-        return responseStub(handler(JSON.parse(body)))
+      if (isGraphQL(path, method)) {
+        return responseStub(response)
       }
       return originalFunction.apply(this, arguments)
     }
 
-    cy.stub(win, 'fetch', fetch).as('fakeServerStub')
+    cy.stub(win, 'fetch', fetch).as('fetchStub')
   })
+})
+
+Cypress.Commands.add('fakeGraphqlResponseWithFixture', fixture => {
+  cy.fixture(fixture)
+    .then(json => {
+      cy.fakeGraphqlResponse(json)
+    })
 })

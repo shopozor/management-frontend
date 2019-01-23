@@ -1,0 +1,14 @@
+{
+  "data": {
+    "login": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InphZGlndXNAYnVkem9ucy5jaCIsImV4cCI6MTU0ODA4OTM3Nywib3JpZ0lhdCI6MTU0ODA4OTA3N30.VYWWvC26wwIaORbvVgY76wcNTev39XCYRtgQtVuHQZA",
+      "user": {
+        "id": "OinqKuDA",
+        "isStaff": true,
+        "email": "softozor@budzons.ch",
+        "permissions": []
+      },
+      "errors": null
+    }
+  }
+}

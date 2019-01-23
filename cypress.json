@@ -1,4 +1,7 @@
 {
   "baseUrl": "http://localhost:4000/#",
-  "ignoreTestFiles": "*.js"
+  "ignoreTestFiles": "*.js",
+  "env": {
+    "fakeGraphql": true
+  }
 }

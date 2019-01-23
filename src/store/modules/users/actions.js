@@ -16,6 +16,8 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
   // if this doesn't work, follow https://markus.oberlehner.net/blog/combining-graphql-and-vuex/
   // this follows https://akryum.github.io/vue-apollo/api/
   // TODO: the mutation needs to go to a separate file!
+  // TODO: the mutation must be named login and be passed the isStaff = true flag
+  // TODO: errors must be handled here too (in case the login method fails, user and token will be null)
   apolloClient
     .mutate({
       mutation: gql`

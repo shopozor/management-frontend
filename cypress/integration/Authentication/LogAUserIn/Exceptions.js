@@ -1,7 +1,3 @@
-export function UnsupportedDurationUnit (message) {
-  this.message = message
-}
-
-export function UnsupportedPersona (message) {
+export function UnsupportedDurationUnit(message) {
   this.message = message
 }

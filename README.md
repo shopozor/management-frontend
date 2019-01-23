@@ -14,22 +14,16 @@ password: Budzonnerie1
 
 ## Acceptance testing
 
-To work efficiently with Cypress, I recommend you install it globally:
-
-```
-npm -g i cypress
-```
-
 To run the tests headlessly (without GUI), run
 
 ```
-cypress run
+npx cypress run
 ```
 
 To run the tests and manage them with the GUI, run
 
 ```
-cypress open
+npx cypress open
 ```
 
 To run only a specific scenario or a specific feature
@@ -38,11 +32,11 @@ To run only a specific scenario or a specific feature
 2. launch either
 
 ```
-cypress run -e TAGS='@focus'
+npx cypress run -e TAGS='@focus'
 ```
 
 or
 
 ```
-cypress open -e TAGS='@focus'
+npx cypress open -e TAGS='@focus'
 ```

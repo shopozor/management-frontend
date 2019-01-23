@@ -25,3 +25,6 @@ generateDoc.txt
 # Cypress test results
 /cypress/screenshots
 /cypress/videos
+
+# generated spec
+/specification/

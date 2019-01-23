@@ -20,7 +20,7 @@ const frToEnDurationUnit = fr => {
 }
 
 defineParameterType({
-  name: 'SessionDuration',
+  name: 'SessionDurationType',
   regexp: new RegExp(/(\d+) (.+)/),
   transformer: (amount, unit) => {
     return duration(parseInt(amount), frToEnDurationUnit(unit))

@@ -3,5 +3,7 @@
   "ignoreTestFiles": "*.js",
   "env": {
     "fakeGraphql": true
-  }
+  },
+  "videoUploadOnPasses": true,
+  "video": true
 }

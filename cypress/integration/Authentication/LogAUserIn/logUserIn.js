@@ -1,7 +1,7 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
-const moment = require('moment')
+import { duration } from 'moment'
 
-import { connectWithUserCredentials } from './Helpers'
+import { connectWithUserCredentials, getTokenDuration } from './Helpers'
 import './SessionDurationType'
 import './PersonaType'
 import { injectResponseFixtureIfFaked } from '../../common/fakeServer'
@@ -15,8 +15,6 @@ before(() => {
 beforeEach(() => {
   cy.log('This will run before every scenario of LogAUserIn.feature test, but NEVER for other feature files')
 })
-
-let loginMoment
 
 Given('un utilisateur non identifié', () => {
   cy.getCookie('user_session').should('not.exist')
@@ -38,7 +36,6 @@ When(
     injectResponseFixtureIfFaked(`Authentication/LogAUserIn/Responses/${persona}`)
     cy.fixture(`Authentication/LogAUserIn/Credentials/${persona}`)
       .then(user => connectWithUserCredentials(user.email, user.password))
-    loginMoment = moment()
   }
 )
 
@@ -51,31 +48,21 @@ When(
   }
 )
 
-Then("sa session s'ouvre", () => {
-  // TODO: decode the token and get the expiry!
+Then("sa session s'ouvre pour {SessionDurationType}", (expectedDuration) => {
   const cookie = cy.getCookie('user_session')
-  console.log('cookie = ', cookie.expiry)
-  cookie
-    .should('exist')
-    .and('have.property', 'expiry')
-  if (cookie.expiry !== undefined) {
-    const expiryDate = moment(cookie.expiry)
-    expect(
-      moment.duration(expiryDate.diff(loginMoment)).asSeconds()
-    ).to.be.closeTo(duration.asSeconds(), 60)
-  }
+  const tokenDuration = getTokenDuration(cookie.value)
+  expect(duration(tokenDuration.diff(expectedDuration)).asSeconds()).to.be.closeTo(0, 10)
 })
 
 Then(
   "il obtient un message d'erreur stipulant que ses identifiants sont incorrects",
   () => {
     cy.get('.incorrectIdentifiers')
-      .should('exist')
-      .and('be.visible')
+      .should('be.visible')
   }
 )
 
 Then("il ne peut plus accéder à l'interface d'identification", () => {
   cy.visit('/login')
-  cy.url().should('not.match', '/login')
+  cy.url().should('not.include', '/login')
 })

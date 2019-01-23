@@ -27,7 +27,7 @@ Fonctionnalité: Identifier un membre du staff
 
   Plan du Scénario: Le membre du staff est enregistré et connaît son mot de passe
     Lorsqu'un <membre> s'identifie avec un e-mail et un mot de passe valides
-    Alors sa session s'ouvre
+    Alors sa session s'ouvre pour 1 mois
     Et il ne peut plus accéder à l'interface d'identification
 
     Exemples: 

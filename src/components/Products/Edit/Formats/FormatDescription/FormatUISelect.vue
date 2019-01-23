@@ -13,7 +13,7 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
-import * as formatUI from '../../../../../types/formatUI'
+import * as formatUI from 'src/types/formatUI'
 import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
 export default {

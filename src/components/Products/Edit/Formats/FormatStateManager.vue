@@ -10,7 +10,7 @@
 
 <script>
 import {mapActions} from 'vuex'
-import types from '../../../../types'
+import types from 'src/types'
 import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
 
 export default {

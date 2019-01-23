@@ -1,5 +1,5 @@
-import * as links from '../types/links'
-import * as auth from '../types/authorization'
+import * as links from 'src/types/links'
+import * as auth from 'src/types/authorization'
 
 const access = {
   [auth.NOT_CONNECTED]: {

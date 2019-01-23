@@ -34,7 +34,7 @@
 import {mapGetters} from 'vuex'
 import access from '../../router/access'
 import pages from '../../router/pages'
-import types from '../../types'
+import types from 'src/types'
 import PageLink from './PageLink'
 
 export default {

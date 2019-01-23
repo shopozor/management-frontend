@@ -1,5 +1,5 @@
 import { setOrder, updateOrder, getUser, updateUser, getProduct, getFormat, updateFormat, updateProduct } from '../serverAccess'
-import types from '../../../../types'
+import types from 'src/types'
 
 export const payOrder = ({ orderId }) => {
   console.log('pay', orderId)

@@ -20,7 +20,7 @@
         <span slot="subtitle">{{ summary }}</span>
       </q-card-title>
       <q-card-media>
-        <img :src="image" alt="product image"/>
+        <img :src="showImage" alt="product image"/>
       </q-card-media>
     </q-card>
   </transition>
@@ -30,8 +30,8 @@
 import { mapGetters, mapActions } from 'vuex'
 import ProductDeleteManager from '../ProductDeleteManager'
 // import ProductVisibilityManager from '../ProductVisibilityManager'
-import types from '../../../types'
-import { NO_IMAGE } from '../../../assets/images'
+import types from 'src/types'
+import ShowImageMixin from 'assets/images/ShowImageMixin'
 
 export default {
   name: 'ProductInventoryCard',
@@ -51,8 +51,7 @@ export default {
       return this.myProducts[this.productId]
     },
     image () {
-      if (this.product.image && this.product.image.length > 0) return this.product.image
-      else return NO_IMAGE
+      return this.product.image
     },
     summary () {
       const paid = this.pendingOrdersOfProductSummary({ productId: this.productId }).paid
@@ -84,6 +83,7 @@ export default {
     ProductDeleteManager
     // ProductVisibilityManager
   },
+  mixins: [ShowImageMixin],
   created () {
     this.getFormatsOfProduct({productId: this.productId})
   }

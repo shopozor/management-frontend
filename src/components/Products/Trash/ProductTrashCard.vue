@@ -4,13 +4,13 @@
       class="product-trash-card q-ma-sm"
       v-if="isDeleted">
       <q-card-media>
-        <img :src="image" alt="product image"/>
+        <img :src="showImage" alt="product image"/>
       </q-card-media>
       <q-card-title>
-        {{ title }}
+        {{ product.title }}
       </q-card-title>
       <q-card-main>
-        <div>{{ description }}</div>
+        <div>{{ product.description }}</div>
       </q-card-main>
       <q-card-actions align="center">
         <q-btn icon="restore_from_trash" round color="positive" size="xl" @click="restore" />
@@ -20,8 +20,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import types from '../../../types'
+import { mapGetters, mapActions } from 'vuex'
+import types from 'src/types'
+import ShowImageMixin from 'assets/images/ShowImageMixin'
 
 export default {
   name: 'ProductTrashCard',
@@ -29,56 +30,18 @@ export default {
     productId: {
       type: String,
       required: true
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      default: 'Pas de description.'
-    },
-    image: {
-      type: String,
-      default: function () {
-        return 'assets/no_image.png'
-      }
-    },
-    conservationDaysAfterSale: {
-      type: Number
-    },
-    conservationMethod: {
-      type: String
-    },
-    categories: {
-      type: String,
-      required: true
-    },
-    state: {
-      type: String,
-      required: true
-    },
-    defaultFormatUI: {
-      type: String
-    },
-    defaultCustomerPrice: {
-      type: Number
-    },
-    defaultUnit: {
-      type: String
-    },
-    formatsIds: {
-      type: Array,
-      required: true
-    },
-    ordersSummary: {
-      type: Object,
-      required: true
     }
   },
   computed: {
+    ...mapGetters(['myProducts']),
+    product () {
+      return this.myProducts[this.productId]
+    },
+    image () {
+      return this.product.image
+    },
     isDeleted () {
-      return this.state === types.productState.DELETED
+      return this.product.state === types.productState.DELETED
     }
   },
   methods: {
@@ -86,7 +49,8 @@ export default {
     restore () {
       this.updateProduct({productId: this.productId, newProps: {state: types.productState.INVISIBLE}})
     }
-  }
+  },
+  mixins: [ShowImageMixin]
 }
 </script>
 

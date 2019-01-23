@@ -14,7 +14,6 @@ yarn.lock
 
 # Editor directories and files
 .idea
-.vscode
 *.suo
 *.ntvs*
 *.njsproj
@@ -22,4 +21,7 @@ yarn.lock
 
 doc
 generateDoc.txt
-cypress/fixtures/users.json
+
+# Cypress test results
+/cypress/screenshots
+/cypress/videos

@@ -3,6 +3,23 @@ import { apolloClient } from '../../../plugins/apollo'
 
 import gql from 'graphql-tag'
 
+const LogIn = gql`
+  mutation LogIn($email: String!, $password: String!) {
+    tokenCreate(email: $email, password: $password) {
+      token
+      errors {
+        field
+        message
+      }
+      user {
+        id
+        email
+        isStaff
+      }
+    }
+  }
+`
+
 export function signup ({ commit }, { email, password }) {
   request
     .signup({ email, password })
@@ -20,22 +37,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
   // TODO: errors must be handled here too (in case the login method fails, user and token will be null)
   apolloClient
     .mutate({
-      mutation: gql`
-        mutation LogIn($email: String!, $password: String!) {
-          tokenCreate(email: $email, password: $password) {
-            token
-            errors {
-              field
-              message
-            }
-            user {
-              id
-              email
-              isStaff
-            }
-          }
-        }
-      `,
+      mutation: LogIn,
       variables: {
         email,
         password

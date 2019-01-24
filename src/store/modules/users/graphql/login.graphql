@@ -1,0 +1,17 @@
+# The mutation must be passed flag isStaff = true
+# The mutation has name login and not tokenCreate
+mutation LogIn($email: String!, $password: String!) {
+  tokenCreate(email: $email, password: $password) {
+    token
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      email
+      isStaff
+      permissions
+    }
+  }
+}

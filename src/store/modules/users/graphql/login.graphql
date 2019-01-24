@@ -1,0 +1,17 @@
+mutation LogIn($email: String!, $password: String!) {
+  tokenCreate(email: $email, password: $password) {
+    token
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      email
+      isStaff
+      permissions {
+        code
+      }
+    }
+  }
+}

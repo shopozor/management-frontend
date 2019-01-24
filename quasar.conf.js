@@ -37,6 +37,12 @@ module.exports = function (ctx) {
             { loader: 'yaml-loader' }
           ]
         })
+
+        cfg.module.rules.push({
+          test: /\.(graphql)$/,
+          loader: 'graphql-tag/loader',
+          exclude: /(node_modules)/
+        })
       }
     },
     devServer: {

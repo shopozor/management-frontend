@@ -1,7 +1,7 @@
 import * as request from '../simulateServer/users/requestUsers'
 import { apolloClient } from '../../../plugins/apollo'
 
-import loginMutation from './graphql/login.graphql'
+import LogIn from './graphql/login.graphql'
 
 export function signup ({ commit }, { email, password }) {
   request
@@ -15,7 +15,7 @@ export function signup ({ commit }, { email, password }) {
 export function login ({ commit }, { email, password, stayLoggedIn }) {
   apolloClient
     .mutate({
-      mutation: loginMutation,
+      mutation: LogIn,
       variables: {
         email,
         password

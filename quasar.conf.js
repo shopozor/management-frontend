@@ -39,9 +39,9 @@ module.exports = function (ctx) {
         })
 
         cfg.module.rules.push({
-          test: /\.(graphql|gql)$/,
-          exclude: /node_modules/,
-          loader: 'graphql-tag/loader'
+          test: /\.(graphql)$/,
+          loader: 'graphql-tag/loader',
+          exclude: /(node_modules)/
         })
       }
     },

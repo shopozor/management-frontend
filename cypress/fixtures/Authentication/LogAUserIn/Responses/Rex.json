@@ -6,7 +6,11 @@
         "id": "KYiFdanQ",
         "isStaff": true,
         "email": "rex@budzons.ch",
-        "permissions": []
+        "permissions": [
+          {
+            "code": "rex"
+          }
+        ]
       },
       "errors": null
     }

@@ -6,7 +6,11 @@
         "id": "jOUINadT",
         "email": "responsable@budzons.ch",
         "isStaff": true,
-        "permissions": []
+        "permissions": [
+          {
+            "code": "manager"
+          }
+        ]
       },
       "errors": null
     }

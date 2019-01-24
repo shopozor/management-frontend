@@ -6,7 +6,11 @@
         "id": "OinqKuDA",
         "isStaff": true,
         "email": "softozor@budzons.ch",
-        "permissions": []
+        "permissions": [
+          {
+            "code": "softozor"
+          }
+        ]
       },
       "errors": null
     }

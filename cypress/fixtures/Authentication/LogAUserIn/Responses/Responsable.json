@@ -8,7 +8,7 @@
         "isStaff": true,
         "permissions": [
           {
-            "code": "manager"
+            "code": "MANAGE_PRODUCERS"
           }
         ]
       },

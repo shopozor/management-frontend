@@ -8,7 +8,19 @@
         "email": "softozor@budzons.ch",
         "permissions": [
           {
-            "code": "softozor"
+            "code": "MANAGE_STAFF"
+          },
+          {
+            "code": "MANAGE_USERS"
+          },
+          {
+            "code": "MANAGE_PRODUCERS"
+          },
+          {
+            "code": "MANAGE_MANAGERS"
+          },
+          {
+            "code": "MANAGE_REX"
           }
         ]
       },

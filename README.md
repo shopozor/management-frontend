@@ -23,6 +23,21 @@ password: Budzonnerie1
 
 ## Acceptance testing
 
+### Fixtures setup
+
+The set of fixtures used in our acceptance tests is shared among our various applications' codebases. That is why they come as a submodule. To load that fixtures submodule, upon repo cloning, you need to 
+
+```
+git submodule init
+git submodule update
+```
+
+During development, new fixture data will be added to the fixtures repo. Upon a `git pull` on the `shopozor-management-frontend`, those new fixtures will not be pulled automatically. You will also need to do a 
+
+```
+git submodule update
+```
+
 ### Basic run
 
 To run the tests headlessly (without GUI), run

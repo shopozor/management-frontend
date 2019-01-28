@@ -19,13 +19,22 @@ export const getMyProducts = ({ commit, getters }) => {
     .catch(error => { console.log(error) })
 }
 
-export const createProduct = ({ commit, getters }, { newProduct }) => {
+export const createProduct = ({ commit, getters }) => {
+  const newProduct = {
+    title: ''
+  }
+
+  commit('setEditedProduct', { product: newProduct })
+
   requestProduct.createProduct({
     userId: getters.userId,
     token: getters.token,
     newProduct
   })
-    .then(response => { commit('storeProducts', response.myProducts) })
+    .then(response => {
+      commit('storeProducts', response.product)
+      commit('updateEditedProduct', { newProps: response.product })
+    })
     .catch(error => { console.log(error) })
 }
 

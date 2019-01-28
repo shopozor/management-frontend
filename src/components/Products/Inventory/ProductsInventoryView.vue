@@ -14,14 +14,14 @@
       v-show="!productsTrashIsEmpty"
       @click="jumpToTrash"
       />
-    <q-page-sticky position="bottom-right">
-      <q-btn class="q-ma-md shadow-12" icon="add" round color="primary" size="xl" />
+    <q-page-sticky position="bottom">
+      <q-btn class="q-ma-md shadow-12" icon="add" round color="primary" size="xl" @click="newProduct" />
     </q-page-sticky>
   </q-page>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import ProductInventoryCard from './ProductInventoryCard'
 
 export default {
@@ -37,6 +37,11 @@ export default {
     ...mapGetters(['productsTrashIsEmpty', 'productsInInventory'])
   },
   methods: {
+    ...mapActions(['createProduct']),
+    newProduct () {
+      this.createProduct()
+      this.jumpTo('edit')
+    },
     jumpToTrash () {
       this.jumpTo('trash')
     }

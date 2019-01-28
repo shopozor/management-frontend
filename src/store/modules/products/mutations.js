@@ -22,6 +22,7 @@ export const setEditedProduct = (state, { product }) => {
 }
 
 export const updateEditedProduct = (state, { newProps }) => {
+  console.log(newProps)
   Object.entries(newProps).forEach(entry => {
     state.editedProduct[entry[0]] = entry[1]
   })

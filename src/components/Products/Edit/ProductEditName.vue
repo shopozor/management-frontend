@@ -5,8 +5,8 @@
         <q-input
           :float-label="$t('products.title')"
           :placeholder="productTitle"
-          :value="editedProduct.title"
-          @input="updateEditedProduct({title: $event})"
+          :value="productTitle"
+          @input="updateEditedProduct({ newProps: {title: $event} })"
         ></q-input>
       </q-field>
       <br >
@@ -17,8 +17,8 @@
         type="textarea"
         :max-height="190"
         rows="8"
-        :value="editedProduct.description"
-        @input="updateEditedProduct({description: $event})"
+        :value="productDescription"
+        @input="updateEditedProduct({ newProps: {description: $event} })"
       ></q-input>
       </q-field>
     </q-card-main>

@@ -1,5 +1,6 @@
 import * as request from '../simulateServer/users/requestUsers'
 import { apolloClient } from '../../../plugins/apollo'
+import * as cookie from '../../cookie'
 
 import LogIn from './graphql/login.graphql'
 
@@ -33,52 +34,70 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
         userId,
         authorizations: permissions
       })
-      stayLoggedIn ? saveToken(userId, token) : removeToken()
+      stayLoggedIn ? saveToken({ email, userId, token }) : removeToken()
       this.$router.back()
     })
     .catch(error => commit('error', error))
 }
 
-export function getAuthorizations ({ commit, getters }) {
-  request
-    .getAuthorizations({
-      userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token')
+export function getAuthorizations ({ commit }) {
+  // request
+  //   .getAuthorizations({
+  //     userId: cookie.get({ cookieId: 'userId' }),
+  //     token: cookie.get({ cookieId: 'token' })
+  //   })
+  //   .then(response => {
+  //     commit('storeAuthorizations', {
+  //       email: response.email,
+  //       token: response.token,
+  //       userId: response.userId,
+  //       authorizations: response.authorizations
+  //     })
+  //   })
+  //   .catch(error => {
+  //     commit('error', error)
+  //   })
+  const token = cookie.get({ cookieId: 'token' })
+  const userId = cookie.get({ cookieId: 'userId' })
+  const email = cookie.get({ cookieId: 'email' })
+  if (token && userId && email) {
+    commit('storeAuthorizations', {
+      email,
+      userId,
+      token,
+      authorizations: []
     })
-    .then(response => {
-      commit('storeAuthorizations', {
-        email: response.email,
-        token: response.token,
-        userId: response.userId,
-        authorizations: response.authorizations
-      })
-    })
-    .catch(error => {
-      commit('error', error)
-    })
+  } else {
+    commit('logout')
+    removeToken()
+  }
 }
 
 export function logout ({ commit, getters }) {
-  request
-    .logout({
-      userId: getters.userId,
-      token: getters.token
-    })
-    .then(response => {
-      commit('logout')
-      removeToken()
-    })
-    .catch(error => {
-      commit('error', error)
-    })
+  // request
+  //   .logout({
+  //     userId: getters.userId,
+  //     token: getters.token
+  //   })
+  //   .then(response => {
+  //     commit('logout')
+  //     removeToken()
+  //   })
+  //   .catch(error => {
+  //     commit('error', error)
+  //   })
+  commit('logout')
+  removeToken()
 }
 
-function saveToken (userId, token) {
-  localStorage.setItem('userId', userId)
-  localStorage.setItem('token', token)
+function saveToken ({ email, userId, token }) {
+  cookie.set({ cookieId: 'email', cookieValue: email, cookieDuration: 365 })
+  cookie.set({ cookieId: 'userId', cookieValue: userId, cookieDuration: 365 })
+  cookie.set({ cookieId: 'token', cookieValue: token, cookieDuration: 365 })
 }
 
 function removeToken () {
-  localStorage.removeItem('userId')
-  localStorage.removeItem('token')
+  cookie.del({ cookieId: 'email' })
+  cookie.del({ cookieId: 'userId' })
+  cookie.del({ cookieId: 'token' })
 }

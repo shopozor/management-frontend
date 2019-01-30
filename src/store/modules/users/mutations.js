@@ -1,10 +1,11 @@
-import types from '../../../types'
+import types from 'src/types'
 
 export function storeAuthorizations (state, payload) {
   state.email = payload.email
   state.userId = payload.userId
   state.token = payload.token
-  state.authorizations = payload.authorizations
+  // state.authorizations = payload.authorizations
+  state.authorizations = [types.auth.PRODUCER]
 }
 
 export function logout (state) {

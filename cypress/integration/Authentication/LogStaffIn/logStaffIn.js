@@ -34,6 +34,7 @@ When(
   "un {PersonaType} s'identifie avec un e-mail et un mot de passe valides",
   function (persona) {
     injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
+    cy.visit('/login')
     cy.fixture(`Authentication/Credentials/${persona}`)
       .then(user => connectWithUserCredentials(user.email, user.password))
   }
@@ -43,6 +44,7 @@ When(
   "un {PersonaType} s'identifie avec un e-mail valide et un mot de passe invalide",
   function (persona) {
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
+    cy.visit('/login')
     cy.fixture(`Authentication/Credentials/${persona}`)
       .then(user => connectWithUserCredentials(user.email, user.password + 'a'))
   }

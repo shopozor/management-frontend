@@ -64,7 +64,8 @@ export default {
   login: {
     stayLoggedIn: 'stay logged in',
     connect: 'login',
-    forgotPassword: 'I forgot my password'
+    forgotPassword: 'I forgot my password',
+    invalidCredentials: 'Your e-mail or password is invalid.'
   },
   layout: {
     notConnected: 'not connected'

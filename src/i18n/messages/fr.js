@@ -69,7 +69,8 @@ export default {
   login: {
     stayLoggedIn: 'rester connecté',
     connect: 'se connecter',
-    forgotPassword: 'J\'ai oublié mon mot de passe'
+    forgotPassword: 'J\'ai oublié mon mot de passe',
+    invalidCredentials: 'Votre e-mail ou votre mot de passe est invalide.'
   },
   layout: {
     notConnected: 'non connecté'

@@ -3,6 +3,7 @@ import { apolloClient } from '../../../plugins/apollo'
 import * as cookie from '../../cookie'
 
 import LogIn from './graphql/login.graphql'
+import types from '../../../types'
 
 export function signup ({ commit }, { email, password }) {
   request
@@ -14,30 +15,45 @@ export function signup ({ commit }, { email, password }) {
 }
 
 export function login ({ commit }, { email, password, stayLoggedIn }) {
-  apolloClient
-    .mutate({
-      mutation: LogIn,
-      variables: {
-        email,
-        password
-      }
-    })
-    .then(response => {
-      console.log('login response = ', response)
-      const content = response.data.tokenCreate
-      const token = content.token
-      const userId = content.user.id
-      const permissions = content.user.permissions
-      commit('storeAuthorizations', {
-        email,
-        token,
-        userId,
-        authorizations: permissions
+  return new Promise((resolve, reject) => {
+    apolloClient
+      .mutate({
+        mutation: LogIn,
+        variables: {
+          email,
+          password
+        }
       })
-      stayLoggedIn ? saveToken({ email, userId, token }) : removeToken()
-      this.$router.back()
-    })
-    .catch(error => commit('error', error))
+      .then(response => {
+        const content = response.data.login
+        const errors = content.errors
+        if (errors) {
+          reject(errors)
+        } else {
+          const token = content.token
+          const userId = content.user.id
+          const email = content.user.email
+          const isStaff = content.user.isStaff
+          const permissions = content.user.permissions
+          if (!isStaff && 1 === 0) {
+            reject(new Error('NOT_STAFF'))
+          } else {
+            commit('storeAuthorizations', {
+              email,
+              token,
+              userId,
+              permissions
+            })
+            stayLoggedIn ? saveToken({ email, userId, token }) : removeToken()
+            resolve(response)
+          }
+        }
+      })
+      .catch(error => {
+        commit('error', error)
+        reject(error)
+      })
+  })
 }
 
 export function getAuthorizations ({ commit }) {

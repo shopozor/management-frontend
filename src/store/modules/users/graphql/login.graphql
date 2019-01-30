@@ -1,5 +1,5 @@
-mutation LogIn($email: String!, $password: String!) {
-  tokenCreate(email: $email, password: $password) {
+mutation LogIn($email: String!, $password: String!, $isStaff: Boolean = true) {
+  login(email: $email, password: $password, isStaff: $isStaff) {
     token
     errors {
       field

@@ -42,7 +42,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
               email,
               token,
               userId,
-              permissions
+              authorizations: [types.auth.PRODUCER, ...permissions]
             })
             stayLoggedIn ? saveToken({ email, userId, token }) : removeToken()
             resolve(response)

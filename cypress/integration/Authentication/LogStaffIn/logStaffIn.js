@@ -1,7 +1,12 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 import { duration } from 'moment'
 
-import { connectWithUserCredentials, getTokenDuration } from './Helpers'
+import {
+  assertSessionIsNotOpen,
+  connectWithUserCredentials,
+  getTokenDuration,
+  getTokenFromLocalStorage
+} from './Helpers'
 import './SessionDurationType'
 import './PersonaType'
 import { injectResponseFixtureIfFaked } from '../../common/fakeServer'
@@ -17,7 +22,7 @@ beforeEach(() => {
 })
 
 Given('un utilisateur non identifié', () => {
-  cy.getCookie('user_session').should('not.exist')
+  assertSessionIsNotOpen()
 })
 
 When(
@@ -50,10 +55,14 @@ When(
   }
 )
 
-Then("sa session s'ouvre pour {SessionDurationType}", (expectedDuration) => {
-  const cookie = cy.getCookie('user_session')
-  const tokenDuration = getTokenDuration(cookie.value)
+Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
+  const token = getTokenFromLocalStorage()
+  const tokenDuration = getTokenDuration(token)
   expect(duration(tokenDuration.diff(expectedDuration)).asSeconds()).to.be.closeTo(0, 10)
+})
+
+Then("son token d'identification est stocké dans le local storage", () => {
+  expect(getTokenFromLocalStorage()).not.to.be.null()
 })
 
 Then(

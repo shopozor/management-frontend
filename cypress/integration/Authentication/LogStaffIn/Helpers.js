@@ -14,6 +14,6 @@ export function getTokenDuration(token) {
   return duration(decodedToken.exp - decodedToken.origIat, 'seconds')
 }
 
-export function getTokenFromCookies() {
+export function getTokenCookie() {
   return cy.getCookie('user_session')
 }

@@ -24,7 +24,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
     })
     .then(response => {
       console.log('login response = ', response)
-      const content = response.data.tokenCreate
+      const content = response.data.login
       const token = content.token
       const userId = content.user.id
       const permissions = content.user.permissions

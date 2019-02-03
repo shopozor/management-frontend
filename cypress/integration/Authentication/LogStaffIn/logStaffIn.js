@@ -4,7 +4,7 @@ import { duration } from 'moment'
 import {
   connectWithUserCredentials,
   getTokenDuration,
-  getTokenFromCookies
+  getTokenCookie
 } from './Helpers'
 import './SessionDurationType'
 import './PersonaType'
@@ -21,7 +21,7 @@ beforeEach(() => {
 })
 
 Given('un utilisateur non identifié', () => {
-  getTokenFromCookies().should('not.exist')
+  getTokenCookie().should('not.exist')
 })
 
 When(
@@ -55,20 +55,19 @@ When(
 )
 
 Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
-  const token = getTokenFromCookies()
-  const tokenDuration = getTokenDuration(token)
-  expect(duration(tokenDuration.diff(expectedDuration)).asSeconds()).to.be.closeTo(0, 10)
+  cy.get('@graphql').then(() => {
+    const token = getTokenCookie().value
+    const tokenDuration = getTokenDuration(token)
+    expect(duration(tokenDuration.diff(expectedDuration)).asSeconds()).to.be.closeTo(0, 10)
+  })
 })
 
 Then(
   "il obtient un message d'erreur stipulant que ses identifiants sont incorrects",
   () => {
-    cy.get('.incorrectIdentifiers')
-      .should('be.visible')
+    cy.get('@graphql').then(() => {
+      cy.get('.incorrectIdentifiers')
+        .should('be.visible')
+    })
   }
 )
-
-Then("il ne peut plus accéder à l'interface d'identification", () => {
-  cy.visit('/login')
-  cy.url().should('not.include', '/login')
-})

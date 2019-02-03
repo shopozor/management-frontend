@@ -39,7 +39,7 @@ Cypress.Commands.add('fakeGraphqlResponse', response => {
       return originalFunction.apply(this, arguments)
     }
 
-    cy.stub(win, 'fetch', fetch).as('fetchStub')
+    cy.stub(win, 'fetch', fetch).as('graphql')
   })
 })
 

@@ -8,7 +8,7 @@ Fonctionnalité: Condamner l'accès à l'interface d'identification à l'utilisa
   pour garantir la sécurité de ses données ainsi que le bon déroulement de sa navigation.*  
 
   Beaucoup d'événements peuvent se passer au moment de l'identification et de la déconnexion d'un utilisateur, 
-  notamment certaines opérations de nettoyage de données. Si un utilisateur peut s'identifié alors qu'il est 
+  notamment certaines opérations de nettoyage de données. Si un utilisateur peut s'identifier alors qu'il est 
   déjà identifié, il est probable que les données relatives à son compte se retrouvent dans un état indéfini. 
 
   Plan du Scénario: Une fois la session ouverte, l'interface d'identification n'est plus accessible

@@ -28,6 +28,7 @@ Fonctionnalité: Se souvenir de l'utilisateur
   Scénario: L'utilisateur veut que le Shopozor se souvienne de lui
     Etant donné un utilisateur qui a demandé au Shopozor de se souvenir de lui
     Et qui s'est identifié avec un e-mail et un mot de passe valides 
+    # Utiliser cy.clock() et cy.tick()
     Lorsque 1 mois passe
     Alors sa session est rafraîchie 
 

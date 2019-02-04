@@ -1,4 +1,4 @@
-import * as links from '../types/links'
+import * as links from 'src/types/links'
 
 export const generatePage = (link, { withLabel }) => {
   return {

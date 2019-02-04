@@ -17,7 +17,7 @@ export const options = ({ filter, unit, withPriceReferenceQuantities }) => {
     case 'all': return allOptions({ withPriceReferenceQuantities })
     case 'warning': return warningOptions({ unit, withPriceReferenceQuantities })
     case 'compatible': return compatibleOptions({ unit, withPriceReferenceQuantities })
-    default: return compatibleOptions({ unit, withPriceReferenceQuantities })
+    default: return compatibleOptions({ unit: defaultUnit({ physicalSize: filter }).short, withPriceReferenceQuantities })
   }
 }
 

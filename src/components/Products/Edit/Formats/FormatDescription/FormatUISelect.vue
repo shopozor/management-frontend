@@ -7,15 +7,18 @@
     float-label="Type de conditionnement"
     :value="UI"
     @input="updateFormatUI"
-    :options="options" />
+    :options="options"
+    :readonly="!isUpdatable" />
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
-import * as formatUI from '../../../../types/formatUI'
+import {mapGetters, mapActions} from 'vuex'
+import * as formatUI from 'src/types/formatUI'
+import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatUISelect',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,
@@ -35,9 +38,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     updateFormatUI (value) {
-      console.log(value)
       this.updateEditedFormat({formatId: this.formatId, newProps: {formatUI: value}})
     }
   }

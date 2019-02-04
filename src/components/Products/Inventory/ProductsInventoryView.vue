@@ -3,7 +3,7 @@
     <product-inventory-card
       v-for="(product, productId) in productsInInventory"
       :key="productId"
-      v-bind="product"
+      :productId="productId"
       :jumpTo="jumpTo" />
     <q-btn
       class="q-ma-lg fixed-bottom-right shadow-6"

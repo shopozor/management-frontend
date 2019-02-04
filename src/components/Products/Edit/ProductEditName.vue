@@ -1,9 +1,10 @@
 <template>
-  <q-card>
+  <q-card class="width-md height-md">
     <q-card-main>
       <q-field>
         <q-input
-          :float-label="$t('products.name')"
+          :float-label="$t('products.title')"
+          :placeholder="productTitle"
           :value="editedProduct.title"
           @input="updateEditedProduct({title: $event})"
         ></q-input>
@@ -12,6 +13,7 @@
       <q-field>
         <q-input
         :float-label="$t('products.productDescription')"
+        :placeholder="productDescription"
         type="textarea"
         :max-height="190"
         rows="8"
@@ -24,15 +26,28 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'ProductEditName',
   computed: {
-    ...mapGetters(['editedProduct'])
+    ...mapGetters(['editedProduct', 'myProducts']),
+    productId () {
+      return this.editedProduct.productId
+    },
+    productTitle () {
+      return this.editedProduct.title
+    },
+    productDescription () {
+      return this.editedProduct.description
+    }
   },
   methods: {
-    ...mapMutations(['updateEditedProduct'])
+    ...mapActions(['updateEditedProduct'])
   }
 }
+
+// TODO : si aucune valeur, afficher la valeur actuelle du produit (placeholder)
+// TODO : pouvoir indiquer si la modification est majeure ou mineure (si oui -> notifications)
+
 </script>

@@ -1,11 +1,11 @@
 <template>
   <transition leave-active-class="animated bounceOutDown">
     <q-card
-      class="product-inventory-card q-ma-sm"
+      class="width-md height-lg q-ma-sm"
       :class="{visibleState: isVisible, invisibleState: !isVisible}"
       v-if="!isDeleted">
       <q-card-actions class="row justify-between">
-        <product-visibility-manager :productId="productId" />
+        <!-- <product-visibility-manager :productId="productId" /> -->
         <q-btn
           class="q-ma-sm"
           icon="create"
@@ -16,21 +16,22 @@
         <product-delete-manager :productId="productId" />
       </q-card-actions>
       <q-card-title>
-        {{ title }}
+        {{ product.title }}
         <span slot="subtitle">{{ summary }}</span>
       </q-card-title>
       <q-card-media>
-        <img :src="image" alt="product image"/>
+        <img :src="showImage" alt="product image"/>
       </q-card-media>
     </q-card>
   </transition>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import ProductDeleteManager from '../ProductDeleteManager'
-import ProductVisibilityManager from '../ProductVisibilityManager'
-import types from '../../../types'
+// import ProductVisibilityManager from '../ProductVisibilityManager'
+import types from 'src/types'
+import ShowImageMixin from 'assets/images/ShowImageMixin'
 
 export default {
   name: 'ProductInventoryCard',
@@ -39,72 +40,35 @@ export default {
       type: String,
       required: true
     },
-    title: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      default: 'Un produit de votre budzonnerie'
-    },
-    image: {
-      type: String,
-      default: function () {
-        return 'assets/no_image.png'
-      }
-    },
-    conservationDaysAfterSale: {
-      type: Number
-    },
-    conservationMethod: {
-      type: String
-    },
-    categories: {
-      type: String,
-      required: true
-    },
-    state: {
-      type: String,
-      required: true
-    },
-    defaultFormatUI: {
-      type: String
-    },
-    defaultCustomerPrice: {
-      type: Number
-    },
-    defaultUnit: {
-      type: String
-    },
-    formatsIds: {
-      type: Array,
-      required: true
-    },
-    ordersSummary: {
-      type: Object,
-      required: true
-    },
     jumpTo: {
       type: Function,
       required: true
     }
   },
   computed: {
+    ...mapGetters(['pendingOrdersOfProductSummary', 'myProducts']),
+    product () {
+      return this.myProducts[this.productId]
+    },
+    image () {
+      return this.product.image
+    },
     summary () {
+      const paid = this.pendingOrdersOfProductSummary({ productId: this.productId }).paid
       return this.$tc(
         'products.ordersSummary',
-        this.ordersSummary.amount,
+        paid.amount,
         {
-          amount: this.ordersSummary.amount,
-          price: this.ordersSummary.customerPrice
+          amount: paid.amount,
+          price: (paid.customerPrice / 100).toFixed(2)
         }
       )
     },
     isVisible () {
-      return this.state === types.productState.VISIBLE
+      return this.product.state === types.productState.VISIBLE
     },
     isDeleted () {
-      return this.state === types.productState.DELETED
+      return this.product.state === types.productState.DELETED
     }
   },
   methods: {
@@ -116,9 +80,10 @@ export default {
     }
   },
   components: {
-    ProductDeleteManager,
-    ProductVisibilityManager
+    ProductDeleteManager
+    // ProductVisibilityManager
   },
+  mixins: [ShowImageMixin],
   created () {
     this.getFormatsOfProduct({productId: this.productId})
   }
@@ -126,12 +91,6 @@ export default {
 </script>
 
 <style lang="stylus">
-
-.product-inventory-card {
-  width: 260px;
-  height: 420px;
-}
-
 .invisibleState {
   opacity: 0.5;
   transition: opacity 0.5s;

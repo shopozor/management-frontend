@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <q-card class="width-md height-md">
     <q-card-main>
       <q-select
         :stack-label="$t('products.conservationMethod')"
@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 // import ProductVisibilityManager from '../ProductVisibilityManager'
-import types from '../../../types'
+import types from 'src/types'
 
 export default {
   name: 'ProductEditType',
@@ -60,7 +60,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateEditedProduct'])
+    ...mapActions(['updateEditedProduct'])
   }
 }
 </script>

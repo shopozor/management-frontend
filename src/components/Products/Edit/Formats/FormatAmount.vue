@@ -1,12 +1,13 @@
 <template>
-  <q-card inline class="format-amount q-ma-sm">
+  <q-card inline class="width-md q-ma-sm">
     <q-card-main>
       <div class="row justify-center">
         <q-btn
           @click="remove"
           icon="remove"
           round
-          color="primary" />
+          color="primary"
+          :disable="disableRemove" />
         <q-field
           class="q-mx-md"
           style="width: 4em">
@@ -23,22 +24,24 @@
       </div>
       <div class="row justify-between q-mt-md">
         <div>
-          <div>{{$tc('products.ordered', pendingOrdersAmount)}}: {{pendingOrdersAmount}}</div>
+          <div>{{$tc('products.ordered', pendingOrdersSummary.paid.amount)}}: {{pendingOrdersSummary.paid.amount}}</div>
           <br>
-          <div>{{$tc('products.available', amount - pendingOrdersAmount)}}: {{amount - pendingOrdersAmount}}</div>
+          <div>{{$tc('products.available', amount - pendingOrdersSummary.paid.amount)}}: {{amount - pendingOrdersSummary.paid.amount}}</div>
+          <br>
+          <div>dans un panier : {{pendingOrdersSummary.notPaid.amount}}</div>
         </div>
-        <format-state-manager class="q-mt-sm" :formatId="formatId" />
       </div>
     </q-card-main>
   </q-card>
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
-import FormatStateManager from './FormatStateManager'
+import {mapGetters, mapActions} from 'vuex'
+import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatAmount',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,
@@ -50,19 +53,13 @@ export default {
     amount () {
       return this.editedFormats[this.formatId].amount
     },
-    pendingOrdersAmount () {
-      const ordersOfFormat = this.ordersPropsOfFilterPropValue({
-        arrayOfPropsKeys: ['amount'],
-        filterKey: 'formatId',
-        filterValue: this.formatId
-      })
-      return Object.values(ordersOfFormat).reduce((totalAmount, actualOrder) => {
-        return totalAmount + actualOrder.amount
-      }, 0)
+    disableRemove () {
+      const noMore = this.amount <= this.pendingOrdersSummary.paid.amount
+      return (noMore && !this.isUpdatable) || this.amount <= 0
     }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     add () {
       this.updateAmount(this.amount + 1)
     },
@@ -70,9 +67,9 @@ export default {
       this.updateAmount(this.amount - 1)
     },
     updateAmount (value) {
-      if (value >= this.pendingOrdersAmount) {
+      if ((value >= this.pendingOrdersSummary.paid.amount || this.isUpdatable) && value >= 0) {
         this.updateEditedFormat({formatId: this.formatId, newProps: {amount: value}})
-      } else {
+      } else if (value >= 0) {
         this.$q.notify({
           message: 'Vous ne pouvez pas baisser votre stock en-dessous du nombre de commandes.',
           icon: 'warning',
@@ -84,24 +81,20 @@ export default {
             }
           ]
         })
+      } else {
+        this.$q.notify({
+          message: 'Votre stock ne peut pas être inférieur à 0.',
+          icon: 'warning',
+          timeout: 5000,
+          position: 'top',
+          actions: [
+            {
+              icon: 'close'
+            }
+          ]
+        })
       }
     }
-  },
-  components: {
-    FormatStateManager
-  },
-  created () {
-    console.log(
-      Object.values(
-        this.ordersPropsOfFilterPropValue({arrayOfPropsKeys: ['amount'], filterKey: 'formatId', filterValue: this.formatId})
-      )[0].amount
-    )
   }
 }
 </script>
-
-<style lang="stylus">
-.format-amount {
-  width: 260px;
-}
-</style>

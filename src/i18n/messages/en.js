@@ -1,4 +1,4 @@
-import types from '../../types'
+import types from 'src/types'
 
 export default {
   shop: 'The Budzonnery',
@@ -83,7 +83,7 @@ export default {
     throwAway: 'Throw away',
     keep: 'Keep',
     ordersSummary: 'No pending orders | One pending order: {price} francs | {amount} pending orders: {price} francs',
-    name: 'Product name',
+    title: 'Product name',
     description: 'product description',
     categories: 'categories',
     conservationMethod: 'Conservation method',

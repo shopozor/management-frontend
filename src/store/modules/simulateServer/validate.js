@@ -1,5 +1,5 @@
 import { getServer, getUser, getFormat, getProduct, getOrdersAmountsOfFormat } from './serverAccess'
-import types from '../../../types'
+import types from 'src/types'
 
 const objectsUpdatableProps = {
   format:

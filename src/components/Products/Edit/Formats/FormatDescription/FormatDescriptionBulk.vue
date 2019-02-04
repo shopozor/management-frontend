@@ -1,19 +1,23 @@
 <template>
   <unit-select
-    :unit="editedFormats[formatId].sizeUnit"
+    :unit="sizeUnit"
     :setUnit="updateSizeUnit"
     width="100%"
     filter="all"
+    withPriceReferenceQuantities
     :label="$t('products.bulk')"
+    :readonly="!isUpdatable"
   />
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import UnitSelect from '../../../../Units/UnitSelect'
+import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
 export default {
-  name: 'FormatDescriptionSizeUnit',
+  name: 'FormatDescriptionBulk',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,
@@ -22,11 +26,15 @@ export default {
   },
   computed: {
     ...mapGetters(['editedFormats']),
-    sizeUnit () { return this.editedFormats[this.formatId].sizeUnit }
+    sizeUnit () {
+      const sizeUnit = this.editedFormats[this.formatId].sizeUnit
+      if (sizeUnit) return sizeUnit
+      else return ''
+    }
   },
   components: {UnitSelect},
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },

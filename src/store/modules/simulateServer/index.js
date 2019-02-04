@@ -2,8 +2,8 @@ import { setServer, getUser, getFormats } from './serverAccess'
 import { createUser, authorize } from './users/manageUsers'
 import { createProduct } from './products/manageProducts'
 import { updateFormatsOfProduct } from './formats/manageFormats'
-import types from '../../../types'
-import { orderFormats } from './orders/manageOrders'
+import types from 'src/types'
+import { orderFormats, payOrder } from './orders/manageOrders'
 
 export const initFakeServer = () => {
   setServer({
@@ -43,7 +43,7 @@ export const initFakeServer = () => {
       conservationDays: 7,
       defaultFormatUI: types.formatUI.AUTO_UNIT,
       defaultUnit: types.units.volume.DL,
-      defaultCustomerPrice: 1
+      defaultCustomerPrice: 100
     }
   })
 
@@ -60,7 +60,7 @@ export const initFakeServer = () => {
       conservationDays: 7,
       defaultFormatUI: types.formatUI.AUTO_PRICE,
       defaultUnit: types.units.mass.HG,
-      defaultCustomerPrice: 3.50
+      defaultCustomerPrice: 350
     }
   })
 
@@ -75,9 +75,7 @@ export const initFakeServer = () => {
       categories: [types.categories.GROCERY],
       conservationMethod: types.conservation.BASEMENT,
       conservationDays: 365,
-      defaultFormatUI: types.formatUI.FREE,
-      defaultUnit: types.units.number.PIECE,
-      defaultCustomerPrice: 20
+      defaultFormatUI: types.formatUI.FREE
     }
   })
 
@@ -89,15 +87,15 @@ export const initFakeServer = () => {
       tempId1: {
         size: 5,
         sizeUnit: types.units.volume.DL,
-        customerPrice: 5,
-        formatUI: types.formatUI.AUTO_UNIT,
+        customerPrice: 500,
+        formatUI: types.formatUI.AUTO_PRICE,
         state: types.formatState.VISIBLE,
         amount: 12
       },
       tempId2: {
         size: 8,
         sizeUnit: types.units.volume.DL,
-        customerPrice: 7,
+        customerPrice: 700,
         formatUI: types.formatUI.AUTO_UNIT,
         state: types.formatState.VISIBLE,
         amount: 9
@@ -111,7 +109,7 @@ export const initFakeServer = () => {
       tempId1: {
         size: 300,
         sizeUnit: types.units.mass.GR,
-        customerPrice: 10.50,
+        customerPrice: 1050,
         formatUI: types.formatUI.AUTO_PRICE,
         state: types.formatState.VISIBLE,
         amount: 8
@@ -119,25 +117,39 @@ export const initFakeServer = () => {
       tempId2: {
         size: 500,
         sizeUnit: types.units.mass.GR,
-        customerPrice: 17.50,
+        customerPrice: 1750,
         formatUI: types.formatUI.AUTO_UNIT,
         state: types.formatState.VISIBLE,
         amount: 4
       },
       tempId3: {
         description: 'petite barquette',
-        customerPrice: 10.50,
+        customerPrice: 1050,
         formatUI: types.formatUI.FREE,
         state: types.formatState.VISIBLE,
         amount: 8
       },
       tempId4: {
-        customerPrice: 3.50,
+        customerPrice: 350,
         customerPriceUnit: types.units.mass.HG,
         formatUI: types.formatUI.BULK,
         state: types.formatState.VISIBLE,
         amount: 4,
         amountUnit: types.units.mass.KG
+      }
+    }
+  })
+
+  updateFormatsOfProduct({
+    productId: productsIds[2],
+    formats: {
+      tempId1: {
+        size: 300,
+        sizeUnit: types.units.mass.GR,
+        customerPrice: 1000,
+        formatUI: types.formatUI.AUTO_UNIT,
+        state: types.formatState.VISIBLE,
+        amount: 20
       }
     }
   })
@@ -152,11 +164,25 @@ export const initFakeServer = () => {
       [formatIds[1]]: 3
     }
   })
+
+  wait()
+
+  orderFormats({
+    customerId,
+    formatsAmounts: {
+      [formatIds[0]]: 4,
+      [formatIds[1]]: 2
+    }
+  })
+
+  const ordersIds = getUser({ userId: customerId }).ordersToReceiveIds
+  payOrder({ orderId: ordersIds[0] })
+  payOrder({ orderId: ordersIds[3] })
 }
 
 const wait = () => {
   const now = Date.now()
   while (Date.now() === now) {
-    console.log(`waiting at ${now} before creating new product`)
+    console.log(`waiting at ${now} before next action`)
   }
 }

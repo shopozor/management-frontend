@@ -3,15 +3,18 @@
     <q-input
       :float-label="$t('products.formatDescription')"
       :value="description"
-      @input="updateDescription" />
+      @input="updateDescription"
+      :readonly="!isUpdatable" />
   </q-field>
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
+import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatDescriptionFree',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,
@@ -24,7 +27,7 @@ export default {
     customerPrice () { return this.editedFormats[this.formatId].customerPrice }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },

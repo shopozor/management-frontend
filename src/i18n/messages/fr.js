@@ -1,4 +1,4 @@
-import types from '../../types'
+import types from 'src/types'
 
 export default {
   shop: 'La Budzonnerie',
@@ -88,7 +88,7 @@ export default {
     throwAway: 'Jeter',
     keep: 'Conserver',
     ordersSummary: 'Aucune commande en cours | Une commande: {price} francs | {amount} commandes: {price} francs',
-    name: 'Nom du produit',
+    title: 'Nom du produit',
     productDescription: 'Description du produit',
     categories: 'Catégories',
     conservationMethod: 'Méthode de conservation',
@@ -97,8 +97,9 @@ export default {
     formatDescription: 'description',
     size: 'taille',
     unit: 'unité',
-    bulk: 'Vente en vrac. Prix au ',
+    bulk: 'Vrac. Prix par ',
     formatType: 'type de conditionnement',
+    defineDefaultPricePerUnit: 'Veuillez indiquer le prix à l\'unité de ce produit',
     customerPays: 'le client paie',
     iGet: 'je reçois',
     ordered: 'commandé | commandé | commandés',

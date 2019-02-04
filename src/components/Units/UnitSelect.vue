@@ -6,7 +6,8 @@
       :float-label="$t('products.unit')"
       :value="unit"
       @input="setUnit"
-      :options="options" />
+      :options="options"
+      :readonly="readonly" />
   </q-field>
 </template>
 
@@ -41,10 +42,28 @@ export default {
       default () {
         return ''
       }
+    },
+    withPriceReferenceQuantities: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    },
+    readonly: {
+      type: Boolean,
+      default () {
+        return false
+      }
     }
   },
   computed: {
-    options () { return helpers.options({filter: this.filter, unit: this.unit}) }
+    options () {
+      return helpers.options({
+        filter: this.filter,
+        unit: this.unit,
+        withPriceReferenceQuantities: this.withPriceReferenceQuantities
+      })
+    }
   }
 }
 </script>

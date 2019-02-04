@@ -1,5 +1,10 @@
-import { setOrder, getUser, updateUser, getProduct, getFormat, updateFormat, updateProduct } from '../serverAccess'
-import types from '../../../../types'
+import { setOrder, updateOrder, getUser, updateUser, getProduct, getFormat, updateFormat, updateProduct } from '../serverAccess'
+import types from 'src/types'
+
+export const payOrder = ({ orderId }) => {
+  console.log('pay', orderId)
+  updateOrder({ orderId, newProps: { state: types.orderState.PENDING_PAID } })
+}
 
 export const orderFormats = ({ customerId, formatsAmounts }) => {
   Object.keys(formatsAmounts).map(formatId => {

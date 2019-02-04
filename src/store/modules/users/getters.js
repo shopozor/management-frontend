@@ -1,4 +1,4 @@
-import * as auth from '../../../types/authorization'
+import * as auth from 'src/types/authorization'
 
 export const authorizations = state => state.authorizations
 export const userId = state => state.userId

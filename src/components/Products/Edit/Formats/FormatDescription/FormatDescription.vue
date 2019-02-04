@@ -1,5 +1,5 @@
 <template>
-  <q-card inline class="format-description q-ma-sm">
+  <q-card inline class="width-md q-ma-sm">
     <q-card-main>
       <format-description-free
         v-if="formatUI === formatUIs.FREE"
@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
-import types from '../../../../types'
-import FormatDescriptionFree from './FormatDescription/FormatDescriptionFree'
-import FormatDescriptionSizeUnit from './FormatDescription/FormatDescriptionSizeUnit'
-import FormatDescriptionAuto from './FormatDescription/FormatDescriptionAuto'
-import FormatDescriptionBulk from './FormatDescription/FormatDescriptionBulk'
+import {mapGetters, mapActions} from 'vuex'
+import types from 'src/types'
+import FormatDescriptionFree from './FormatDescriptionFree'
+import FormatDescriptionSizeUnit from './FormatDescriptionSizeUnit'
+import FormatDescriptionAuto from './FormatDescriptionAuto'
+import FormatDescriptionBulk from './FormatDescriptionBulk'
 import FormatUISelect from './FormatUISelect'
 
 export default {
@@ -50,7 +50,7 @@ export default {
     customerPriceUnit () { return this.editedFormats[this.formatId]['customerPriceUnit'] }
   },
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },
@@ -69,9 +69,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-.format-description {
-  width: 260px;
-}
-</style>

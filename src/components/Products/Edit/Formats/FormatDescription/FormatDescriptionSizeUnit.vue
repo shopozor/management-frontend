@@ -7,15 +7,18 @@
     :setUnit="updateSizeUnit"
     unitWidth="50%"
     filter="all"
+    :readonly="!isUpdatable"
   />
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import UnitField from '../../../../Units/UnitField'
+import FormatCriticalValuesMixin from '../FormatCriticalValuesMixin.js'
 
 export default {
   name: 'FormatDescriptionSizeUnit',
+  mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
       type: String,
@@ -29,7 +32,7 @@ export default {
   },
   components: {UnitField},
   methods: {
-    ...mapMutations(['updateEditedFormat']),
+    ...mapActions(['updateEditedFormat']),
     update (propName, value) {
       this.updateEditedFormat({formatId: this.formatId, newProps: {[propName]: value}})
     },

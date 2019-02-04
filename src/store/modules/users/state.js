@@ -1,4 +1,4 @@
-import types from '../../../types'
+import types from 'src/types'
 
 export default {
   authorizations: [types.auth.NOT_CONNECTED],

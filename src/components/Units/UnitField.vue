@@ -7,14 +7,16 @@
         :value="value"
         @input="setValue"
         type="number"
-        :float-label="$t('products.size')" />
+        :float-label="$t('products.size')"
+        :readonly="readonly" />
     </q-field>
     <unit-select
       class="self-baseline"
       :unit="unit"
       :setUnit="updateUnitAndValue"
       :filter="filter"
-      :width="unitWidth" />
+      :width="unitWidth"
+      :readonly="readonly" />
   </div>
 </template>
 
@@ -64,15 +66,22 @@ export default {
       default () {
         return 'compatible'
       }
+    },
+    readonly: {
+      type: Boolean,
+      default () {
+        return false
+      }
     }
   },
   methods: {
     updateUnitAndValue (newUnit) {
-      if (this.linked && helpers.unitsAreCompatible({unit1: this.unit, unit2: newUnit})) {
-        const newValue = helpers.convert({ startValue: this.value, startUnit: this.unit, endUnit: newUnit })
+      const unit1 = this.unit
+      this.setUnit(newUnit)
+      if (this.linked && helpers.unitsAreCompatible({unit1, unit2: newUnit})) {
+        const newValue = helpers.convert({ startValue: this.value, startUnit: unit1, endUnit: newUnit })
         this.setValue(newValue)
       }
-      this.setUnit(newUnit)
     }
   },
   components: {UnitSelect}

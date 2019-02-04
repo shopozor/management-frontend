@@ -7,7 +7,7 @@ import {
   getTokenCookie
 } from './Helpers'
 import './SessionDurationType'
-import './PersonaType'
+import '../common/PersonaType'
 import { injectResponseFixtureIfFaked } from '../../common/fakeServer'
 
 before(() => {

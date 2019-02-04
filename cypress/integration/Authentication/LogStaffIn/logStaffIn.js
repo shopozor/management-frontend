@@ -68,6 +68,18 @@ Then(
     cy.get('@graphql').then(() => {
       cy.get('.incorrectIdentifiers')
         .should('be.visible')
+      // TODO: need to double-check that the contained message corresponds to WRONG_CREDENTIALS
+    })
+  }
+)
+
+Then(
+  "il obtient un message d'erreur stipulant que son compte n'a pas les droits d'administrateur",
+  () => {
+    cy.get('@graphql').then(() => {
+      cy.get('.incorrectIdentifiers')
+        .should('be.visible')
+      // TODO: need to double-check that the contained message corresponds to USER_NOT_ADMIN
     })
   }
 )

@@ -43,4 +43,4 @@ Fonctionnalité: Identifier un membre du staff
 
   Scénario: Un Consommateur ne peut pas s'identifier
     Lorsqu'un Consommateur s'identifie avec un e-mail et un mot de passe valides 
-    Alors il obtient un message d'erreur stipulant que ses identifiants sont incorrects
+    Alors il obtient un message d'erreur stipulant que son compte n'a pas les droits d'administrateur

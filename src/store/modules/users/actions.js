@@ -42,7 +42,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
               userId,
               authorizations: content.user.permissions // permissionsAdapter(content.user)
             })
-            stayLoggedIn ? saveToken({ email, userId, token }) : removeToken()
+            stayLoggedIn ? saveUser({ email, userId, token }) : saveToken({ token })
             resolve(response)
           }
         }
@@ -104,9 +104,17 @@ export function logout ({ commit, getters }) {
   removeToken()
 }
 
-function saveToken ({ email, userId, token }) {
+function saveUser ({ email, userId, token }) {
+  console.log('save user')
   cookie.set({ cookieId: 'email', cookieValue: email, cookieDuration: 30 })
   cookie.set({ cookieId: 'userId', cookieValue: userId, cookieDuration: 30 })
+  cookie.set({ cookieId: 'token', cookieValue: token, cookieDuration: 30 })
+}
+
+function saveToken ({ token }) {
+  console.log('save token')
+  cookie.del({ cookieId: 'email' })
+  cookie.del({ cookieId: 'userId' })
   cookie.set({ cookieId: 'token', cookieValue: token, cookieDuration: 30 })
 }
 

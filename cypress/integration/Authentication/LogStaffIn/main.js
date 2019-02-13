@@ -56,9 +56,11 @@ When(
 
 Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
   cy.get('@graphql').then(() => {
-    const token = getTokenCookie().value
-    const tokenDuration = getTokenDuration(token)
-    expect(duration(tokenDuration.diff(expectedDuration)).asSeconds()).to.be.closeTo(0, 10)
+    // TODO: peut-on s'affranchir du "should" qui ne sert qu'à accéder au cookie ?
+    cy.getCookie('token').should('exist').then(cookie => {
+      const tokenDuration = getTokenDuration(cookie.value)
+      expect(duration(tokenDuration.diff(expectedDuration)).asSeconds()).to.equal(0)
+    })
   })
 })
 

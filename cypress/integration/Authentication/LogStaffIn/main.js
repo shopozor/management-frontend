@@ -2,7 +2,7 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 import { duration } from 'moment'
 
 import {
-  connectWithUserCredentials,
+  connectWithUserCredentialsViaGui,
   getTokenDuration,
   getTokenCookie
 } from './Helpers'
@@ -30,7 +30,7 @@ When(
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
     cy.visit('/login')
     cy.fixture('Authentication/Credentials/InvalidEmailAndPassword')
-      .then(user => connectWithUserCredentials(user.email, user.password))
+      .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
   }
 )
 
@@ -40,7 +40,7 @@ When(
     injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
     cy.visit('/login')
     cy.fixture(`Authentication/Credentials/${persona}`)
-      .then(user => connectWithUserCredentials(user.email, user.password))
+      .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
   }
 )
 
@@ -50,7 +50,7 @@ When(
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
     cy.visit('/login')
     cy.fixture(`Authentication/Credentials/${persona}`)
-      .then(user => connectWithUserCredentials(user.email, user.password + 'a'))
+      .then(user => connectWithUserCredentialsViaGui(user.email, user.password + 'a'))
   }
 )
 

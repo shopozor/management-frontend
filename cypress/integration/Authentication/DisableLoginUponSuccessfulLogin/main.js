@@ -14,10 +14,7 @@ beforeEach(() => {
 })
 
 Given('un {PersonaType} identifié', function (persona) {
-  cy.fixture(`Authentication/LogStaffIn/Responses/${persona}`)
-    .then(loginData => {
-      login(loginData)
-    })
+  login(persona)
 });
 
 When("il navigue vers l'interface d'identification", function () {

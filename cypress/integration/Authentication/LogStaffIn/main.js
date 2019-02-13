@@ -3,9 +3,9 @@ import { duration } from 'moment'
 
 import {
   connectWithUserCredentialsViaGui,
-  getTokenDuration,
-  getTokenCookie
+  getTokenDuration
 } from './Helpers'
+import { getTokenCookie } from '../common/Helpers'
 import './SessionDurationType'
 import '../common/PersonaType'
 import { injectResponseFixtureIfFaked } from '../../common/fakeServer'

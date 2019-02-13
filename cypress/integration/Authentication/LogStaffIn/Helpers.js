@@ -13,7 +13,3 @@ export function getTokenDuration(token) {
   const decodedToken = jwtDecode(token)
   return duration(decodedToken.exp - decodedToken.origIat, 'seconds')
 }
-
-export function getTokenCookie() {
-  return cy.getCookie('user_session')
-}

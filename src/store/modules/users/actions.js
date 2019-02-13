@@ -14,14 +14,25 @@ export function signup ({ commit }, { email, password }) {
 }
 
 export function login ({ commit }, { email, password, stayLoggedIn }) {
-  return new Promise((resolve, reject) => {
-    apolloClient
-      .mutate({
-        mutation: LogIn,
-        variables: {
-          email,
-          password
-        }
+  apolloClient
+    .mutate({
+      mutation: LogIn,
+      variables: {
+        email,
+        password
+      }
+    })
+    .then(response => {
+      console.log('login response = ', response)
+      const content = response.data.login
+      const token = content.token
+      const userId = content.user.id
+      const permissions = content.user.permissions
+      commit('storeAuthorizations', {
+        email,
+        token,
+        userId,
+        authorizations: permissions
       })
       .then(response => {
         const content = response.data.login

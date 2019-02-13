@@ -15,7 +15,7 @@ module.exports = {
     'standard'
   ],
   // required to lint *.vue files
-  plugins: ['vue'],
+  plugins: ['vue', 'cypress'],
   globals: {
     ga: true, // Google Analytics
     cordova: true,

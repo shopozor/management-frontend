@@ -3,7 +3,6 @@ import { apolloClient } from '../../../plugins/apollo'
 import * as cookie from '../../cookie'
 
 import LogIn from './graphql/login.graphql'
-import types from '../../../types'
 
 export function signup ({ commit }, { email, password }) {
   request
@@ -32,17 +31,15 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
         } else {
           const token = content.token
           const userId = content.user.id
-          const email = content.user.email
           const isStaff = content.user.isStaff
-          const permissions = content.user.permissions
-          if (!isStaff && 1 === 0) {
+          if (!isStaff) {
             reject(new Error('NOT_STAFF'))
           } else {
             commit('storeAuthorizations', {
               email,
               token,
               userId,
-              authorizations: [types.auth.PRODUCER, ...permissions]
+              authorizations: content.user.permissions // permissionsAdapter(content.user)
             })
             stayLoggedIn ? saveToken({ email, userId, token }) : removeToken()
             resolve(response)
@@ -107,9 +104,9 @@ export function logout ({ commit, getters }) {
 }
 
 function saveToken ({ email, userId, token }) {
-  cookie.set({ cookieId: 'email', cookieValue: email, cookieDuration: 365 })
-  cookie.set({ cookieId: 'userId', cookieValue: userId, cookieDuration: 365 })
-  cookie.set({ cookieId: 'token', cookieValue: token, cookieDuration: 365 })
+  cookie.set({ cookieId: 'email', cookieValue: email, cookieDuration: 30 })
+  cookie.set({ cookieId: 'userId', cookieValue: userId, cookieDuration: 30 })
+  cookie.set({ cookieId: 'token', cookieValue: token, cookieDuration: 30 })
 }
 
 function removeToken () {

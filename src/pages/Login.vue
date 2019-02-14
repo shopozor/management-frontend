@@ -7,6 +7,11 @@
             {{ $t('login.invalidCredentials') }}
           </q-item-main>
         </q-item>
+        <q-item class="userIsNotStaff bg-warning" v-if="userIsNotStaff" @click="() => alert('rediriger')">
+          <q-item-main>
+            {{ $t('login.userIsNotStaff') }}
+          </q-item-main>
+        </q-item>
         <q-item>
           <q-item-main>
             <q-field
@@ -67,18 +72,11 @@ export default {
         stayLoggedIn: vm.stayLoggedIn
       })
         .then(() => vm.$router.back())
-        .catch(error => vm.handleError(error))
+        .catch(errors => vm.handleError(errors))
     },
-    handleError (error) {
-      switch (error.message) {
-        case 'WRONG_CREDENTIALS':
-          this.invalidCredentials = true
-          break
-        case 'NOT_STAFF':
-          this.userIsNotStaff = true
-          break
-        default: break
-      }
+    handleError (errors) {
+      this.invalidCredentials = errors.some(error => error.message === 'WRONG_CREDENTIALS')
+      this.userIsNotStaff = errors.some(error => error.message === 'USER_NOT_ADMIN')
     },
     focusPassword () {
       this.$refs.password.focus()

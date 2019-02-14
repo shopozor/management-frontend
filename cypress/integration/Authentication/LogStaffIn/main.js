@@ -58,6 +58,7 @@ Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
   cy.get('@graphql').then(() => {
     // TODO: peut-on s'affranchir du "should" qui ne sert qu'à accéder au cookie ?
     cy.getCookie('token').should('exist').then(cookie => {
+      console.log(cookie)
       const tokenDuration = getTokenDuration(cookie.value)
       expect(tokenDuration.asSeconds()).to.equal(expectedDuration.asSeconds())
     })
@@ -79,7 +80,7 @@ Then(
   "il obtient un message d'erreur stipulant que son compte n'a pas les droits d'administrateur",
   () => {
     cy.get('@graphql').then(() => {
-      cy.get('.incorrectIdentifiers')
+      cy.get('.userIsNotStaff')
         .should('be.visible')
       // TODO: need to double-check that the contained message corresponds to USER_NOT_ADMIN
     })

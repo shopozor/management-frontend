@@ -70,7 +70,8 @@ export default {
     stayLoggedIn: 'rester connecté',
     connect: 'se connecter',
     forgotPassword: 'J\'ai oublié mon mot de passe',
-    invalidCredentials: 'Votre e-mail ou votre mot de passe est invalide.'
+    invalidCredentials: 'Votre e-mail ou votre mot de passe est invalide.',
+    userIsNotStaff: 'Vous n\'êtes pas enregistré comme producteur. Cliquez ici pour soumettre une demande.'
   },
   layout: {
     notConnected: 'non connecté'

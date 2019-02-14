@@ -32,19 +32,14 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
         } else {
           const token = content.token
           const userId = content.user.id
-          const isStaff = content.user.isStaff
-          if (!isStaff) {
-            reject(new Error('NOT_STAFF'))
-          } else {
-            commit('storeAuthorizations', {
-              email,
-              token,
-              userId,
-              authorizations: content.user.permissions // permissionsAdapter(content.user)
-            })
-            stayLoggedIn ? saveUser({ email, userId, token }) : saveToken({ token })
-            resolve(response)
-          }
+          commit('storeAuthorizations', {
+            email,
+            token,
+            userId,
+            authorizations: content.user.permissions // permissionsAdapter(content.user)
+          })
+          stayLoggedIn ? saveUser({ email, userId, token }) : saveToken({ token })
+          resolve(response)
         }
       })
       .catch(error => {

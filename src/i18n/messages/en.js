@@ -65,7 +65,8 @@ export default {
     stayLoggedIn: 'stay logged in',
     connect: 'login',
     forgotPassword: 'I forgot my password',
-    invalidCredentials: 'Your e-mail or password is invalid.'
+    invalidCredentials: 'Your e-mail or password is invalid.',
+    userIsNotStaff: 'You are not recognized as a producer. Click here to submit this request.'
   },
   layout: {
     notConnected: 'not connected'

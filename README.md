@@ -45,3 +45,9 @@ Run
 ```
 npm run e2e
 ``` 
+
+## update fixtures
+
+1. `git pull` (s'il y a du neuf, on est redirigé vers gnu nano)
+2. dans gnu nano, ^X pour quitter, puis N pour ne pas créer de fichier
+3. `git submodule update`

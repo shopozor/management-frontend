@@ -66,7 +66,7 @@ export default {
     connect: 'login',
     forgotPassword: 'I forgot my password',
     invalidCredentials: 'Your e-mail or password is invalid.',
-    userIsNotStaff: 'You are not recognized as a producer. Connect to the shop to submit this request.'
+    userIsNotStaff: 'You are not recognized as a producer.'
   },
   layout: {
     notConnected: 'not connected'

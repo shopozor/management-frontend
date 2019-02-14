@@ -71,7 +71,7 @@ export default {
     connect: 'se connecter',
     forgotPassword: 'J\'ai oublié mon mot de passe',
     invalidCredentials: 'Votre e-mail ou votre mot de passe est invalide.',
-    userIsNotStaff: 'Vous n\'êtes pas enregistré comme producteur. Connectez-vous sur le shop pour soumettre une demande.'
+    userIsNotStaff: 'Vous n\'êtes pas enregistré comme administrateur.'
   },
   layout: {
     notConnected: 'non connecté'

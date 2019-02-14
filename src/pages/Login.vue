@@ -7,7 +7,7 @@
             {{ $t('login.invalidCredentials') }}
           </q-item-main>
         </q-item>
-        <q-item class="userIsNotStaff bg-warning" v-if="userIsNotStaff" @click="() => alert('rediriger')">
+        <q-item class="userIsNotStaff bg-warning" v-if="userIsNotStaff">
           <q-item-main>
             {{ $t('login.userIsNotStaff') }}
           </q-item-main>

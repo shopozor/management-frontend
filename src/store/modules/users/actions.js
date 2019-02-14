@@ -24,10 +24,9 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
         }
       })
       .then(response => {
-        console.log('login response = ', response)
         const content = response.data.login
         const errors = content.errors
-        if (errors) {
+        if (errors.length > 0) {
           reject(errors)
         } else {
           const token = content.token

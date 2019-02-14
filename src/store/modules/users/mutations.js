@@ -1,18 +1,17 @@
 import types from 'src/types'
 
-export function storeAuthorizations (state, payload) {
+export function storePermissions (state, payload) {
   state.email = payload.email
   state.userId = payload.userId
   state.token = payload.token
-  // state.authorizations = payload.authorizations
-  state.authorizations = [types.auth.PRODUCER]
+  state.permissions = payload.permissions
 }
 
 export function logout (state) {
   state.userId = ''
   state.token = ''
   state.email = ''
-  state.authorizations = [types.auth.NOT_CONNECTED]
+  state.permissions = [types.permissions.NOT_CONNECTED]
 
   this.$router.push({ path: '/' })
 }

@@ -1,7 +1,7 @@
-import * as auth from '../../../types/authorization'
+import types from '../../../types'
 
-export const authorizations = state => state.authorizations
+export const permissions = state => state.permissions
 export const userId = state => state.userId
 export const token = state => state.token
 export const email = state => state.email
-export const isAuthorized = state => state.authorizations.every(authorization => authorization !== auth.NOT_CONNECTED)
+export const isAuthorized = state => state.permissions.every(permission => permission !== types.permissions.NOT_CONNECTED)

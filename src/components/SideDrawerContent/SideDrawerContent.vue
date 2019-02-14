@@ -58,7 +58,7 @@ export default {
   },
   props: { drawerOpen: Boolean },
   computed: {
-    ...mapGetters(['email', 'authorizations', 'isAuthorized']),
+    ...mapGetters(['email', 'permissions', 'isAuthorized']),
     userManagementLinks: function () {
       return this.filterAccessibleLinks(this.orderedLinks.userManagement)
     },
@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     filterAccessibleLinks (filterKeys) {
-      const accessList = access(this.authorizations)
+      const accessList = access(this.permissions)
       const accessibleLinks = filterKeys.filter(key => {
         return accessList[key]
       })

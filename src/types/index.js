@@ -1,4 +1,4 @@
-import * as auth from './authorization'
+import * as permissions from './permissions'
 import * as links from './links'
 import * as orderState from './orderState'
 import * as userState from './userState'
@@ -10,7 +10,7 @@ import units from './units'
 import * as conservation from './conservation'
 
 export default {
-  auth,
+  permissions,
   links,
   orderState,
   userState,

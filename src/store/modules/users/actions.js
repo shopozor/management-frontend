@@ -31,11 +31,11 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
         } else {
           const token = content.token
           const userId = content.user.id
-          commit('storeAuthorizations', {
+          commit('storePermissions', {
             email,
             token,
             userId,
-            authorizations: content.user.permissions // permissionsAdapter(content.user)
+            permissions: content.user.permissions
           })
           stayLoggedIn ? saveUser({ email, userId, token }) : saveToken({ token })
           resolve(response)
@@ -48,18 +48,18 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
   })
 }
 
-export function getAuthorizations ({ commit }) {
+export function getPermissions ({ commit }) {
   // request
   //   .getAuthorizations({
   //     userId: cookie.get({ cookieId: 'userId' }),
   //     token: cookie.get({ cookieId: 'token' })
   //   })
   //   .then(response => {
-  //     commit('storeAuthorizations', {
+  //     commit('storePermissions', {
   //       email: response.email,
   //       token: response.token,
   //       userId: response.userId,
-  //       authorizations: response.authorizations
+  //       permissions: response.permissions
   //     })
   //   })
   //   .catch(error => {
@@ -69,11 +69,11 @@ export function getAuthorizations ({ commit }) {
   const userId = cookie.get({ cookieId: 'userId' })
   const email = cookie.get({ cookieId: 'email' })
   if (token && userId && email) {
-    commit('storeAuthorizations', {
+    commit('storePermissions', {
       email,
       userId,
       token,
-      authorizations: []
+      permissions: []
     })
   } else {
     commit('logout')

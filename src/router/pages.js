@@ -17,7 +17,7 @@ export const generatePage = (link) => {
 }
 
 function userCanAccess (link) {
-  return access(store.getters.authorizations)[link]
+  return access(store.getters.permissions)[link]
 }
 
 export const firstUpperCase = string => string.charAt(0).toUpperCase() + string.slice(1)

@@ -1,7 +1,7 @@
 import types from '../../../types'
 
 export default {
-  authorizations: [types.auth.NOT_CONNECTED],
+  permissions: [types.permissions.NOT_CONNECTED],
   userId: '',
   token: '',
   email: ''

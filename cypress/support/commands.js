@@ -33,7 +33,7 @@ Cypress.Commands.add('fakeGraphqlResponse', response => {
     const originalFunction = win.fetch
 
     function fetch (path, { body, method }) {
-      if (isGraphQL(path, method)) {
+      if (Cypress.env('fakeGraphql') && isGraphQL(path, method)) {
         return responseStub(response)
       }
       return originalFunction.apply(this, arguments)

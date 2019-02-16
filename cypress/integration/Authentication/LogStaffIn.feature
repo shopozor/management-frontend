@@ -12,6 +12,8 @@ Fonctionnalité: Identifier un membre du staff
   Comme le compte de l'utilisateur n'est pas créé si celui-ci n'accepte pas notre politique des cookies, 
   les scénarios ci-dessous ne traitent que le cas où le token d'identification est stocké dans un cookie.
 
+  <img src="LogStaffIn.feature.gif" alt="Démo" width="1000" height="660"/>
+
   Contexte: L'utilisateur n'est pas identifié
     Etant donné un utilisateur non identifié
 

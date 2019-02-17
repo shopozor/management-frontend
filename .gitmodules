@@ -1,3 +1,6 @@
 [submodule "cypress/fixtures"]
 	path = cypress/fixtures
 	url = git@github.com:softozor/shopozor-fixtures
+[submodule "common"]
+	path = common
+	url = https://bitbucket.org/softozor/shopozor-common-frontend

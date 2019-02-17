@@ -1,7 +1,7 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
-import '../common/PersonaType'
-import { login } from '../common/Helpers'
+import '../../../../common/cypress/integration/Authentication/common/PersonaType'
+import { login } from '../../../../common/cypress/integration/Authentication/common/Helpers'
 
 before(() => {
   cy.log(

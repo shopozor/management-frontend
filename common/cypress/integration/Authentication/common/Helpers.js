@@ -1,3 +1,6 @@
+const jwtDecode = require('jwt-decode')
+import { duration } from 'moment'
+
 import { injectResponseFixtureIfFaked } from '../../common/fakeServer'
 
 // import store from '../../../../src/store/index'
@@ -31,4 +34,17 @@ export function login(persona) {
     const token = getTokenCookie().value
     expect(token).to.not.be.null
   })
+}
+
+export function connectWithUserCredentialsViaGui(email, password) {
+  cy.get('input[type=email]').clear().type(email)
+  cy.get('input[type=password]').clear().type(password)
+  cy.get('button[type=button]')
+    .contains('se connecter')
+    .click()
+}
+
+export function getTokenDuration(token) {
+  const decodedToken = jwtDecode(token)
+  return duration(decodedToken.exp - decodedToken.origIat, 'seconds')
 }

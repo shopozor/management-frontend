@@ -2,12 +2,12 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
 import {
   connectWithUserCredentialsViaGui,
-  getTokenDuration
-} from './Helpers'
-import { getTokenCookie } from '../common/Helpers'
-import './SessionDurationType'
-import '../common/PersonaType'
-import { injectResponseFixtureIfFaked } from '../../common/fakeServer'
+  getTokenDuration, 
+  getTokenCookie
+} from '../../../../common/cypress/integration/Authentication/common/Helpers'
+import '../../../../common/cypress/integration/Authentication/common/SessionDurationType'
+import '../../../../common/cypress/integration/Authentication/common/PersonaType'
+import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
 
 before(() => {
   cy.log(
@@ -55,8 +55,10 @@ When(
 
 Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
   cy.get('@graphql').then(() => {
-    cy.wait(1000)
-    getTokenCookie().then(cookie => {
+    if(!Cypress.env('fakeGraphql')){
+      cy.wait(1000)
+    }
+    cy.getCookie('token').then(cookie => {
       const tokenDuration = getTokenDuration(cookie.value)
       expect(tokenDuration.asSeconds()).to.equal(expectedDuration.asSeconds())
     })

@@ -37,7 +37,7 @@
     "@cypress/webpack-preprocessor": "^4.0.3",
     "babel-eslint": "^10.0.1",
     "cypress": "^3.1.5",
-    "cypress-cucumber-preprocessor": "^1.9.1",
+    "cypress-cucumber-preprocessor": "^1.11.0",
     "eslint": "^5.10.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-friendly-formatter": "^4.0.1",

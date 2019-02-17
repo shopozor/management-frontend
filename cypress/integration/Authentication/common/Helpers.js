@@ -3,7 +3,7 @@ import { injectResponseFixtureIfFaked } from '../../common/fakeServer'
 // import store from '../../../../src/store/index'
 
 export function getTokenCookie() {
-  return cy.getCookie('user_session')
+  return cy.getCookie('token')
 }
 
 export function login(persona) {

@@ -56,7 +56,7 @@ When(
 Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
   cy.get('@graphql').then(() => {
     cy.wait(1000)
-    cy.getCookie('token').then(cookie => {
+    getTokenCookie().then(cookie => {
       const tokenDuration = getTokenDuration(cookie.value)
       expect(tokenDuration.asSeconds()).to.equal(expectedDuration.asSeconds())
     })

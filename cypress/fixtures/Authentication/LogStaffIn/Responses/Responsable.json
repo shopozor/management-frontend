@@ -1,0 +1,17 @@
+{
+  "data": {
+    "login": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJlc3BvbnNhYmxlQGJ1ZHpvbnMuY2giLCJleHAiOjE1NTI3MTgzMzIsIm9yaWdJYXQiOjE1NTAxMjYzMzJ9.7beb7C0VAEYG7jsh4MdSDYbse0nBsPJkZwBu4oxnN88",
+      "user": {
+        "id": "jOUINadT",
+        "isStaff": true,
+        "permissions": [
+          {
+            "code": "MANAGE_PRODUCERS"
+          }
+        ]
+      },
+      "errors": []
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "data": {
+    "login": {
+      "token": null,
+      "user": null,
+      "errors": [
+        {
+          "field": null,
+          "message": "USER_NOT_ADMIN"
+        }
+      ]  
+    }
+  }
+}

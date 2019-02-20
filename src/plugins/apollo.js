@@ -4,9 +4,8 @@ import VueApollo from 'vue-apollo'
 import fetch from 'node-fetch'
 import { createHttpLink } from 'apollo-link-http'
 
-// TODO: get that server address from an environment variable or the config
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8000/graphql/',
+  uri: process.env.API,
   fetch: fetch
 })
 

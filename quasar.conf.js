@@ -14,6 +14,11 @@ module.exports = function (ctx) {
     ],
     supportIE: false,
     build: {
+      env: ctx.dev ? {
+        API: JSON.stringify('http://localhost:8000/graphql/')
+      } : {
+        API: JSON.stringify('GRAPHQL_API')
+      },
       scopeHoisting: true,
       // vueRouterMode: 'history',
       // vueCompiler: true,

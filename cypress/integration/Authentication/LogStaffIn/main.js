@@ -5,9 +5,11 @@ import {
   getTokenDuration,
   getTokenCookie
 } from '../../../../common/cypress/integration/Authentication/common/Helpers'
-import '../../../../common/cypress/integration/Authentication/common/SessionDurationType'
 import '../../../../common/cypress/integration/Authentication/common/PersonaType'
+import '../../../../common/cypress/integration/Authentication/common/SessionDurationType'
+import TokenHandler from '../../../../common/cypress/integration/Authentication/common/TokenHandler'
 import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
+import { Promise } from 'bluebird';
 
 before(() => {
   cy.log(
@@ -55,9 +57,9 @@ When(
 
 Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
   cy.get('@graphql').then(() => {
-    cy.wait(1000)
-    getTokenCookie().then(cookie => {
-      const tokenDuration = getTokenDuration(cookie.value)
+    const handler = new TokenHandler
+    handler.getToken().then(token => {
+      const tokenDuration = getTokenDuration(token)
       expect(tokenDuration.asSeconds()).to.equal(expectedDuration.asSeconds())
     })
   })

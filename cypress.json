@@ -5,7 +5,9 @@
     "*.gif"
   ],
   "env": {
-    "fakeGraphql": true
+    "fakeGraphql": true,
+    "timeoutInMs": 1000,
+    "timeDeltaInMs": 10
   },
   "videoUploadOnPasses": true,
   "video": true,

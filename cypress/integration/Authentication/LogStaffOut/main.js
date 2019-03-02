@@ -4,22 +4,22 @@ import { login } from '../common/Helpers'
 
 import '../common/PersonaType'
 
-Given('un {PersonaType} connectÃ© au Shopozor', function (persona) {
+Given('un {PersonaType} connecté au Shopozor', function (persona) {
   login(persona)
 })
 
-When('il se dÃ©connecte', function () {
-  // Write code here that turns the phrase above into concrete actions
+When('il se déconnecte', function () {
+  // 1. click the disconnect button
   return 'pending'
 })
 
 Then('sa session se ferme', function () {
   // 1. double-check that the authentication token is not present anymore in the cookies
-  // 2. double-check that the "me" query returns failure
+  // 2. double-check that the user can access the login interface again
   return 'pending'
 })
 
-Then("il est redirigÃ© vers l'interface d'identification", function (string) {
-  // Write code here that turns the phrase above into concrete actions
+Then("il est redirigé vers l'interface d'identification", function (string) {
+    // 1. double-check that the user is routed to the login page
   return 'pending'
 })

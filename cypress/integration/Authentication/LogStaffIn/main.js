@@ -21,12 +21,12 @@ beforeEach(() => {
   cy.log('This will run before every scenario of LogAUserIn.feature test, but NEVER for other feature files')
 })
 
-Given('un utilisateur non identifié', () => {
+Given('^un utilisateur non identifié$', () => {
   getTokenCookie().should('not.exist')
 })
 
 When(
-  "un utilisateur s'identifie avec un e-mail et un mot de passe invalides",
+  "^un utilisateur s'identifie avec un e-mail et un mot de passe invalides$",
   function () {
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
     cy.visit('/login')
@@ -36,7 +36,7 @@ When(
 )
 
 When(
-  "un {PersonaType} s'identifie avec un e-mail et un mot de passe valides",
+  "^un {PersonaType} s'identifie avec un e-mail et un mot de passe valides$",
   function (persona) {
     injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
     cy.visit('/login')
@@ -46,7 +46,7 @@ When(
 )
 
 When(
-  "un {PersonaType} s'identifie avec un e-mail valide et un mot de passe invalide",
+  "^un {PersonaType} s'identifie avec un e-mail valide et un mot de passe invalide$",
   function (persona) {
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
     cy.visit('/login')
@@ -55,7 +55,7 @@ When(
   }
 )
 
-Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
+Then("^sa session s'ouvre pour {SessionDurationType}$", expectedDuration => {
   cy.get('@graphql').then(() => {
     const handler = new TokenHandler
     handler.getToken().then(token => {
@@ -66,7 +66,7 @@ Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {
 })
 
 Then(
-  "il obtient un message d'erreur stipulant que ses identifiants sont incorrects",
+  "^il obtient un message d'erreur stipulant que ses identifiants sont incorrects$",
   () => {
     cy.get('@graphql').then(() => {
       cy.get('.incorrectIdentifiers')
@@ -76,7 +76,7 @@ Then(
 )
 
 Then(
-  "il obtient un message d'erreur stipulant que son compte n'a pas les droits d'administrateur",
+  "^il obtient un message d'erreur stipulant que son compte n'a pas les droits d'administrateur$",
   () => {
     cy.get('@graphql').then(() => {
       cy.get('.userIsNotStaff')

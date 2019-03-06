@@ -14,7 +14,7 @@ Fonctionnalité: Condamner l'accès à l'interface d'identification à l'utilisa
 
   Plan du Scénario: Une fois la session ouverte, l'interface d'identification n'est plus accessible
     Etant donné un <membre> identifié 
-    Lorsqu'il navigue vers l'interface d'identification
+    Lorsqu'il accède à l'interface admin
     Alors il est redirigé vers la page d'accueil
 
     Exemples: 

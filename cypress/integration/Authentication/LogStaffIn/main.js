@@ -9,7 +9,6 @@ import '../../../../common/cypress/integration/Authentication/common/PersonaType
 import '../../../../common/cypress/integration/Authentication/common/SessionDurationType'
 import TokenHandler from '../../../../common/cypress/integration/Authentication/common/TokenHandler'
 import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
-import { Promise } from 'bluebird';
 
 before(() => {
   cy.log(
@@ -25,11 +24,15 @@ Given('^un utilisateur non identifié$', () => {
   getTokenCookie().should('not.exist')
 })
 
+When("^un utilisateur accède à l'interface admin$", function () {
+  cy.visit('/')
+})
+
 When(
   "^un utilisateur s'identifie avec un e-mail et un mot de passe invalides$",
   function () {
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
-    cy.visit('/login')
+    cy.visit('/')
     cy.fixture('Authentication/Credentials/InvalidEmailAndPassword')
       .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
   }
@@ -39,7 +42,7 @@ When(
   "^un {PersonaType} s'identifie avec un e-mail et un mot de passe valides$",
   function (persona) {
     injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
-    cy.visit('/login')
+    cy.visit('/')
     cy.fixture(`Authentication/Credentials/${persona}`)
       .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
   }
@@ -49,11 +52,22 @@ When(
   "^un {PersonaType} s'identifie avec un e-mail valide et un mot de passe invalide$",
   function (persona) {
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
-    cy.visit('/login')
+    cy.visit('/')
     cy.fixture(`Authentication/Credentials/${persona}`)
       .then(user => connectWithUserCredentialsViaGui(user.email, user.password + 'a'))
   }
 )
+
+Then("^il doit s'identifier$", function () {
+  // double-check that the login form is displayed
+  return 'pending'
+})
+
+Then("^n'a pas accès à un menu utilisateur$", function () {
+  // double-check that the burger menu is not displayed
+  // double-check that the menu sidebar is not displayed
+  return 'pending'
+})
 
 Then("^sa session s'ouvre pour {SessionDurationType}$", expectedDuration => {
   cy.get('@graphql').then(() => {

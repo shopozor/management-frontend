@@ -17,6 +17,11 @@ Fonctionnalité: Identifier un membre du staff
   Contexte: L'utilisateur n'est pas identifié
     Etant donné un utilisateur non identifié
 
+  Scénario: L'utilisateur accède à l'interface admin
+    Lorsqu'un utilisateur accède à l'interface admin
+    Alors il doit s'identifier 
+    Et n'a pas accès à un menu utilisateur
+
   Scénario: Le membre du staff n'est pas encore enregistré
     Lorsqu'un utilisateur s'identifie avec un e-mail et un mot de passe invalides
     Alors il obtient un message d'erreur stipulant que ses identifiants sont incorrects

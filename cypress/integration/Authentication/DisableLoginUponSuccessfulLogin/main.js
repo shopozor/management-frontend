@@ -17,11 +17,11 @@ Given("^un {PersonaType} identifié$", function (persona) {
   login(persona)
 });
 
-When("^il navigue vers l'interface d'identification$", function () {
-  cy.visit('/login')
+When("^accède à l'interface admin$", function () {
+  cy.visit('/')
 });
 
 Then("^il est redirigé vers la page d'accueil$", function () {
-  cy.url().should('not.include', '/login')
   // TODO: verify that the user is redirected to the home page
+  // TODO: verify that there is no login form
 });

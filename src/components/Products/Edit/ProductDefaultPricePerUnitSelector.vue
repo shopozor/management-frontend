@@ -32,6 +32,10 @@ export default {
   computed: {
     ...mapGetters(['editedProduct']),
     defaultCustomerPrice () {
+      /**
+       *  TODO: cet accès est buggué
+       * setDefaultCustomerPrice est lancé à chaque event tant que customerPrice n'est pas défini
+       */
       if (!this.editedProduct.defaultCustomerPrice) this.setDefaultCustomerPrice(0)
       return this.editedProduct.defaultCustomerPrice
     },

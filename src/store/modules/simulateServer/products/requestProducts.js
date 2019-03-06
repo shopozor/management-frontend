@@ -13,10 +13,10 @@ export const createProduct = ({ userId, token, newProduct }) => {
       rejectIf.productIsNotValid('createProduct', reject, { product: newProduct })
       rejectIf.someObjectPropIsNotUpdatable('createProduct', reject, { object: newProduct, objectType: 'product', id: 'newProduct' })
 
-      manageProducts.createProduct({ userId, newProduct })
+      const product = manageProducts.createProduct({ userId, newProduct })
       resolve({
         message: `[createProduct] The product was successfully created.`,
-        myProducts: server.getProductsOfProducer({ userId })
+        product
       })
     }, delayInMs)
   })

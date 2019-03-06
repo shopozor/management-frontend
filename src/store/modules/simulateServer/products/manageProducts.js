@@ -24,6 +24,7 @@ export const createProduct = ({ userId, email, newProduct }) => {
   }
   server.setProduct({ productId, product })
   giveProductAccessToUser({ userId, email, productId })
+  return product
 }
 
 export const giveProductAccessToUser = ({ userId, email, productId }) => {

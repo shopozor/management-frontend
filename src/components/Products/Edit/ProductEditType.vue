@@ -5,16 +5,16 @@
         :stack-label="$t('products.conservationMethod')"
         separator
         :options="conservationOptions"
-        :value="editedProduct.conservationMethod"
-        @input="updateEditedProduct({conservationMethod: $event})"
+        :value="conservationMethod"
+        @input="updateEditedProduct({ newProps: {conservationMethod: $event} })"
       />
       <br>
       <q-field>
         <q-input
           :float-label="$t('products.conservationTime')"
           type="number"
-          :value="editedProduct.conservationDays"
-          @input="updateEditedProduct({conservationDays: $event})"
+          :value="conservationDays"
+          @input="updateEditedProduct({ newProps: {conservationDays: $event} })"
           orientation="horizontal"
           :suffix="$tc('products.day', editedProduct.conservationDays)"
         />
@@ -26,8 +26,8 @@
         chips
         separator
         :options="categoriesOptions"
-        :value="editedProduct.categories"
-        @input="updateEditedProduct({categories: $event})"
+        :value="categories"
+        @input="updateEditedProduct({ newProps: {categories: $event} })"
       />
     </q-card-main>
   </q-card>
@@ -42,6 +42,16 @@ export default {
   name: 'ProductEditType',
   computed: {
     ...mapGetters(['editedProduct']),
+    conservationMethod () {
+      return this.editedProduct.conservationMethod
+    },
+    conservationDays () {
+      console.log(this.editedProduct.conservationDays)
+      return this.editedProduct.conservationDays
+    },
+    categories () {
+      return this.editedProduct.categories
+    },
     categoriesOptions () {
       return Object.keys(types.categories).map(categories => {
         return {

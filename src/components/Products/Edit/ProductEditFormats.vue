@@ -13,7 +13,7 @@
     </q-collapsible>
     <product-edit-format
       class="q-ma-sm"
-      v-for="id in editedProduct.formatsIds"
+      v-for="id in formatsIds"
       :key="id"
       :formatId="id"
     />
@@ -30,7 +30,10 @@ import NewFormat from './Formats/NewFormat'
 export default {
   name: 'ProductEditFormats',
   computed: {
-    ...mapGetters(['editedProduct'])
+    ...mapGetters(['editedProduct']),
+    formatsIds () {
+      return this.editedProduct.formatsIds
+    }
   },
   components: {ProductEditFormat, ProductDefaultPricePerUnitSelector, NewFormat}
 }

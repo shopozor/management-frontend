@@ -69,6 +69,11 @@ Then("^n'a pas accès à un menu utilisateur$", function () {
   return 'pending'
 })
 
+Then("^n'a pas accès à un lien pour s'enregistrer$", function () {
+  // double-check that no registration link is available on the page
+  return 'pending'
+})
+
 Then("^sa session s'ouvre pour {SessionDurationType}$", expectedDuration => {
   cy.get('@graphql').then(() => {
     const handler = new TokenHandler

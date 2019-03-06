@@ -10,7 +10,12 @@ Fonctionnalité: Identifier un membre du staff
   A la création de son compte, l'utilisateur est averti de l'utilisation de cookies 
   qui sont incontournables pour garantir une identification sécurisée. 
   Comme le compte de l'utilisateur n'est pas créé si celui-ci n'accepte pas notre politique des cookies, 
-  les scénarios ci-dessous ne traitent que le cas où le token d'identification est stocké dans un cookie.
+  les scénarios ci-dessous ne traitent que le cas où le token d'identification est stocké dans un cookie.  
+
+  En plus de ça, pour laisser le contrôle au Rex sur les nouveaux membres du staff, l'interface 
+  administrateur ne propose pas d'enregistrer de nouveaux utilisateurs. Un nouvel utilisateur s'enregistre 
+  en temps que client sur l'interface du Consommateur puis notifie le Rex de son envie d'agir en 
+  tant que Producteur ou Responsable.
 
   <img src="LogStaffIn.feature.gif" alt="Démo" width="1000" height="660"/>
 
@@ -18,9 +23,15 @@ Fonctionnalité: Identifier un membre du staff
     Etant donné un utilisateur non identifié
 
   Scénario: L'utilisateur accède à l'interface admin
+
+    L'accès à l'interface administrateur envoie par défaut l'utilisateur vers un formulaire 
+    d'identification. Aucun lien d'enregistrement n'est proposé pour les utilisateurs sans 
+    identifiants.
+
     Lorsqu'un utilisateur accède à l'interface admin
     Alors il doit s'identifier 
     Et n'a pas accès à un menu utilisateur
+    Et n'a pas accès à un lien pour s'enregistrer
 
   Scénario: Le membre du staff n'est pas encore enregistré
     Lorsqu'un utilisateur s'identifie avec un e-mail et un mot de passe invalides

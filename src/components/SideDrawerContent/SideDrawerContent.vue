@@ -29,7 +29,7 @@ import types from '../../types'
 import PageLink from './PageLink'
 
 export default {
-  name: 'SideDrawer',
+  name: 'SideDrawerContent',
   data () {
     return {
       pages,

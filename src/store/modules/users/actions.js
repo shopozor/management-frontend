@@ -1,6 +1,7 @@
 import * as request from '../simulateServer/users/requestUsers'
 import { apolloClient } from '../../../plugins/apollo'
 import * as cookie from '../../cookie'
+import types from '../../../types'
 
 import LogIn from './graphql/login.graphql'
 
@@ -65,9 +66,9 @@ export function getPermissions ({ commit }) {
   //   .catch(error => {
   //     commit('error', error)
   //   })
-  const token = cookie.get({ cookieId: 'token' })
-  const userId = cookie.get({ cookieId: 'userId' })
-  const email = cookie.get({ cookieId: 'email' })
+  const token = cookie.get({ cookieId: types.cookies.TOKEN })
+  const userId = cookie.get({ cookieId: types.cookies.USER_ID })
+  const email = cookie.get({ cookieId: types.cookies.EMAIL })
   if (token && userId && email) {
     commit('storePermissions', {
       email,
@@ -100,20 +101,20 @@ export function logout ({ commit, getters }) {
 
 function saveUser ({ email, userId, token }) {
   console.log('save user')
-  cookie.set({ cookieId: 'email', cookieValue: email, cookieDuration: 30 })
-  cookie.set({ cookieId: 'userId', cookieValue: userId, cookieDuration: 30 })
-  cookie.set({ cookieId: 'token', cookieValue: token, cookieDuration: 30 })
+  cookie.set({ cookieId: types.cookies.EMAIL, cookieValue: email, cookieDuration: 30 })
+  cookie.set({ cookieId: types.cookies.USER_ID, cookieValue: userId, cookieDuration: 30 })
+  cookie.set({ cookieId: types.cookies.TOKEN, cookieValue: token, cookieDuration: 30 })
 }
 
 function saveToken ({ token }) {
   console.log('save token')
-  cookie.del({ cookieId: 'email' })
-  cookie.del({ cookieId: 'userId' })
-  cookie.set({ cookieId: 'token', cookieValue: token, cookieDuration: 30 })
+  cookie.del({ cookieId: types.cookies.EMAIL })
+  cookie.del({ cookieId: types.cookies.USER_ID })
+  cookie.set({ cookieId: types.cookies.TOKEN, cookieValue: token, cookieDuration: 30 })
 }
 
 function removeToken () {
-  cookie.del({ cookieId: 'email' })
-  cookie.del({ cookieId: 'userId' })
-  cookie.del({ cookieId: 'token' })
+  cookie.del({ cookieId: types.cookies.EMAIL })
+  cookie.del({ cookieId: types.cookies.USER_ID })
+  cookie.del({ cookieId: types.cookies.TOKEN })
 }

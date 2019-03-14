@@ -8,6 +8,7 @@ import * as formatUI from './formatUI'
 import * as categories from './categories'
 import units from './units'
 import * as conservation from './conservation'
+import * as cookies from './cookies'
 
 export default {
   permissions,
@@ -19,5 +20,6 @@ export default {
   formatUI,
   categories,
   units,
-  conservation
+  conservation,
+  cookies
 }

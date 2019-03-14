@@ -40,7 +40,7 @@
           <q-toggle class="q-ma-md" :class="{'text-faded': !stayLoggedIn}" v-model="stayLoggedIn" :label="$t('login.stayLoggedIn')"></q-toggle>
         </q-item>
         <q-item class="row justify-center">
-            <q-btn class="q-ma-md" color="primary" :label="$t('login.connect')" @click="login" ></q-btn>
+            <q-btn class="q-ma-md loginButton" color="primary" :label="$t('login.connect')" @click="login" ></q-btn>
         </q-item>
         <q-item class="row justify-center">
           <router-link to="/confirmationEmailSent">{{ $t('login.forgotPassword') }}</router-link>

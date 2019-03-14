@@ -5,11 +5,13 @@
         color="primary"
       >
         <q-btn
+          class="burger-menu"
           flat
           dense
           round
           @click="drawerOpen = !drawerOpen"
           aria-label="Menu"
+          :disable="!isAuthorized"
         >
           <q-icon name="menu" />
         </q-btn>
@@ -33,6 +35,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import SideDrawerContent from '../components/SideDrawerContent/SideDrawerContent'
 import LanguageSelect from '../components/I18n/LanguageSelect'
 
@@ -44,6 +47,9 @@ export default {
     }
   },
   components: {SideDrawerContent, LanguageSelect},
+  computed: {
+    ...mapGetters(['isAuthorized'])
+  },
   methods: {
     clear () {
       window.localStorage.clear()
@@ -52,6 +58,9 @@ export default {
         window.location.reload()
       }, 1000)
     }
+  },
+  created () {
+    this.drawerOpen = this.drawerOpen && this.isAuthorized
   }
 }
 </script>

@@ -9,6 +9,7 @@ import '../../../../common/cypress/integration/Authentication/common/PersonaType
 import '../../../../common/cypress/integration/Authentication/common/SessionDurationType'
 import TokenHandler from '../../../../common/cypress/integration/Authentication/common/TokenHandler'
 import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
+import types from '../../../../src/types'
 
 before(() => {
   cy.log(
@@ -59,19 +60,21 @@ When(
 )
 
 Then("il doit s'identifier", function () {
-  // double-check that the login form is displayed
-  return 'pending'
+  cy.get('input[type=email]').should('exist')
+  cy.get('input[type=password]').should('exist')
+  cy.get('.loginButton').should('exist')
 })
 
 Then("n'a pas accès à un menu utilisateur", function () {
-  // double-check that the burger menu is not displayed
-  // double-check that the menu sidebar is not displayed
-  return 'pending'
+  cy.get('.burger-menu').should('have.class', 'disabled')
+  cy.get('.q-layout-drawer').should('not.be.visible')
 })
 
 Then("n'a pas accès à un lien pour s'enregistrer", function () {
-  // double-check that no registration link is available on the page
-  return 'pending'
+  // TODO: y'a bien une manière plus élégante de faire ça, non ?
+  cy.visit(`/${types.links.SIGNUP}`).then(context => {
+    expect(context.location.href).contain(types.links.LOGIN)
+  })
 })
 
 Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {

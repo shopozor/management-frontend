@@ -71,10 +71,8 @@ Then("n'a pas accès à un menu utilisateur", function () {
 })
 
 Then("n'a pas accès à un lien pour s'enregistrer", function () {
-  // TODO: y'a bien une manière plus élégante de faire ça, non ?
-  cy.visit(`/${types.links.SIGNUP}`).then(context => {
-    expect(context.location.href).contain(types.links.LOGIN)
-  })
+  cy.visit(`/${types.links.SIGNUP}`)
+  cy.url().should("not.include", types.links.SIGNUP)
 })
 
 Then("sa session s'ouvre pour {SessionDurationType}", expectedDuration => {

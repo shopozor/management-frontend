@@ -1,4 +1,4 @@
-import * as request from '../simulateServer/users/requestUsers'
+// import * as request from '../simulateServer/users/requestUsers'
 import { apolloClient } from '../../../plugins/apollo'
 import * as cookie from '../../../../common/src/store/cookie'
 import types from '../../../../common/src/types'
@@ -6,12 +6,12 @@ import types from '../../../../common/src/types'
 import LogIn from './graphql/login.graphql'
 
 export function signup ({ commit }, { email, password }) {
-  request
-    .signup({ email, password })
-    .then(response => {
-      this.$router.push({ path: '/ConfirmationEmailSent' })
-    })
-    .catch(error => commit('error', error))
+  // request
+  //   .signup({ email, password })
+  //   .then(response => {
+  //     this.$router.push({ path: '/ConfirmationEmailSent' })
+  //   })
+  //   .catch(error => commit('error', error))
 }
 
 export function login ({ commit }, { email, password, stayLoggedIn }) {

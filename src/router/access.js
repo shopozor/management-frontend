@@ -1,4 +1,4 @@
-import types from '../types'
+import types from '../../common/src/types'
 
 const access = {
   [types.permissions.NOT_CONNECTED]: {

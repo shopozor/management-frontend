@@ -30,7 +30,7 @@
 import { mapActions } from 'vuex'
 import ProductDeleteManager from '../ProductDeleteManager'
 import ProductVisibilityManager from '../ProductVisibilityManager'
-import types from '../../../types'
+import types from '../../../../common/src/types'
 
 export default {
   name: 'ProductInventoryCard',

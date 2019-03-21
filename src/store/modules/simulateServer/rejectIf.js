@@ -15,7 +15,7 @@ import {
   formatWillNotDisappear,
   formatHasNoPendingOrder
 } from './validate'
-import types from '../../../types'
+import types from '../../../../common/src/types'
 import { getUser } from './serverAccess'
 
 export const userAlreadyExists = (method, reject, { email }) => {

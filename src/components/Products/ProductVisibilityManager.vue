@@ -12,7 +12,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import types from '../../types'
+import types from '../../../common/src/types'
 
 export default {
   name: 'ProductVisibilityManager',

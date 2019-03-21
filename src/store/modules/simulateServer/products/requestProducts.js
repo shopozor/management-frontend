@@ -1,7 +1,7 @@
 import * as server from '../serverAccess'
 import * as manageProducts from './manageProducts'
 import * as rejectIf from '../rejectIf'
-import types from '../../../../types'
+import types from '../../../../../common/src/types'
 
 const delayInMs = 200
 

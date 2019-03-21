@@ -1,26 +1,6 @@
-import * as links from '../types/links'
+import * as links from '../../common/src/types/links'
 import access from './access'
-import store from '../store'
-
-export const generatePage = (link) => {
-  return {
-    path: `/${link}`,
-    component: () => import(`pages/${firstUpperCase(link)}.vue`),
-    beforeEnter: (to, from, next) => {
-      if (userCanAccess(link)) {
-        next()
-      } else {
-        next(from)
-      }
-    }
-  }
-}
-
-function userCanAccess (link) {
-  return access(store.getters.permissions)[link]
-}
-
-export const firstUpperCase = string => string.charAt(0).toUpperCase() + string.slice(1)
+import { generatePage } from '../../common/src/router/helpers'
 
 /**
  * To add a new page:
@@ -36,17 +16,17 @@ export const firstUpperCase = string => string.charAt(0).toUpperCase() + string.
 
 export default {
   [links.HOME]: { path: '/', component: () => import('pages/Home.vue') },
-  [links.SIGNUP]: generatePage(links.SIGNUP),
-  [links.CONFIRMATION_EMAIL_SENT]: generatePage(links.CONFIRMATION_EMAIL_SENT),
-  [links.LOGIN]: generatePage(links.LOGIN),
-  [links.LOGOUT]: generatePage(links.LOGOUT),
-  [links.PROFILE]: generatePage(links.PROFILE),
-  [links.CALENDAR]: generatePage(links.CALENDAR),
-  [links.PRODUCTS]: generatePage(links.PRODUCTS),
-  [links.MY_SHOP]: generatePage(links.MY_SHOP),
-  [links.MANAGE_SHOPS]: generatePage(links.MANAGE_SHOPS),
-  [links.MANAGE_SITE]: generatePage(links.MANAGE_SITE),
-  [links.MAP]: generatePage(links.MAP),
-  [links.ORDERS]: generatePage(links.ORDERS),
-  [links.FAKE_SHOP]: generatePage(links.FAKE_SHOP)
+  [links.SIGNUP]: generatePage(links.SIGNUP, access),
+  [links.CONFIRMATION_EMAIL_SENT]: generatePage(links.CONFIRMATION_EMAIL_SENT, access),
+  [links.LOGIN]: generatePage(links.LOGIN, access),
+  [links.LOGOUT]: generatePage(links.LOGOUT, access),
+  [links.PROFILE]: generatePage(links.PROFILE, access),
+  [links.CALENDAR]: generatePage(links.CALENDAR, access),
+  [links.PRODUCTS]: generatePage(links.PRODUCTS, access),
+  [links.MY_SHOP]: generatePage(links.MY_SHOP, access),
+  [links.MANAGE_SHOPS]: generatePage(links.MANAGE_SHOPS, access),
+  [links.MANAGE_SITE]: generatePage(links.MANAGE_SITE, access),
+  [links.MAP]: generatePage(links.MAP, access),
+  [links.ORDERS]: generatePage(links.ORDERS, access),
+  [links.FAKE_SHOP]: generatePage(links.FAKE_SHOP, access)
 }

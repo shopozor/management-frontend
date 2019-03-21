@@ -1,4 +1,4 @@
-import types from '../../../types'
+import types from '../../../../common/src/types'
 
 export const permissions = state => state.permissions
 export const userId = state => state.userId

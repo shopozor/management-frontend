@@ -9,7 +9,7 @@ import '../../../../common/cypress/integration/Authentication/common/PersonaType
 import '../../../../common/cypress/integration/Authentication/common/SessionDurationType'
 import TokenHandler from '../../../../common/cypress/integration/Authentication/common/TokenHandler'
 import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
-import types from '../../../../src/types'
+import types from '../../../../common/src/types'
 
 before(() => {
   cy.log(

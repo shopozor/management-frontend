@@ -1,4 +1,4 @@
-import types from '../../../types'
+import types from '../../../../common/src/types'
 
 export const storeFormats = (state, { formats }) => {
   state.formats = { ...state.formats, ...formats }

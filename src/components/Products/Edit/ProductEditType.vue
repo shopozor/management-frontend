@@ -36,7 +36,7 @@
 <script>
 import {mapGetters, mapMutations} from 'vuex'
 // import ProductVisibilityManager from '../ProductVisibilityManager'
-import types from '../../../types'
+import types from '../../../../common/src/types'
 
 export default {
   name: 'ProductEditType',

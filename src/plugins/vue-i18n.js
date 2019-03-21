@@ -2,7 +2,7 @@
 import VueI18n from 'vue-i18n'
 
 // let's say we have a file in /src/i18n containing the language pack
-import messages from 'src/i18n/messages'
+import messages from '../../common/src/i18n/messages'
 
 export default ({ app, Vue }) => {
   // we tell Vue to use our Vue package:

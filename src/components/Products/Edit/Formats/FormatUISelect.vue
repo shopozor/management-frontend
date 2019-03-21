@@ -12,7 +12,7 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import * as formatUI from '../../../../types/formatUI'
+import * as formatUI from '../../../../../common/src/types/formatUI'
 
 export default {
   name: 'FormatUISelect',

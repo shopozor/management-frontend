@@ -10,7 +10,7 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import types from '../../../../types'
+import types from '../../../../../common/src/types'
 
 export default {
   name: 'FormatStateManager',

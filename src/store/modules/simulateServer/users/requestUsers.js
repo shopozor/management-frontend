@@ -1,7 +1,7 @@
 import * as manageUsers from './manageUsers'
 import * as rejectIf from '../rejectIf'
 import { tokenIsValid } from '../validate'
-import types from '../../../../types'
+import types from '../../../../../common/src/types'
 
 const delayInMs = 200
 

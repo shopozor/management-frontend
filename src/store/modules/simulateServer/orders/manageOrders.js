@@ -1,5 +1,5 @@
 import { setOrder, getUser, updateUser, getProduct, getFormat, updateFormat, updateProduct } from '../serverAccess'
-import types from '../../../../types'
+import types from '../../../../../common/src/types'
 
 export const orderFormats = ({ customerId, formatsAmounts }) => {
   Object.keys(formatsAmounts).map(formatId => {

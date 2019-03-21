@@ -1,5 +1,0 @@
-export const DAIRY = 'DAIRY'
-export const MEAT = 'MEAT'
-export const FRUITS = 'FRUITS'
-export const VEGETABLES = 'VEGETABLES'
-export const GROCERY = 'GROCERY'

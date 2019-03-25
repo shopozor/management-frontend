@@ -25,6 +25,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
         }
       })
       .then(response => {
+        console.log(response.data.login)
         const content = response.data.login
         const errors = content.errors
         if (errors.length > 0) {

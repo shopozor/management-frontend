@@ -25,7 +25,6 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
         }
       })
       .then(response => {
-        console.log(response.data.login)
         const content = response.data.login
         const errors = content.errors
         if (errors.length > 0) {
@@ -37,7 +36,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
             email,
             token,
             userId,
-            permissions: content.user.permissions
+            permissions: content.user.permissions.map(permissionPack => permissionPack.code)
           })
           stayLoggedIn ? saveUser({ email, userId, token }) : saveToken({ token })
           resolve(response)
@@ -84,6 +83,14 @@ export function getPermissions ({ commit }) {
 }
 
 export function logout ({ commit, getters }) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      commit('logout')
+      removeToken()
+      resolve()
+      this.$router.push('/')
+    }, 1000)
+  })
   // request
   //   .logout({
   //     userId: getters.userId,
@@ -96,19 +103,15 @@ export function logout ({ commit, getters }) {
   //   .catch(error => {
   //     commit('error', error)
   //   })
-  commit('logout')
-  removeToken()
 }
 
 function saveUser ({ email, userId, token }) {
-  console.log('save user')
   cookie.set({ cookieId: types.cookies.EMAIL, cookieValue: email, cookieDuration: 30 })
   cookie.set({ cookieId: types.cookies.USER_ID, cookieValue: userId, cookieDuration: 30 })
   cookie.set({ cookieId: types.cookies.TOKEN, cookieValue: token, cookieDuration: 30 })
 }
 
 function saveToken ({ token }) {
-  console.log('save token')
   cookie.del({ cookieId: types.cookies.EMAIL })
   cookie.del({ cookieId: types.cookies.USER_ID })
   cookie.set({ cookieId: types.cookies.TOKEN, cookieValue: token, cookieDuration: 30 })

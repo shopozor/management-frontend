@@ -1,22 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import { generateRoutes } from '../../common/src/router/helpers'
+import { generateRoutes, checkIfUserCanAccess } from '../../common/src/router/helpers'
 import { links, accessRules } from './links'
 import store from '../store'
 import types from '../../common/src/types'
 
-const permissions = store.getters.permissions
-
-const forceLogin = (to, next) => {
+const forceLogin = ({ to }) => {
   const loginPath = `/${types.links.LOGIN}`
   const pathIsNotLogin = to.path !== loginPath
   const userIsNotConnected = !store.getters.isAuthorized
-  if (pathIsNotLogin && userIsNotConnected) next({ path: loginPath })
-  else next()
+  if (pathIsNotLogin && userIsNotConnected) return loginPath
+  else return false
 }
 
-const routes = generateRoutes({ links, accessRules, permissions })
+const routes = generateRoutes({ links, accessRules, permissions: store.getters.permissions })
 
 Vue.use(VueRouter)
 
@@ -36,7 +34,14 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
-  Router.beforeEach((to, from, next) => { forceLogin(to, next) })
+  Router.beforeEach((to, from, next) => {
+    const path = forceLogin({ to })
+    if (path) next(path)
+    else {
+      const routeIsAccessible = checkIfUserCanAccess({ to, permissions: store.getters.permissions })
+      next(routeIsAccessible)
+    }
+  })
 
   return Router
 }

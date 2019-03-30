@@ -12,8 +12,6 @@ export function logout (state) {
   state.token = ''
   state.email = ''
   state.permissions = [types.permissions.NOT_CONNECTED]
-
-  this.$router.push({ path: '/' })
 }
 
 export function error (state, error) {

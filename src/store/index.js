@@ -12,14 +12,16 @@ Vue.use(Vuex)
  * directly export the Store instantiation
  */
 
-export default new Vuex.Store({
-  state: { },
-  getters: { },
-  mutations: { },
-  actions: { },
+const store = new Vuex.Store({
+  state: {},
+  getters: {},
+  mutations: {},
+  actions: {},
   modules: {
     users,
     products,
     orders
   }
 })
+
+export default store

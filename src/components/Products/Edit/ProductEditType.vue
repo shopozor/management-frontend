@@ -34,43 +34,43 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 // import ProductVisibilityManager from '../ProductVisibilityManager'
-import types from 'src/types'
+import types from "../../../../common/src/types";
 
 export default {
-  name: 'ProductEditType',
+  name: "ProductEditType",
   computed: {
-    ...mapGetters(['editedProduct']),
-    conservationMethod () {
-      return this.editedProduct.conservationMethod
+    ...mapGetters(["editedProduct"]),
+    conservationMethod() {
+      return this.editedProduct.conservationMethod;
     },
-    conservationDays () {
-      console.log(this.editedProduct.conservationDays)
-      return this.editedProduct.conservationDays
+    conservationDays() {
+      console.log(this.editedProduct.conservationDays);
+      return this.editedProduct.conservationDays;
     },
-    categories () {
-      return this.editedProduct.categories
+    categories() {
+      return this.editedProduct.categories;
     },
-    categoriesOptions () {
+    categoriesOptions() {
       return Object.keys(types.categories).map(categories => {
         return {
           value: categories,
           label: this.$t(`categories.${categories}`)
-        }
-      })
+        };
+      });
     },
-    conservationOptions () {
+    conservationOptions() {
       return Object.keys(types.conservation).map(conservation => {
         return {
           value: conservation,
           label: this.$t(`conservation.${conservation}`)
-        }
-      })
+        };
+      });
     }
   },
   methods: {
-    ...mapActions(['updateEditedProduct'])
+    ...mapActions(["updateEditedProduct"])
   }
-}
+};
 </script>

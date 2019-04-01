@@ -9,12 +9,11 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
-import types from 'src/types'
-import FormatCriticalValuesMixin from './FormatCriticalValuesMixin.js'
+import { mapGetters, mapMutations } from "vuex";
+import types from "../../../../../common/src/types";
 
 export default {
-  name: 'FormatStateManager',
+  name: "FormatStateManager",
   mixins: [FormatCriticalValuesMixin],
   props: {
     formatId: {
@@ -23,10 +22,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateEditedFormat']),
-    del () {
-      this.updateEditedFormat({formatId: this.formatId, newProps: {state: types.formatState.DELETED}})
+    ...mapActions(["updateEditedFormat"]),
+    del() {
+      this.updateEditedFormat({
+        formatId: this.formatId,
+        newProps: { state: types.formatState.DELETED }
+      });
     }
   }
-}
+};
 </script>

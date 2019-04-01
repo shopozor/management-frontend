@@ -10,7 +10,6 @@ Make sure you run the script
 .vscode/install-extensions.sh
 ```
 
-
 ## Test identifiers
 
 * client@budzons.ch
@@ -18,8 +17,32 @@ Make sure you run the script
 * gerant@budzons.ch
 * manager@budzons.ch
 * softozor@budzons.ch
-
 password: Budzonnerie1
+
+## Development setup
+
+### Run the saleor server
+
+1. Browse your `saleor` project folder
+2. Run the following commands
+
+```
+pipenv shell
+python ./manage.py runserver
+```
+
+### Reset the database data
+
+1. Browse your `saleor` project folder
+2. Run the following commands
+
+```
+pipenv run ./resetDB.sh
+```
+
+### Run the frontend
+
+Run `quasar dev`
 
 ## Acceptance testing
 
@@ -34,9 +57,9 @@ git submodule update
 
 During development, new fixture data will be added to the fixtures repo. Upon a `git pull` on the `shopozor-management-frontend`, those new fixtures will not be pulled automatically. You will also need to do a 
 
-```
-git submodule update
-```
+1. `git pull` (s'il y a du neuf, on est redirigé vers gnu nano)
+2. dans gnu nano, ^X pour quitter, puis N pour ne pas créer de fichier
+3. `git submodule update`
 
 ### Basic run
 

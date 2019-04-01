@@ -1,61 +1,42 @@
-import * as requestProduct from '../simulateServer/products/requestProducts'
-import * as requestFormats from '../simulateServer/formats/requestFormats'
+// import * as request from '../simulateServer/products/requestProducts'
 
 export const getProducts = ({ commit, getters }) => {
-  requestProduct.getProducts({
-    userId: getters.userId,
-    token: getters.token
-  })
-    .then(response => { commit('storeProducts', response.products) })
-    .catch(error => { console.log(error) })
+  // request.getProducts({
+  //   userId: getters.userId,
+  //   token: getters.token
+  // })
+  //   .then(response => { commit('storeProducts', response.products) })
+  //   .catch(error => { console.log(error) })
 }
 
 export const getMyProducts = ({ commit, getters }) => {
-  requestProduct.getMyProducts({
-    userId: getters.userId,
-    token: getters.token
-  })
-    .then(response => { commit('storeProducts', response.myProducts) })
-    .catch(error => { console.log(error) })
+  // request.getMyProducts({
+  //   userId: getters.userId,
+  //   token: getters.token
+  // })
+  //   .then(response => { commit('storeMyProducts', response.myProducts) })
+  //   .catch(error => { console.log(error) })
 }
 
-export const createProduct = ({ commit, getters }) => {
-  const newProduct = {
-    title: ''
-  }
-
-  commit('setEditedProduct', { product: newProduct })
-
-  requestProduct.createProduct({
-    userId: getters.userId,
-    token: getters.token,
-    newProduct
-  })
-    .then(response => {
-      commit('storeProducts', response.product)
-      commit('updateEditedProduct', { newProps: response.product })
-    })
-    .catch(error => { console.log(error) })
+export const createProduct = ({ commit, getters }, { newProduct }) => {
+  // request.createProduct({
+  //   userId: getters.userId,
+  //   token: getters.token,
+  //   newProduct
+  // })
+  //   .then(response => { commit('storeMyProducts', response.myProducts) })
+  //   .catch(error => { console.log(error) })
 }
 
 export const updateProduct = ({ commit, getters }, { productId, newProps }) => {
-  requestProduct.updateProduct({
-    userId: getters.userId,
-    token: getters.token,
-    productId,
-    newProps
-  })
-    .then(response => { commit('storeProducts', response.myProducts) })
-    .catch(error => console.log(error))
-}
-
-export const getFormats = ({ commit, getters }) => {
-  requestFormats.getFormats({
-    userId: getters.userId,
-    token: getters.token
-  })
-    .then(response => commit('storeFormats', { formats: response.formats }))
-    .catch(error => console.log(error))
+  // request.updateProduct({
+  //   userId: getters.userId,
+  //   token: getters.token,
+  //   productId,
+  //   newProps
+  // })
+  //   .then(response => { commit('storeMyProducts', response.myProducts) })
+  //   .catch(error => console.log(error))
 }
 
 export const getFormatsOfProduct = ({ commit, getters }, { productId }) => {
@@ -89,16 +70,16 @@ export const createEditedProduct = ({ commit }) => {
 }
 
 export const setEditedProduct = ({ commit, getters }, { productId }) => {
-  const localProduct = getters.productsInInventory[productId]
-  if (localProduct) commit('setEditedProduct', { product: localProduct })
-  else {
-    requestProduct.getMyProducts({
-      userId: getters.userId,
-      token: getters.token
-    })
-      .then(response => commit('setEditedProduct', { product: response.myProducts[productId] }))
-      .catch(error => console.log(error))
-  }
+  // const localProduct = getters.productsInInventory[productId]
+  // if (localProduct) commit('setEditedProduct', localProduct)
+  // else {
+  //   request.getMyProducts({
+  //     userId: getters.userId,
+  //     token: getters.token
+  //   })
+  //     .then(response => commit('setEditedProduct', response.myProducts[productId]))
+  //     .catch(error => console.log(error))
+  // }
 }
 
 export const updateEditedProduct = ({ commit }, { newProps }) => {

@@ -1,27 +1,21 @@
 <template>
   <div id="q-app">
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { initFakeServer } from './store/modules/simulateServer'
+import { mapActions } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   methods: {
-    ...mapActions(['getAuthorizations'])
+    ...mapActions(["getPermissions"])
   },
-  created () {
-    const serverMustBeInitialized = localStorage.getItem('fake_server') === null
-    if (serverMustBeInitialized) {
-      initFakeServer()
-    } else {
-      this.getAuthorizations()
-    }
+  created() {
+    // this.getPermissions()
   }
-}
+};
 </script>
 
 <style>

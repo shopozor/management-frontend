@@ -3,7 +3,8 @@
     <q-card
       class="width-md height-lg q-ma-sm"
       :class="{visibleState: isVisible, invisibleState: !isVisible}"
-      v-if="!isDeleted">
+      v-if="!isDeleted"
+    >
       <q-card-actions class="row justify-between">
         <!-- <product-visibility-manager :productId="productId" /> -->
         <q-btn
@@ -12,29 +13,29 @@
           :label="$t('products.edit')"
           size="md"
           color="primary"
-          @click="edit" />
-        <product-delete-manager :productId="productId" />
+          @click="edit"
+        />
+        <product-delete-manager :productId="productId"/>
       </q-card-actions>
       <q-card-title>
         {{ product.title }}
         <span slot="subtitle">{{ summary }}</span>
       </q-card-title>
       <q-card-media>
-        <img :src="showImage" alt="product image"/>
+        <img :src="showImage" alt="product image">
       </q-card-media>
     </q-card>
   </transition>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import ProductDeleteManager from '../ProductDeleteManager'
-// import ProductVisibilityManager from '../ProductVisibilityManager'
-import types from 'src/types'
-import ShowImageMixin from 'assets/images/ShowImageMixin'
+import { mapGetters, mapActions } from "vuex";
+import ProductDeleteManager from "../ProductDeleteManager";
+import ProductVisibilityManager from "../ProductVisibilityManager";
+import types from "../../../../common/src/types";
 
 export default {
-  name: 'ProductInventoryCard',
+  name: "ProductInventoryCard",
   props: {
     productId: {
       type: String,
@@ -46,37 +47,40 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['pendingOrdersOfProductSummary', 'myProducts']),
-    product () {
-      return this.myProducts[this.productId]
+    ...mapGetters(["pendingOrdersOfProductSummary", "myProducts"]),
+    product() {
+      return this.myProducts[this.productId];
     },
-    image () {
-      return this.product.image
+    image() {
+      return this.product.image;
     },
-    summary () {
-      const paid = this.pendingOrdersOfProductSummary({ productId: this.productId }).paid
-      return this.$tc(
-        'products.ordersSummary',
-        paid.amount,
-        {
-          amount: paid.amount,
-          price: (paid.customerPrice / 100).toFixed(2)
-        }
-      )
+    summary() {
+      const paid = this.pendingOrdersOfProductSummary({
+        productId: this.productId
+      }).paid;
+      return this.$tc("products.ordersSummary", paid.amount, {
+        amount: paid.amount,
+        price: (paid.customerPrice / 100).toFixed(2)
+      });
     },
-    isVisible () {
-      return this.product.state === types.productState.VISIBLE
+    isVisible() {
+      return this.product.state === types.productState.VISIBLE;
     },
-    isDeleted () {
-      return this.product.state === types.productState.DELETED
+    isDeleted() {
+      return this.product.state === types.productState.DELETED;
     }
   },
   methods: {
-    ...mapActions(['updateProduct', 'getFormatsOfProduct', 'setEditedProduct', 'setEditedFormats']),
-    edit () {
-      this.setEditedProduct({productId: this.productId})
-      this.setEditedFormats({productId: this.productId})
-      this.jumpTo('edit')
+    ...mapActions([
+      "updateProduct",
+      "getFormatsOfProduct",
+      "setEditedProduct",
+      "setEditedFormats"
+    ]),
+    edit() {
+      this.setEditedProduct({ productId: this.productId });
+      this.setEditedFormats({ productId: this.productId });
+      this.jumpTo("edit");
     }
   },
   components: {
@@ -84,10 +88,10 @@ export default {
     // ProductVisibilityManager
   },
   mixins: [ShowImageMixin],
-  created () {
-    this.getFormatsOfProduct({productId: this.productId})
+  created() {
+    this.getFormatsOfProduct({ productId: this.productId });
   }
-}
+};
 </script>
 
 <style lang="stylus">

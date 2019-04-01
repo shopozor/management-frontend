@@ -7,20 +7,21 @@
     checked-icon="visibility"
     unchecked-icon="visibility_off"
     @input="toggleVisibility"
-    :label="visibilityLabel" />
+    :label="visibilityLabel"
+  />
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import types from 'src/types'
+import { mapActions } from "vuex";
+import types from "../../../common/src/types";
 
 export default {
-  name: 'ProductVisibilityManager',
-  data () {
+  name: "ProductVisibilityManager",
+  data() {
     return {
       visibility: this.$store.state.products.myProducts[this.productId].state,
-      productState: {...types.productState}
-    }
+      productState: { ...types.productState }
+    };
   },
   props: {
     productId: {
@@ -29,53 +30,64 @@ export default {
     },
     showLabel: {
       type: Boolean,
-      default: function () {
-        return false
+      default: function() {
+        return false;
       }
     }
   },
   computed: {
-    state () { return this.$store.state.products.myProducts[this.productId].state },
-    ordersSummary () { return this.$store.state.products.myProducts[this.productId].ordersSummary },
-    visibilityLabel () {
-      if (this.state === types.productState.VISIBLE && this.showLabel) return this.$t('products.visible')
-      else if (this.showLabel) return this.$t('products.hidden')
-      else return ''
+    state() {
+      return this.$store.state.products.myProducts[this.productId].state;
     },
-    confirmHideWithOrders () {
+    ordersSummary() {
+      return this.$store.state.products.myProducts[this.productId]
+        .ordersSummary;
+    },
+    visibilityLabel() {
+      if (this.state === types.productState.VISIBLE && this.showLabel)
+        return this.$t("products.visible");
+      else if (this.showLabel) return this.$t("products.hidden");
+      else return "";
+    },
+    confirmHideWithOrders() {
       return {
-        title: this.$t('dialog.warning'),
-        message: this.$t(
-          'products.warningHide',
-          {
-            amount: this.ordersSummary.amount,
-            price: this.ordersSummary.customerPrice
-          }),
-        ok: this.$t('products.hide'),
-        cancel: this.$t('products.letVisible')
-      }
+        title: this.$t("dialog.warning"),
+        message: this.$t("products.warningHide", {
+          amount: this.ordersSummary.amount,
+          price: this.ordersSummary.customerPrice
+        }),
+        ok: this.$t("products.hide"),
+        cancel: this.$t("products.letVisible")
+      };
     }
   },
   methods: {
-    ...mapActions(['updateProduct']),
-    toggleVisibility (newVal) {
-      const vm = this
+    ...mapActions(["updateProduct"]),
+    toggleVisibility(newVal) {
+      const vm = this;
       if (
         vm.state === types.productState.VISIBLE &&
         newVal === types.productState.INVISIBLE &&
         vm.ordersSummary.amount > 0
       ) {
-        vm.$q.dialog({...vm.confirmHideWithOrders})
+        vm.$q
+          .dialog({ ...vm.confirmHideWithOrders })
           .then(() => {
-            vm.updateProduct({productId: vm.productId, newProps: {state: newVal, force: true}})
+            vm.updateProduct({
+              productId: vm.productId,
+              newProps: { state: newVal, force: true }
+            });
           })
           .catch(() => {
-            vm.visibility = types.productState.VISIBLE
-          })
+            vm.visibility = types.productState.VISIBLE;
+          });
       } else {
-        vm.updateProduct({productId: vm.productId, newProps: {state: newVal}})
+        vm.updateProduct({
+          productId: vm.productId,
+          newProps: { state: newVal }
+        });
       }
     }
   }
-}
+};
 </script>

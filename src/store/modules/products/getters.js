@@ -1,5 +1,5 @@
-import types from 'src/types'
-import { filterObjectOfObjects } from '../../helpers'
+import types from '../../../../common/src/types'
+import NO_IMAGE from '../../../assets/no_image.png'
 
 export const productsTrashIsEmpty = (state, getters) => {
   return Object.keys(getters.productsInTrash).length === 0

@@ -1,24 +1,18 @@
 <template>
-  <q-btn
-    class="q-ma-sm"
-    @click="deleteProduct"
-    icon="delete"
-    color="negative"
-    round
-    size="md" />
+  <q-btn class="q-ma-sm" @click="deleteProduct" icon="delete" color="negative" round size="md"/>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import types from 'src/types'
+import { mapActions } from "vuex";
+import types from "../../../common/src/types";
 
 export default {
-  name: 'ProductDeleteManager',
-  data () {
+  name: "ProductDeleteManager",
+  data() {
     return {
       visibility: this.state,
-      productState: {...types.productState}
-    }
+      productState: { ...types.productState }
+    };
   },
   props: {
     productId: {
@@ -27,51 +21,62 @@ export default {
     }
   },
   computed: {
-    ordersSummary () { return this.$store.getters.productsInInventory[this.productId].ordersSummary },
-    state () { return this.$store.getters.productsInInventory[this.productId].state },
-    dialogs () {
+    ordersSummary() {
+      return this.$store.getters.productsInInventory[this.productId]
+        .ordersSummary;
+    },
+    state() {
+      return this.$store.getters.productsInInventory[this.productId].state;
+    },
+    dialogs() {
       return {
         confirmDeleteWithoutOrders: {
-          title: this.$t('dialog.warning'),
-          message: this.$t('products.warningDeleteWithoutOrders'),
-          ok: this.$t('products.throwAway'),
-          cancel: this.$t('products.keep')
+          title: this.$t("dialog.warning"),
+          message: this.$t("products.warningDeleteWithoutOrders"),
+          ok: this.$t("products.throwAway"),
+          cancel: this.$t("products.keep")
         },
         consfirmDeleteWithOrders: {
-          title: this.$t('dialog.warning'),
-          message: this.$t(
-            'products.warningDeleteWithOrders',
-            {
-              amount: this.ordersSummary.amount,
-              price: this.ordersSummary.customerPrice
-            }),
-          ok: this.$t('products.throwAway'),
-          cancel: this.$t('products.keep')
+          title: this.$t("dialog.warning"),
+          message: this.$t("products.warningDeleteWithOrders", {
+            amount: this.ordersSummary.amount,
+            price: this.ordersSummary.customerPrice
+          }),
+          ok: this.$t("products.throwAway"),
+          cancel: this.$t("products.keep")
         }
-      }
+      };
     }
   },
   methods: {
-    ...mapActions(['updateProduct']),
-    deleteProduct () {
-      const vm = this
+    ...mapActions(["updateProduct"]),
+    deleteProduct() {
+      const vm = this;
       if (
         vm.state === types.productState.VISIBLE &&
         vm.ordersSummary.amount > 0
       ) {
-        vm.$q.dialog({...vm.dialogs.consfirmDeleteWithOrders})
+        vm.$q
+          .dialog({ ...vm.dialogs.consfirmDeleteWithOrders })
           .then(() => {
-            vm.updateProduct({productId: vm.productId, newProps: {state: types.productState.DELETED, force: true}})
+            vm.updateProduct({
+              productId: vm.productId,
+              newProps: { state: types.productState.DELETED, force: true }
+            });
           })
-          .catch(() => {})
+          .catch(() => {});
       } else {
-        vm.$q.dialog({...vm.dialogs.confirmDeleteWithoutOrders})
+        vm.$q
+          .dialog({ ...vm.dialogs.confirmDeleteWithoutOrders })
           .then(() => {
-            vm.updateProduct({productId: vm.productId, newProps: {state: types.productState.DELETED}})
+            vm.updateProduct({
+              productId: vm.productId,
+              newProps: { state: types.productState.DELETED }
+            });
           })
-          .catch(() => {})
+          .catch(() => {});
       }
     }
   }
-}
+};
 </script>

@@ -14,20 +14,20 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import types from "../../../../../common/src/types";
-import FormatDescriptionFree from "./FormatDescription/FormatDescriptionFree";
-import FormatDescriptionSizeUnit from "./FormatDescription/FormatDescriptionSizeUnit";
-import FormatDescriptionAuto from "./FormatDescription/FormatDescriptionAuto";
-import FormatDescriptionBulk from "./FormatDescription/FormatDescriptionBulk";
-import FormatUISelect from "./FormatUISelect";
+import { mapGetters, mapActions } from 'vuex'
+import types from '../../../../../../common/src/types'
+import FormatDescriptionFree from './FormatDescriptionFree'
+import FormatDescriptionSizeUnit from './FormatDescriptionSizeUnit'
+import FormatDescriptionAuto from './FormatDescriptionAuto'
+import FormatDescriptionBulk from './FormatDescriptionBulk'
+import FormatUISelect from './FormatUISelect'
 
 export default {
-  name: "FormatDescription",
-  data() {
+  name: 'FormatDescription',
+  data () {
     return {
       formatUIs: types.formatUI
-    };
+    }
   },
   props: {
     formatId: {
@@ -36,48 +36,48 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["editedFormats"]),
-    formatUI() {
-      return this.editedFormats[this.formatId].formatUI;
+    ...mapGetters(['editedFormats']),
+    formatUI () {
+      return this.editedFormats[this.formatId].formatUI
     },
-    description() {
-      return this.editedFormats[this.formatId]["description"];
+    description () {
+      return this.editedFormats[this.formatId]['description']
     },
-    size() {
-      return this.editedFormats[this.formatId]["size"];
+    size () {
+      return this.editedFormats[this.formatId]['size']
     },
-    sizeUnit() {
-      return this.editedFormats[this.formatId]["sizeUnit"];
+    sizeUnit () {
+      return this.editedFormats[this.formatId]['sizeUnit']
     },
-    customerPrice() {
-      return this.editedFormats[this.formatId]["customerPrice"];
+    customerPrice () {
+      return this.editedFormats[this.formatId]['customerPrice']
     },
-    customerPriceUnit() {
-      return this.editedFormats[this.formatId]["customerPriceUnit"];
+    customerPriceUnit () {
+      return this.editedFormats[this.formatId]['customerPriceUnit']
     }
   },
   methods: {
-    ...mapActions(["updateEditedFormat"]),
-    update(propName, value) {
+    ...mapActions(['updateEditedFormat']),
+    update (propName, value) {
       this.updateEditedFormat({
         formatId: this.formatId,
         newProps: { [propName]: value }
-      });
+      })
     },
-    updateDescription(value) {
-      this.update("description", value);
+    updateDescription (value) {
+      this.update('description', value)
     },
-    updateSize(value) {
-      this.update("size", value);
+    updateSize (value) {
+      this.update('size', value)
     },
-    updateSizeUnit(newUnit) {
-      this.update("sizeUnit", newUnit);
+    updateSizeUnit (newUnit) {
+      this.update('sizeUnit', newUnit)
     },
-    updateCustomerPrice(value) {
-      this.update("customerPrice", value);
+    updateCustomerPrice (value) {
+      this.update('customerPrice', value)
     },
-    updateCustomerPriceUnit(value) {
-      this.update("customerPriceUnit", value);
+    updateCustomerPriceUnit (value) {
+      this.update('customerPriceUnit', value)
     }
   },
   components: {
@@ -87,5 +87,5 @@ export default {
     FormatDescriptionBulk,
     FormatUISelect
   }
-};
+}
 </script>

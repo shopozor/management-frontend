@@ -5,17 +5,17 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex'
 
 export default {
-  name: "App",
+  name: 'App',
   methods: {
-    ...mapActions(["getPermissions"])
+    ...mapActions(['getPermissions'])
   },
-  created() {
+  created () {
     // this.getPermissions()
   }
-};
+}
 </script>
 
 <style>

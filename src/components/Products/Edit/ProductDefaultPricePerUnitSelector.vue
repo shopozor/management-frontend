@@ -25,7 +25,7 @@
 import {mapGetters, mapActions} from 'vuex'
 import PriceInput from '../../Price/PriceInput'
 import UnitSelect from '../../Units/UnitSelect'
-import types from 'src/types'
+import types from '../../../../common/src/types'
 
 export default {
   name: 'ProductDefaultPricePerUnitSelector',

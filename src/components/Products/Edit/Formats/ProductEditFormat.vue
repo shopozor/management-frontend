@@ -10,19 +10,21 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import FormatDescription from "./FormatDescription/FormatDescription";
-import FormatPrice from "./FormatPrice/FormatPrice";
-import FormatAmount from "./FormatAmount";
-import types from "../../../../../common/src/types";
+import { mapGetters } from 'vuex'
+import FormatDescription from './FormatDescription/FormatDescription'
+import FormatPrice from './FormatPrice/FormatPrice'
+import FormatAmount from './FormatAmount'
+import FormatStateManager from './FormatStateManager'
+import FormatCriticalValuesMixin from './FormatCriticalValuesMixin'
+import types from '../../../../../common/src/types'
 
 export default {
-  name: "ProductEditFormat",
+  name: 'ProductEditFormat',
   mixins: [FormatCriticalValuesMixin],
-  data() {
+  data () {
     return {
       state: types.formatState
-    };
+    }
   },
   props: {
     formatId: {
@@ -31,10 +33,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["editedFormats"]),
-    show() {
-      const state = this.editedFormats[this.formatId].state;
-      return state === this.state.VISIBLE || state === this.state.INVISIBLE;
+    ...mapGetters(['editedFormats']),
+    show () {
+      const state = this.editedFormats[this.formatId].state
+      return state === this.state.VISIBLE || state === this.state.INVISIBLE
     }
   },
   components: {
@@ -43,5 +45,5 @@ export default {
     FormatPrice,
     FormatStateManager
   }
-};
+}
 </script>

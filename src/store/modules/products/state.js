@@ -1,6 +1,16 @@
 export default {
   products: {},
-  editedProduct: {},
-  formats: {},
-  editedFormats: {}
+  myProducts: {},
+  editedProduct: {
+    productId: '',
+    title: '',
+    description: '',
+    image: '',
+    categories: [],
+    conservationMethod: '',
+    conservationDaysAfterSale: 0,
+    defaultFormatUI: '',
+    defaultCustomerPrice: 0,
+    defaultUnit: ''
+  }
 }

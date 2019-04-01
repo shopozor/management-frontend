@@ -29,13 +29,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import ProductDeleteManager from "../ProductDeleteManager";
-import ProductVisibilityManager from "../ProductVisibilityManager";
-import types from "../../../../common/src/types";
+import { mapGetters, mapActions } from 'vuex'
+import ProductDeleteManager from '../ProductDeleteManager'
+// import ProductVisibilityManager from '../ProductVisibilityManager'
+import ShowImageMixin from '../../../assets/images/ShowImageMixin'
+import types from '../../../../common/src/types'
 
 export default {
-  name: "ProductInventoryCard",
+  name: 'ProductInventoryCard',
   props: {
     productId: {
       type: String,
@@ -47,40 +48,40 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["pendingOrdersOfProductSummary", "myProducts"]),
-    product() {
-      return this.myProducts[this.productId];
+    ...mapGetters(['pendingOrdersOfProductSummary', 'myProducts']),
+    product () {
+      return this.myProducts[this.productId]
     },
-    image() {
-      return this.product.image;
+    image () {
+      return this.product.image
     },
-    summary() {
+    summary () {
       const paid = this.pendingOrdersOfProductSummary({
         productId: this.productId
-      }).paid;
-      return this.$tc("products.ordersSummary", paid.amount, {
+      }).paid
+      return this.$tc('products.ordersSummary', paid.amount, {
         amount: paid.amount,
         price: (paid.customerPrice / 100).toFixed(2)
-      });
+      })
     },
-    isVisible() {
-      return this.product.state === types.productState.VISIBLE;
+    isVisible () {
+      return this.product.state === types.productState.VISIBLE
     },
-    isDeleted() {
-      return this.product.state === types.productState.DELETED;
+    isDeleted () {
+      return this.product.state === types.productState.DELETED
     }
   },
   methods: {
     ...mapActions([
-      "updateProduct",
-      "getFormatsOfProduct",
-      "setEditedProduct",
-      "setEditedFormats"
+      'updateProduct',
+      'getFormatsOfProduct',
+      'setEditedProduct',
+      'setEditedFormats'
     ]),
-    edit() {
-      this.setEditedProduct({ productId: this.productId });
-      this.setEditedFormats({ productId: this.productId });
-      this.jumpTo("edit");
+    edit () {
+      this.setEditedProduct({ productId: this.productId })
+      this.setEditedFormats({ productId: this.productId })
+      this.jumpTo('edit')
     }
   },
   components: {
@@ -88,20 +89,20 @@ export default {
     // ProductVisibilityManager
   },
   mixins: [ShowImageMixin],
-  created() {
-    this.getFormatsOfProduct({ productId: this.productId });
+  created () {
+    this.getFormatsOfProduct({ productId: this.productId })
   }
-};
+}
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 .invisibleState {
-  opacity: 0.5;
-  transition: opacity 0.5s;
+  opacity: 0.5
+  transition: opacity 0.5s
 }
 
 .visibleState {
-  opacity: 1;
-  transition: opacity 0.5s;
+  opacity: 1
+  transition: opacity 0.5s
 }
 </style>

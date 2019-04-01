@@ -9,18 +9,19 @@
         <div>{{ product.description }}</div>
       </q-card-main>
       <q-card-actions align="center">
-        <q-btn icon="restore_from_trash" round color="positive" size="xl" @click="restore"/>
+        <q-btn icon="restore_from_trash" round color="positive" size='xl' @click='restore'/>
       </q-card-actions>
     </q-card>
   </transition>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import types from "../../../../common/src/types";
+import { mapActions, mapGetters } from 'vuex'
+import types from '../../../../common/src/types'
+import ShowImageMixin from '../../../assets/images/ShowImageMixin'
 
 export default {
-  name: "ProductTrashCard",
+  name: 'ProductTrashCard',
   props: {
     productId: {
       type: String,
@@ -28,34 +29,34 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["myProducts"]),
-    product() {
-      return this.myProducts[this.productId];
+    ...mapGetters(['myProducts']),
+    product () {
+      return this.myProducts[this.productId]
     },
-    image() {
-      return this.product.image;
+    image () {
+      return this.product.image
     },
-    isDeleted() {
-      return this.product.state === types.productState.DELETED;
+    isDeleted () {
+      return this.product.state === types.productState.DELETED
     }
   },
   methods: {
-    ...mapActions(["updateProduct"]),
-    restore() {
+    ...mapActions(['updateProduct']),
+    restore () {
       this.updateProduct({
         productId: this.productId,
         newProps: { state: types.productState.INVISIBLE }
-      });
+      })
     }
   },
   mixins: [ShowImageMixin]
-};
+}
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 .product-trash-card {
-  width: 30%;
-  min-width: 240px;
-  max-width: 500px;
+  width: 30%
+  min-width: 240px
+  max-width: 500px
 }
 </style>

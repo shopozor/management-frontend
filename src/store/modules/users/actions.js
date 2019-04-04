@@ -2,8 +2,35 @@
 import { apolloClient } from '../../../plugins/apollo'
 import * as cookie from '../../../../common/src/store/cookie'
 import types from '../../../../common/src/types'
+import { wait } from '../../../../common/src/Helpers'
 
 import LogIn from './graphql/login.graphql'
+
+function saveUser ({ email, userId, token }) {
+  cookie.set({ cookieId: types.cookies.EMAIL, cookieValue: email, cookieDuration: 30 })
+  cookie.set({ cookieId: types.cookies.USER_ID, cookieValue: userId, cookieDuration: 30 })
+  cookie.set({ cookieId: types.cookies.TOKEN, cookieValue: token, cookieDuration: 30 })
+}
+
+function saveToken ({ token }) {
+  cookie.del({ cookieId: types.cookies.EMAIL })
+  cookie.del({ cookieId: types.cookies.USER_ID })
+  cookie.set({ cookieId: types.cookies.TOKEN, cookieValue: token, cookieDuration: 30 })
+}
+
+function removeToken () {
+  cookie.del({ cookieId: types.cookies.EMAIL })
+  cookie.del({ cookieId: types.cookies.USER_ID })
+  cookie.del({ cookieId: types.cookies.TOKEN })
+}
+
+function adaptPermissions (received) {
+  const permissions = received.map(permissionPack => permissionPack.code)
+  if (permissions.every(permission => permission !== types.permissions.NOT_CONNECTED)) {
+    permissions.push(types.permissions.MANAGE_PRODUCTS)
+  }
+  return permissions
+}
 
 export function signup ({ commit }, { email, password }) {
   // request
@@ -28,6 +55,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
         const content = response.data.login
         const errors = content.errors
         if (errors.length > 0) {
+          commit('error', errors)
           reject(errors)
         } else {
           const token = content.token
@@ -36,7 +64,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
             email,
             token,
             userId,
-            permissions: content.user.permissions.map(permissionPack => permissionPack.code)
+            permissions: adaptPermissions(content.user.permissions)
           })
           stayLoggedIn ? saveUser({ email, userId, token }) : saveToken({ token })
           resolve(response)
@@ -82,43 +110,11 @@ export function getPermissions ({ commit }) {
   }
 }
 
-export function logout ({ commit, getters }) {
+export function logout ({ commit }) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      commit('logout')
-      removeToken()
-      resolve()
-      this.$router.push('/')
-    }, 1000)
+    wait(1000)
+    commit('logout')
+    removeToken()
+    resolve()
   })
-  // request
-  //   .logout({
-  //     userId: getters.userId,
-  //     token: getters.token
-  //   })
-  //   .then(response => {
-  //     commit('logout')
-  //     removeToken()
-  //   })
-  //   .catch(error => {
-  //     commit('error', error)
-  //   })
-}
-
-function saveUser ({ email, userId, token }) {
-  cookie.set({ cookieId: types.cookies.EMAIL, cookieValue: email, cookieDuration: 30 })
-  cookie.set({ cookieId: types.cookies.USER_ID, cookieValue: userId, cookieDuration: 30 })
-  cookie.set({ cookieId: types.cookies.TOKEN, cookieValue: token, cookieDuration: 30 })
-}
-
-function saveToken ({ token }) {
-  cookie.del({ cookieId: types.cookies.EMAIL })
-  cookie.del({ cookieId: types.cookies.USER_ID })
-  cookie.set({ cookieId: types.cookies.TOKEN, cookieValue: token, cookieDuration: 30 })
-}
-
-function removeToken () {
-  cookie.del({ cookieId: types.cookies.EMAIL })
-  cookie.del({ cookieId: types.cookies.USER_ID })
-  cookie.del({ cookieId: types.cookies.TOKEN })
 }

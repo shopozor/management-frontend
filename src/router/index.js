@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import { generateRoutes, checkIfUserCanAccess } from '../../common/src/router/helpers'
+import { generateRoutes, checkIfUserCanAccess } from '../../common/src/router/Helpers'
 import { links, accessRules } from './links'
 import store from '../store'
 import types from '../../common/src/types'

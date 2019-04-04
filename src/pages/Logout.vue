@@ -15,8 +15,8 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'PageLogout',
-  mounted () {
-    this.logout()
+  created () {
+    this.logout().then(this.goHome)
   },
   computed: {
     ...mapGetters(['isAuthorized'])

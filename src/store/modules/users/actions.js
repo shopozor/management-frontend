@@ -2,7 +2,6 @@
 import { apolloClient } from '../../../plugins/apollo'
 import * as cookie from '../../../../common/src/store/cookie'
 import types from '../../../../common/src/types'
-import { wait } from '../../../../common/src/Helpers'
 
 import LogIn from './graphql/login.graphql'
 
@@ -112,7 +111,6 @@ export function getPermissions ({ commit }) {
 
 export function logout ({ commit }) {
   return new Promise((resolve, reject) => {
-    wait(1000)
     commit('logout')
     removeToken()
     resolve()

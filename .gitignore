@@ -28,3 +28,6 @@ generateDoc.txt
 
 # generated spec
 /specification/
+
+# unit test results
+/test/jest/coverage

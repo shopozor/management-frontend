@@ -3,17 +3,17 @@
     <div style="width: 500px; max-width: 90vw;">
       <q-list id="LoginForm">
         <q-item class="incorrectIdentifiers bg-warning" v-if="invalidCredentials">
-          <q-item-main>
+          <q-item-section>
             {{ $t('login.invalidCredentials') }}
-          </q-item-main>
+          </q-item-section>
         </q-item>
         <q-item class="userIsNotStaff bg-warning" v-if="userIsNotStaff">
-          <q-item-main>
+          <q-item-section>
             {{ $t('login.userIsNotStaff') }}
-          </q-item-main>
+          </q-item-section>
         </q-item>
         <q-item>
-          <q-item-main>
+          <q-item-section>
             <q-field
               icon="mail">
               <q-input
@@ -21,10 +21,10 @@
                 type="email"
                 :float-label="$t('profile.email')" />
             </q-field>
-          </q-item-main>
+          </q-item-section>
         </q-item>
         <q-item>
-            <q-item-main>
+            <q-item-section>
               <q-field
                 icon="vpn_lock">
                 <q-input
@@ -34,13 +34,13 @@
                   :float-label="$t('profile.password')"
                   @keyup.enter="login({email, password, stayLoggedIn})" />
               </q-field>
-            </q-item-main>
+            </q-item-section>
         </q-item>
         <q-item class="row justify-center">
           <q-toggle class="q-ma-md" :class="{'text-faded': !stayLoggedIn}" v-model="stayLoggedIn" :label="$t('login.stayLoggedIn')"></q-toggle>
         </q-item>
         <q-item class="row justify-center">
-            <q-btn class="q-ma-md loginButton" color="primary" :label="$t('login.connect')" @click="login" ></q-btn>
+          <q-btn class="q-ma-md loginButton" color="primary" :label="$t('login.connect')" @click="login" ></q-btn>
         </q-item>
         <q-item class="row justify-center">
           <router-link to="/confirmationEmailSent">{{ $t('login.forgotPassword') }}</router-link>

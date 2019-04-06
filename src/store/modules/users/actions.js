@@ -1,5 +1,5 @@
 // import * as request from '../simulateServer/users/requestUsers'
-import { apolloClient } from '../../../plugins/apollo'
+import { apolloClient } from '../../../boot/apollo'
 import * as cookie from '../../../../common/src/store/cookie'
 import types from '../../../../common/src/types'
 

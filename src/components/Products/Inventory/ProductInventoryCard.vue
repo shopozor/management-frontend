@@ -17,13 +17,11 @@
         />
         <product-delete-manager :productId="productId"/>
       </q-card-actions>
-      <q-card-title>
+      <q-card-section>
         {{ product.title }}
         <span slot="subtitle">{{ summary }}</span>
-      </q-card-title>
-      <q-card-media>
-        <img :src="showImage" alt="product image">
-      </q-card-media>
+      </q-card-section>
+      <img :src="showImage" alt="product image">
     </q-card>
   </transition>
 </template>

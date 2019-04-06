@@ -1,6 +1,6 @@
 <template>
   <q-card class="width-md height-md">
-    <q-card-main>
+    <q-card-section>
       <q-field>
         <q-input
           :float-label="$t('products.title')"
@@ -21,7 +21,7 @@
         @input="updateEditedProduct({ newProps: {description: $event} })"
       ></q-input>
       </q-field>
-    </q-card-main>
+    </q-card-section>
   </q-card>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <q-card inline class="width-md q-ma-sm">
-    <q-card-main>
+    <q-card-section>
       <div class="row justify-center">
         <q-btn
           @click="remove"
@@ -31,7 +31,7 @@
           <div>dans un panier : {{pendingOrdersSummary.notPaid.amount}}</div>
         </div>
       </div>
-    </q-card-main>
+    </q-card-section>
   </q-card>
 </template>
 

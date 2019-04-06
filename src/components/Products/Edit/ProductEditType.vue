@@ -1,6 +1,6 @@
 <template>
   <q-card class="width-md height-md">
-    <q-card-main>
+    <q-card-section>
       <q-select
         :stack-label="$t('products.conservationMethod')"
         separator
@@ -29,7 +29,7 @@
         :value="categories"
         @input="updateEditedProduct({ newProps: {categories: $event} })"
       />
-    </q-card-main>
+    </q-card-section>
   </q-card>
 </template>
 

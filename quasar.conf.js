@@ -3,14 +3,13 @@
 module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
-    plugins: ['vuelidate', 'vue-i18n', 'apollo'],
+    boot: ['vuelidate', 'vue-i18n', 'apollo'],
     css: ['app.styl'],
     extras: [
-      ctx.theme.mat ? 'roboto-font' : null,
       'material-icons' // optional, you are not bound to it
-      // 'ionicons',
-      // 'mdi',
-      // 'fontawesome'
+      // 'ionicons-v4',
+      // 'mdi-v3',
+      // 'fontawesome-v5'
     ],
     supportIE: false,
     build: {
@@ -62,25 +61,21 @@ module.exports = function (ctx) {
         'QBtnToggle',
         'QCard',
         'QCardActions',
-        'QCardMain',
-        'QCardMedia',
-        'QCardSeparator',
-        'QCardTitle',
+        'QCardSection',
         'QCheckbox',
-        'QCollapsible',
+        'QExpansionItem',
         'QDialog',
         'QField',
         'QIcon',
         'QInput',
-        'QItem',
-        'QItemMain',
-        'QItemSeparator',
-        'QItemSide',
-        'QLayout',
-        'QLayoutDrawer',
-        'QLayoutHeader',
         'QList',
-        'QListHeader',
+        'QItem',
+        'QItemSection',
+        'QItemLabel',
+        'QSeparator',
+        'QLayout',
+        'QDrawer',
+        'QHeader',
         'QPage',
         'QPageContainer',
         'QPageSticky',
@@ -93,10 +88,10 @@ module.exports = function (ctx) {
       directives: ['Ripple'],
       // Quasar plugins
       plugins: ['Notify', 'Dialog']
-      // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
+      // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons-v4'
 
       // Will be used only if necessary. We prefer stick to vue-i18n for further VST compatibility
-      // i18n: 'fr' // Quasar language
+      // lang: 'fr' // Quasar language
     },
     // animations: 'all' --- includes all animations
     animations: [],

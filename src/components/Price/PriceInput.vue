@@ -1,5 +1,5 @@
 <template>
-  <q-card-main>
+  <q-card-section>
     <q-field v-if="customer">
       <q-input
         :style="`width: ${width}`"
@@ -33,7 +33,7 @@
         :readonly="readonly"
       />
     </q-field>
-  </q-card-main>
+  </q-card-section>
 </template>
 
 <script>

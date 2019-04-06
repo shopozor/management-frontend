@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="q-pa-md flex flex-center">
     <div style="width: 500px; max-width: 90vw;">
-      <q-list>
+      <q-list id="LoginForm">
         <q-item class="incorrectIdentifiers bg-warning" v-if="invalidCredentials">
           <q-item-main>
             {{ $t('login.invalidCredentials') }}

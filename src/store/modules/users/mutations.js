@@ -15,5 +15,5 @@ export function logout (state) {
 }
 
 export function error (state, error) {
-  console.log(error)
+  console.log('A promise returned the following error : ', error)
 }

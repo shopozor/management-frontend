@@ -22,7 +22,6 @@ When("il accède à l'interface admin", function () {
 })
 
 Then("il est redirigé vers la page d'accueil", function () {
-  // TODO: verify that the user is redirected to the home page
   cy.url().should('not.include', '/login')
-  // TODO: verify that there is no login form
+  cy.get('[id="LoginForm"]').should('not.exist')
 })

@@ -129,3 +129,8 @@ which outputs for example
            return 'pending';
          });
 ```
+## Unit testing
+
+```
+npm run test:unit
+```

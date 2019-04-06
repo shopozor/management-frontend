@@ -13,15 +13,16 @@ beforeEach(() => {
   cy.log('This will run before every scenario of DisableLoginUponSuccessfulLogin.feature test, but NEVER for other feature files')
 })
 
-Given("^un {PersonaType} identifié$", function (persona) {
+Given("un {PersonaType} identifié", function (persona) {
   login(persona)
-});
+})
 
-When("^accède à l'interface admin$", function () {
+When("il accède à l'interface admin", function () {
   cy.visit('/')
-});
+})
 
-Then("^il est redirigé vers la page d'accueil$", function () {
+Then("il est redirigé vers la page d'accueil", function () {
   // TODO: verify that the user is redirected to the home page
+  cy.url().should('not.include', '/login')
   // TODO: verify that there is no login form
-});
+})

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import { generateRoutes, checkIfUserCanAccess } from '../../common/src/router/helpers'
+import { generateRoutes, checkIfUserCanAccess } from '../../common/src/router/Helpers'
 import { links, accessRules } from './links'
 import store from '../store'
 import types from '../../common/src/types'
@@ -35,10 +35,12 @@ export default function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
+    console.log(to.path)
     const path = forceLogin({ to })
     if (path) next(path)
     else {
       const routeIsAccessible = checkIfUserCanAccess({ to, permissions: store.getters.permissions })
+      console.log(store.getters.permissions)
       next(routeIsAccessible)
     }
   })

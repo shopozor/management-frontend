@@ -71,7 +71,7 @@ export default {
         password: vm.password,
         stayLoggedIn: vm.stayLoggedIn
       })
-        .then(() => vm.$router.back())
+        .then(() => vm.$router.push('/'))
         .catch(errors => vm.handleError(errors))
     },
     handleError (errors) {

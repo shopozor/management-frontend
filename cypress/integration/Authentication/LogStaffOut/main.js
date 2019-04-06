@@ -1,25 +1,25 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
-import { login } from '../common/Helpers'
+import {
+  login,
+  navigateTo,
+  getTokenCookie
+} from '../../../../common/cypress/integration/Authentication/common/Helpers'
+import '../../../../common/cypress/integration/Authentication/common/PersonaType'
+import types from '../../../../common/src/types'
 
-import '../common/PersonaType'
-
-Given('un {PersonaType} connecté au Shopozor', function (persona) {
+Given('un {PersonaType} connectÃ© au Shopozor', function (persona) {
   login(persona)
 })
 
-When('il se déconnecte', function () {
-  // 1. click the disconnect button
-  return 'pending'
+When('il se dÃ©connecte', function () {
+  navigateTo(types.links.LOGOUT)
 })
 
 Then('sa session se ferme', function () {
-  // 1. double-check that the authentication token is not present anymore in the cookies
-  // 2. double-check that the user can access the login interface again
-  return 'pending'
+  getTokenCookie().should('not.exist')
 })
 
-Then("il est redirigé vers l'interface d'identification", function (string) {
-    // 1. double-check that the user is routed to the login page
-  return 'pending'
+Then("il est redirigÃ© vers l'interface d'identification", function () {
+  cy.url().should('include', '/login')
 })

@@ -14,26 +14,28 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-field
-              icon="mail">
-              <q-input
-                v-model="email"
-                type="email"
-                :float-label="$t('profile.email')" />
-            </q-field>
+            <q-input
+              v-model="email"
+              type="email"
+              :float-label="$t('profile.email')">
+              <template v-slot:prepend>
+                <q-icon name="mail" />
+              </template>
+            </q-input>
           </q-item-section>
         </q-item>
         <q-item>
             <q-item-section>
-              <q-field
-                icon="vpn_lock">
-                <q-input
-                  ref="password"
-                  v-model="password"
-                  type="password"
-                  :float-label="$t('profile.password')"
-                  @keyup.enter="login({email, password, stayLoggedIn})" />
-              </q-field>
+              <q-input
+                ref="password"
+                v-model="password"
+                type="password"
+                :float-label="$t('profile.password')"
+                @keyup.enter="login({email, password, stayLoggedIn})">
+                <template v-slot:prepend>
+                  <q-icon name="vpn_lock" />
+                </template>
+              </q-input>
             </q-item-section>
         </q-item>
         <q-item class="row justify-center">

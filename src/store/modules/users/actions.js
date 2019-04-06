@@ -111,8 +111,10 @@ export function getPermissions ({ commit }) {
 
 export function logout ({ commit }) {
   return new Promise((resolve, reject) => {
-    commit('logout')
-    removeToken()
-    resolve()
+    setTimeout(() => {
+      commit('logout')
+      removeToken()
+      resolve()
+    }, 1000)
   })
 }

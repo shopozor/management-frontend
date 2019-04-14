@@ -1,11 +1,13 @@
 pipeline {
-  agent any
-  tools { nodejs "node"}
+  agent {
+    docker {
+      image "node:latest"
+    }
+  }
   stages {
     stage('Node Modules Installation') {
       steps {
         sh "npm install"
-        sh "npm -g install cypress"
       }
     }
     stage('Performing acceptance tests') {

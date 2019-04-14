@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'node:latest'
+      image 'cypress/browsers:node11.13.0-chrome73'
     }
   } 
   stages {

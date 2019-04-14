@@ -1,0 +1,11 @@
+import { mountQuasar } from '../../utils'
+import Login from '../../../../src/pages/Login'
+import vueI18N from '../../../../src/boot/vue-i18n'
+
+describe('Login page', () => {
+  const wrapper = mountQuasar(Login, { plugins: [ vueI18N ] })
+
+  it('has an e-mail input', () => {
+    expect(wrapper.contains('input')).toBeTruthy()
+  })
+})

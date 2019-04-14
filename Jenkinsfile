@@ -8,6 +8,7 @@ pipeline {
     stage('Node Modules Installation') {
       steps {
         sh "npm install"
+        sh "npm -g install cypress"
       }
     }
     stage('Performing acceptance tests') {

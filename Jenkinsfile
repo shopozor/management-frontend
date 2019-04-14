@@ -7,8 +7,10 @@ pipeline {
   stages {
     stage('Node Modules Installation') {
       steps {
-        sh "npm install"
-        sh "npm -g install cypress"
+        withEnv(["HOME=$WORKSPACE"]) {
+          sh "npm install"
+          sh "npm -g install cypress"
+        }
       }
     }
     stage('Performing acceptance tests') {

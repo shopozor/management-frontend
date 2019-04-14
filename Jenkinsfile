@@ -1,16 +1,10 @@
 pipeline {
-  agent {
-    docker {
-      image 'cypress/browsers:node11.13.0-chrome73'
-    }
-  } 
+  agent any
+  tools { nodejs "node"}
   stages {
     stage('Node Modules Installation') {
       steps {
-        withEnv(["HOME=$WORKSPACE"]) {
-          sh "npm install"
-          sh "npm -g install cypress"
-        }
+        sh "npm install"
       }
     }
     stage('Performing acceptance tests') {

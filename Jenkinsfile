@@ -7,7 +7,9 @@ pipeline {
   stages {
     stage('Node Modules Installation') {
       steps {
-        sh "npm install"
+        withEnv(["HOME=$WORKSPACE"]) {
+          sh "npm install"
+        }
       }
     }
     stage('Performing acceptance tests') {

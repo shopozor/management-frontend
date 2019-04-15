@@ -27,9 +27,9 @@ pipeline {
   }
   post {
     always {
-      script {
-         junit "**/junit-reports/*.xml"
-      }
+      echo 'Stopping local server'
+      sh 'pkill -f http-server'
+      junit "**/junit-reports/*.xml"
     }
   }
 }

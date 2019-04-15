@@ -8,8 +8,7 @@
   "private": true,
   "scripts": {
     "build": "quasar build",
-    "cypress:ci": "cross-env CYPRESS_TAGS=\"not @wip\" && concurrently \"cypress run --env configFile=acceptance\" --kill-others \"quasar dev\" --success first",
-    "cypress:acceptance": "wait-on http://localhost:4000 && cross-env CYPRESS_TAGS=\"not @wip\" && cypress run --env configFile=acceptance",
+    "cypress:ci": "wait-on http://localhost:4000 && cross-env CYPRESS_TAGS=\"not @wip\" && cypress run --env configFile=acceptance",
     "lint": "eslint --ext .js,.vue src",
     "start": "quasar serve dist/spa-mat",
     "start:dev": "quasar dev",
@@ -38,7 +37,6 @@
     "@babel/runtime-corejs2": "^7.4.3",
     "@cypress/webpack-preprocessor": "^4.0.3",
     "babel-eslint": "^10.0.1",
-    "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
     "cypress": "^3.2.0",
     "cypress-cucumber-preprocessor": "^1.11.0",

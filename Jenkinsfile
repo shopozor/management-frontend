@@ -12,7 +12,7 @@ pipeline {
     }
     stage('Performing acceptance tests') {
       steps {
-        sh "npm run cypress:ci"
+        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run cypress:ci"
       }
     }
   }

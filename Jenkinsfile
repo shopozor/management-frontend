@@ -1,13 +1,9 @@
 pipeline {
   agent {
     docker {
-      // image "node:latest"
       image 'cypress/base:11.13.0'
     }
   }
-  // needs apt install xvfb libxss1 libgconf2-4
-  // agent any
-  // tools { nodejs "node" }
   stages {
     stage('Node Modules Installation') {
       steps {

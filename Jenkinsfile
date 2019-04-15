@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('Node Modules Installation') {
       steps {
-        sh "npm install"
+        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm ci"
       }
     }
     stage('Performing acceptance tests') {

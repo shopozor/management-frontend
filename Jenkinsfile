@@ -12,7 +12,7 @@ pipeline {
     }
     stage('Start frontend test server') {
       steps {
-        sh "npm run start:dev"
+        sh "nohup npm run start:dev &"
       }
     }
     stage('Performing acceptance tests') {

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "quasar build",
     "cypress:ci": "cross-env CYPRESS_TAGS=\"not @wip\" && concurrently \"cypress run --env configFile=acceptance\" --kill-others \"quasar dev\" --success first",
-    "cypress:acceptance": "cross-env CYPRESS_TAGS=\"not @wip\" && cypress run --env configFile=acceptance",
+    "cypress:acceptance": "wait-on http://localhost:4000 && cross-env CYPRESS_TAGS=\"not @wip\" && cypress run --env configFile=acceptance",
     "lint": "eslint --ext .js,.vue src",
     "start": "quasar serve dist/spa-mat",
     "start:dev": "quasar dev",
@@ -56,7 +56,8 @@
     "moment": "^2.22.2",
     "quasar-cli": "^0.17.23",
     "strip-ansi": "^3.0.1",
-    "vue-template-compiler": "^2.5.18"
+    "vue-template-compiler": "^2.5.18",
+    "wait-on": "^3.2.0"
   },
   "engines": {
     "node": ">= 8.9.0",

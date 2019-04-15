@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Node Modules Installation') {
       steps {
-        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm ci"
+        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm i"
       }
     }
     stage('Performing acceptance tests') {

@@ -17,9 +17,14 @@ const path = require('path')
 // const webpack = require('@cypress/webpack-preprocessor')
 
 function getConfigurationByFile (file) {
-  const pathToConfigFile = path.resolve('cypress', 'config', `${file}.json`)
+  const pathToConfigFile = path.resolve('common', 'cypress', 'config', `${file}.json`)
   console.log('loading cypress config file: ', pathToConfigFile)
   return fs.readJson(pathToConfigFile)
+}
+
+function getConfiguration (config) {
+  const file = config.env.configFile || 'development'
+  return getConfigurationByFile(file)
 }
 
 module.exports = (on, config) => {
@@ -37,6 +42,5 @@ module.exports = (on, config) => {
   on('file:preprocessor', file => { return cucumber()(file) })
   // on('file:preprocessor', file => webpack(options)(file))
 
-  const file = config.env.configFile || 'development'
-  return getConfigurationByFile(file)
+  return getConfiguration(config)
 }

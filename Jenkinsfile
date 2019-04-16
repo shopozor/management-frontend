@@ -27,6 +27,7 @@ pipeline {
   post {
     always {
       junit "**/$REPORTS_FOLDER/*.xml"
+      archiveArtifacts artifacts: 'cypress/videos/*.mp4'
     }
   }
 }

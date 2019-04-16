@@ -4,6 +4,9 @@ pipeline {
       image 'cypress/base:11.13.0'
     }
   }
+  environment {
+    REPORTS_FOLDER = 'junit-reports'    
+  }
   stages {
     stage('Node Modules Installation') {
       steps {
@@ -17,6 +20,12 @@ pipeline {
     }
     stage('Performing acceptance tests') {
       steps {
+        if(fileExists($REPORTS_FOLDER)) {
+          dir($REPORTS_FOLDER) {
+            deleteDir()
+          }
+        }
+        // TODO: try to use concurrently instead of nohup and pkill
         sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run cypress:acceptance"
       }
     }
@@ -25,7 +34,7 @@ pipeline {
     always {
       echo 'Stopping local server'
       sh 'pkill -f node'
-      junit "**/junit-reports/*.xml"
+      junit "**/$REPORTS_FOLDER/*.xml"
     }
   }
 }

@@ -25,7 +25,7 @@ pipeline {
             deleteDir()
           }
           // TODO: try to use concurrently instead of nohup and pkill
-          sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run cypress:acceptance"
+          sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run cypress:ci"
         }
       }
     }

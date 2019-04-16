@@ -21,8 +21,10 @@ pipeline {
     stage('Performing acceptance tests') {
       steps {
         script {
-          dir($REPORTS_FOLDER) {
-            deleteDir()
+          if(fileExists("$WORKSPACE/$REPORTS_FOLDER")) {
+            dir("$WORKSPACE/$REPORTS_FOLDER") {
+              deleteDir()
+            }
           }
           // TODO: try to use concurrently instead of nohup and pkill
           sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run cypress:acceptance"

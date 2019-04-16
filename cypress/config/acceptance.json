@@ -11,7 +11,7 @@
   },
   "reporter": "junit",
   "reporterOptions": {
-    "mochaFile": "junit-reports/cypress-report.xml",
+    "mochaFile": "junit-reports/cypress-report.[hash].xml",
     "toConsole": true
   },
   "videoUploadOnPasses": false,

@@ -50,6 +50,7 @@ pipeline {
     stage('Retrieving artifacts from frontend environment') {
       steps {
         // open ssh connection with frontend environment
+        echo "trouduc"
       }
     }
     stage('Stopping frontend environment') {

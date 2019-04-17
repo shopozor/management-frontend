@@ -19,8 +19,7 @@ pipeline {
       }
       steps {
         script {
-          // sh "curl -o $BACKEND_JPS https://raw.githubusercontent.com/softozor/shopozor-backend/dev/e2e/manifest.jps"
-          sh "curl -fsSL https://raw.githubusercontent.com/softozor/shopozor-backend/dev/e2e/manifest.jps"
+          sh "curl -o $BACKEND_JPS https://raw.githubusercontent.com/softozor/shopozor-backend/dev/e2e/manifest.jps"
           // def ant = new AntBuilder()
           // ant.replace(file: BACKEND_JPS, token: "GIT_USER", value: GITHUB_CREDENTIALS_USR)
           // ant.replace(file: BACKEND_JPS, token: "GIT_PASSWORD", value: GITHUB_CREDENTIALS_PSW)

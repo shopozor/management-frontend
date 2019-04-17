@@ -1,9 +1,10 @@
 pipeline {
-  agent {
-    docker {
-      image 'everpeace/curl-jq'
-    }
-  } 
+  agent any
+  // agent {
+  //   docker {
+  //     image 'everpeace/curl-jq'
+  //   }
+  // } 
   environment {
     REPORTS_FOLDER = 'junit-reports'
     JELASTIC_CREDENTIALS = credentials('jelastic-credentials')

@@ -26,12 +26,12 @@ pipeline {
       archiveArtifacts artifacts: 'cypress/videos/**/*.mp4, cypress/screenshots/**/*.png'
     }
   }
+}
 
-  def deleteFolder(folderName) {
-    script {
-      dir(folderName) {
-        deleteDir()
-      }
+def deleteFolder(folderName) {
+  script {
+    dir(folderName) {
+      deleteDir()
     }
   }
 }

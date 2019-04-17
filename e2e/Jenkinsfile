@@ -32,7 +32,7 @@ pipeline {
     stage('Starting up frontend and performing end-to-end tests') {
       environment {
         BITBUCKET_CREDENTIALS = credentials('bitbucket-credentials')
-        FRONTEND_JPS = 'manifest.jps'
+        FRONTEND_JPS = './e2e/manifest.jps'
       }
       steps {
         sh "sed -i \"s/GIT_USER/$BITBUCKET_CREDENTIALS_USR/g\" $FRONTEND_JPS"

@@ -48,16 +48,11 @@ wasEnvCreated() {
   echo $envExists
 }
 
-getManifestContent() {
-  local pathToManifest=$1
-  echo $(cat $pathToManifest)
-}
-
 installEnv() {
   local session=$1
   local envName=$2
   local pathToManifest=$3
-  local manifest=$(getManifestContent $pathToManifest)
+  local manifest=$(cat $pathToManifest)
   echo "Installing new environment <$envName> from manifest <$pathToManifest>..." >&2
   local installApp=$(curl -k \
   -A "${USER_AGENT}" \

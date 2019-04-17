@@ -2,7 +2,10 @@
   "@quasar/testing-unit-jest": {
     "babel": "babelrc",
     "options": [
-      "scripts"
+      "scripts",
+      "SFC",
+      "wallabyjs",
+      "majestic"
     ]
   },
   "@quasar/testing": {

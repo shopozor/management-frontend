@@ -16,9 +16,7 @@ module.exports = {
     '<rootDir>/src/**/*.vue',
     '<rootDir>/src/**/*.js',
     '<rootDir>/src/**/*.ts',
-    '<rootDir>/src/**/*.jsx',
-    '<rootDir>/common/src/**/*.vue',
-    '<rootDir>/common/src/**/*.js'
+    '<rootDir>/src/**/*.jsx'
   ],
   coverageThreshold: {
     global: {
@@ -52,7 +50,7 @@ module.exports = {
   transform: {
     '.*\\.vue$': 'vue-jest',
     '.*\\.js$': 'babel-jest',
-    '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub'
+    '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
     // use these if NPM is being flaky
     // '.*\\.vue$': '<rootDir>/node_modules/@quasar/quasar-app-extension-testing-unit-jest/node_modules/vue-jest',
     // '.*\\.js$': '<rootDir>/node_modules/@quasar/quasar-app-extension-testing-unit-jest/node_modules/babel-jest'

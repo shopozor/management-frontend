@@ -5,15 +5,6 @@ if [ $# -ne 5 ] ; then
   exit 0
 fi
 
-HOSTER_URL=$1
-APPID=$2
-SESSION=$(getSession $3 $4)
-ENV_NAME=$5
-CONTENT_TYPE="Content-Type: application/x-www-form-urlencoded; charset=UTF-8;";
-USER_AGENT="Mozilla/4.73 [en] (X11; U; Linux 2.2.15 i686)"
-
-stopEnv $SESSION $ENV_NAME
-
 getSession() {
   local login=$1
   local password=$2
@@ -24,6 +15,13 @@ getSession() {
   echo "Signed in" >&2
   echo $( jq '.session' <<< $signIn |  sed 's/\"//g' )
 }
+
+HOSTER_URL=$1
+APPID=$2
+SESSION=$(getSession $3 $4)
+ENV_NAME=$5
+CONTENT_TYPE="Content-Type: application/x-www-form-urlencoded; charset=UTF-8;";
+USER_AGENT="Mozilla/4.73 [en] (X11; U; Linux 2.2.15 i686)"
 
 stopEnv() {
   local session=$1
@@ -37,3 +35,5 @@ stopEnv() {
   echo "Environment <$envName> stopped" >&2 
   exit 0
 }
+
+stopEnv $SESSION $ENV_NAME

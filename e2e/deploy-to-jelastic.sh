@@ -1,5 +1,16 @@
 #!/bin/bash
 
+getSession() {
+  local login=$1
+  local password=$2
+  echo "Signing in..." >&2
+  local signIn=$(curl -k -H "${CONTENT_TYPE}" -A "${USER_AGENT}"  -X POST \
+    -fsS "${HOSTER_URL}/1.0/users/authentication/rest/signin" -d "login=$login&password=$password");
+  echo 'Response signIn user: '$signIn >&2
+  echo "Signed in" >&2
+  echo $( jq '.session' <<< $signIn |  sed 's/\"//g' )
+}
+
 if [ $# -lt 5 ] ; then
   echo "Usage: $0 hosterUrl appId login password envName [deploy_group = cp] [path-to-manifest = manifest.jps]"
   exit 0
@@ -14,33 +25,6 @@ MANIFEST=${7:-manifest.jps}
 
 CONTENT_TYPE="Content-Type: application/x-www-form-urlencoded; charset=UTF-8;";
 USER_AGENT="Mozilla/4.73 [en] (X11; U; Linux 2.2.15 i686)"
-
-deployToJelastic
-
-getSession() {
-  local login=$1
-  local password=$2
-  echo "Signing in..." >&2
-  local signIn=$(curl -k -H "${CONTENT_TYPE}" -A "${USER_AGENT}"  -X POST \
-    -fsS "${HOSTER_URL}/1.0/users/authentication/rest/signin" -d "login=$login&password=$password");
-  echo 'Response signIn user: '$signIn >&2
-  echo "Signed in" >&2
-  echo $( jq '.session' <<< $signIn |  sed 's/\"//g' )
-}
-
-deployToJelastic() {
-  ENVS=$(getEnvs $SESSION)
-  CREATED=$(wasEnvCreated "$ENVS" "${ENV_NAME}")
-
-  if [ "${CREATED}" == "null" ]; then
-    installEnv $SESSION "${ENV_NAME}" "$MANIFEST"
-  else
-    startEnvIfNecessary $SESSION "${ENV_NAME}" "$ENVS"
-    redeployEnvironment $SESSION "${ENV_NAME}" ${DEPLOY_GROUP}
-  fi
-
-  exit 0
-}
 
 getEnvs() {
   local session=$1
@@ -64,6 +48,11 @@ wasEnvCreated() {
   echo $envExists
 }
 
+getManifestContent() {
+  local pathToManifest=$1
+  echo $(cat $pathToManifest)
+}
+
 installEnv() {
   local session=$1
   local envName=$2
@@ -78,9 +67,16 @@ installEnv() {
   echo "Environment <$envName> installed: "$installApp >&2
 }
 
-getManifestContent() {
-  local pathToManifest=$1
-  echo $(cat $pathToManifest)
+startEnv() {
+  local session=$1
+  local envName=$2
+  echo "Starting up environment <$envName>..." >&2
+  curl -k \
+    -H "${CONTENT_TYPE}" \
+    -A "${USER_AGENT}" \
+    -X POST \
+    -fsS ${HOSTER_URL}/1.0/environment/control/rest/startenv -d "session=${session}&envName=${envName}"
+  echo "Environment <$envName> started" >&2
 }
 
 startEnvIfNecessary() {
@@ -92,18 +88,6 @@ startEnvIfNecessary() {
   if [ "$status" != "1" ] ; then
     startEnv $session "$envName"
   fi
-}
-
-startEnv() {
-  local session=$1
-  local envName=$2
-  echo "Starting up environment <$envName>..." >&2
-  curl -k \
-    -H "${CONTENT_TYPE}" \
-    -A "${USER_AGENT}" \
-    -X POST \
-    -fsS ${HOSTER_URL}/1.0/environment/control/rest/startenv -d "session=${session}&envName=${envName}"
-  echo "Environment <$envName> started" >&2
 }
 
 redeployEnvironment() {
@@ -119,3 +103,19 @@ redeployEnvironment() {
     -d "appid=${APPID}&session=${session}&envName=${envName}&tag=latest&nodeGroup=${deployGroup}&useExistingVolumes=true&delay=20"
   echo "Environment redeployed" >&2
 }
+
+deployToJelastic() {
+  ENVS=$(getEnvs $SESSION)
+  CREATED=$(wasEnvCreated "$ENVS" "${ENV_NAME}")
+
+  if [ "${CREATED}" == "null" ]; then
+    installEnv $SESSION "${ENV_NAME}" "$MANIFEST"
+  else
+    startEnvIfNecessary $SESSION "${ENV_NAME}" "$ENVS"
+    redeployEnvironment $SESSION "${ENV_NAME}" ${DEPLOY_GROUP}
+  fi
+
+  exit 0
+}
+
+deployToJelastic

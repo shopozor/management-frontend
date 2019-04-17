@@ -18,7 +18,7 @@ pipeline {
       }
       steps {
         script {
-          sh "curl -o backend.jps $BACKEND_NAME_PSW"
+          sh "curl -o backend.jps https://raw.githubusercontent.com/softozor/shopozor-backend/dev/e2e/manifest.jps"
           def ant = new AntBuilder()
           // ant.replace(file: "myFile", token: "NEEDLE", value: "replacement")
           sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"

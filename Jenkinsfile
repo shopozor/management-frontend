@@ -15,12 +15,8 @@ pipeline {
     }
     stage('Performing acceptance tests') {
       steps {
-        script {
-          dir("$REPORTS_FOLDER") {
-            deleteDir()
-          }
-          sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run start:ci"
-        }
+        deleteFolder($REPORTS_FOLDER)        
+        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run start:ci"
       }
     }
   }
@@ -28,6 +24,14 @@ pipeline {
     always {
       junit "**/$REPORTS_FOLDER/*.xml"
       archiveArtifacts artifacts: 'cypress/videos/**/*.mp4, cypress/screenshots/**/*.png'
+    }
+  }
+
+  def deleteFolder(folderName) {
+    script {
+      dir(folderName) {
+        deleteDir()
+      }
     }
   }
 }

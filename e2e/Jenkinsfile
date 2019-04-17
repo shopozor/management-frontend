@@ -18,12 +18,14 @@ pipeline {
       }
       steps {
         script {
-          sh "curl -o backend.jps https://raw.githubusercontent.com/softozor/shopozor-backend/dev/e2e/manifest.jps"
+          sh "curl -o $BACKEND_JPS https://raw.githubusercontent.com/softozor/shopozor-backend/dev/e2e/manifest.jps"
           def ant = new AntBuilder()
-          // ant.replace(file: "myFile", token: "NEEDLE", value: "replacement")
-          sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
-          sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
-          sh "sed -i \"s/GIT_BRANCH/dev/g\" $BACKEND_JPS"
+          ant.replace(file: BACKEND_JPS, token: "GIT_USER", value: GITHUB_CREDENTIALS_USR)
+          ant.replace(file: BACKEND_JPS, token: "GIT_PASSWORD", value: GITHUB_CREDENTIALS_PSW)
+          ant.replace(file: BACKEND_JPS, token: "GIT_BRANCH", value: "dev")
+          // sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
+          // sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
+          // sh "sed -i \"s/GIT_BRANCH/dev/g\" $BACKEND_JPS"
           sh "./deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR cp $BACKEND_JPS"
         }
       }

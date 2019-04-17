@@ -15,7 +15,7 @@ pipeline {
     }
     stage('Performing acceptance tests') {
       steps {
-        deleteFolder($REPORTS_FOLDER)        
+        deleteFolder(REPORTS_FOLDER)
         sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run start:ci"
       }
     }

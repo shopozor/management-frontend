@@ -9,7 +9,7 @@
   "scripts": {
     "build": "quasar build",
     "cypress:ci": "wait-on http://localhost:4000 && cross-env CYPRESS_TAGS=\"not @wip\" && cypress run --env configFile=acceptance",
-    "start:ci": "concurrently \"npm run cypress:ci\" --kill-others \"npm run start:dev\" --success first",
+    "start:ci": "concurrently \"yarn run cypress:ci\" --kill-others \"yarn run start\" --success first",
     "lint": "eslint --ext .js,.vue src",
     "start": "quasar serve dist/spa-mat",
     "start:dev": "quasar dev",

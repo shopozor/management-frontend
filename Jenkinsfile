@@ -10,13 +10,18 @@ pipeline {
   stages {
     stage('Node Modules Installation') {
       steps {
-        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm i"
+        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache yarn"
+      }
+    }
+    stage('Building application') {
+      steps {
+        sh "yarn run build"
       }
     }
     stage('Performing acceptance tests') {
       steps {
         deleteFolder(REPORTS_FOLDER)
-        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache npm run start:ci"
+        sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache yarn run start:ci"
       }
     }
   }

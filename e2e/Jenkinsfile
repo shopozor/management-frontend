@@ -55,23 +55,14 @@ pipeline {
         echo "trouduc"
       }
     }
-    stage('Stopping frontend environment') {
-      steps {
-        sh "chmod u+x ./e2e/stop-jelastic-env.sh"
-        sh "./e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
-      }
-    }
-    stage('Stopping backend environment') {
-      steps {
-        sh "chmod u+x ./e2e/stop-jelastic-env.sh"
-        sh "./e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
-      }
-    }
   }
   post {
     always {
       junit "**/$REPORTS_FOLDER/*.xml"
       archiveArtifacts artifacts: 'cypress/videos/**/*.mp4, cypress/screenshots/**/*.png'
+      sh "chmod u+x ./e2e/stop-jelastic-env.sh"
+      sh "./e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
+      sh "./e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
     }
   }
 }

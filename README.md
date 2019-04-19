@@ -2,6 +2,13 @@
 
 > WIP
 
+## Continuous integration
+
+The articles below are pretty useful:
+
+* [How to integrate Cypress and Cucumber in your development flow in just a few weeks](https://medium.com/@itortv/how-to-integrate-cypress-and-cucumber-in-your-development-flow-in-just-a-few-weeks-96a46ac9165a)
+* [Cypress e2e Testing in the Jenkins Pipeline](https://medium.com/@ronnieschaniel/cypress-e2e-testing-in-the-jenkins-pipeline-cc0a0df29fb6)
+
 ## VSCode configuration
 
 Make sure you run the script

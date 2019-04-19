@@ -8,11 +8,12 @@
   "private": true,
   "scripts": {
     "build": "quasar build",
+    "cypress:ci": "wait-on http://localhost:4000 && cross-env CYPRESS_TAGS=\"not @wip\" && cypress run --env configFile=acceptance",
+    "start:ci": "concurrently \"yarn run cypress:ci\" --kill-others \"yarn run start\" --success first",
     "lint": "eslint --ext .js,.vue src",
     "start": "quasar serve dist/spa-mat",
     "start:dev": "quasar dev",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
-    "e2e": "cypress run",
     "test:unit": "jest --updateSnapshot",
     "test:unit:coverage": "jest --coverage",
     "test:unit:watch": "jest --watch",
@@ -43,12 +44,15 @@
     "vuelidate": "^0.7.4"
   },
   "devDependencies": {
+    "@babel/runtime-corejs2": "^7.4.3",
     "@cypress/webpack-preprocessor": "^4.0.3",
     "@quasar/app": "^1.0.0-beta.18",
     "@quasar/quasar-app-extension-testing": "^1.0.0-rc.5",
     "@quasar/quasar-app-extension-testing-unit-jest": "^1.0.0-beta.22",
     "babel-eslint": "^10.0.1",
-    "cypress": "^3.1.5",
+    "concurrently": "^4.1.0",
+    "cross-env": "^5.2.0",
+    "cypress": "^3.2.0",
     "cypress-cucumber-preprocessor": "^1.11.0",
     "eslint": "^5.10.0",
     "eslint-config-standard": "^12.0.0",
@@ -65,6 +69,7 @@
     "moment": "^2.22.2",
     "strip-ansi": "^3.0.1",
     "vue-template-compiler": "^2.5.18",
+    "wait-on": "^3.2.0",
     "wallaby-vue-compiler": "^1.0.3"
   },
   "engines": {

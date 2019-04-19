@@ -32,3 +32,6 @@ generateDoc.txt
 
 # unit test results
 /test/jest/coverage
+
+# npm package lock
+package-lock.json

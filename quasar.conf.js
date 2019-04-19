@@ -16,7 +16,7 @@ module.exports = function (ctx) {
       env: ctx.dev ? {
         API: JSON.stringify('http://localhost:8000/graphql/')
       } : {
-        API: JSON.stringify('GRAPHQL_API')
+        API: JSON.stringify(process.env.GRAPHQL_API)
       },
       scopeHoisting: true,
       // vueRouterMode: 'history',

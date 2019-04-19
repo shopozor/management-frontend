@@ -14,7 +14,7 @@ module.exports = function (ctx) {
     supportIE: false,
     build: {
       env: ctx.dev ? {
-        API: JSON.stringify('http://localhost:8000/graphql/')
+        API: process.env.GRAPHQL_API ? JSON.stringify(process.env.GRAPHQL_API) : JSON.stringify('http://localhost:8000/graphql/')
       } : {
         API: JSON.stringify(process.env.GRAPHQL_API)
       },

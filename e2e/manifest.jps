@@ -35,6 +35,8 @@ application:
 
   onInstall:
     - deployRepo
+    # TODO: configure pre-deployment script that creates .netrc file with bitbucket credentials
+    # https://stackoverflow.com/questions/7714326/git-submodule-url-not-including-username
     # TODO: configure post-deployment script that launches the tests
     # TODO: configure API URL
     - startApp

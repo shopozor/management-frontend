@@ -1,13 +1,9 @@
 <template>
   <transition leave-active-class="animated bounceOutUp">
     <q-card class="product-trash-card q-ma-sm" v-if="isDeleted">
-      <q-card-media>
-        <img :src="showImage" alt="product image">
-      </q-card-media>
-      <q-card-title>{{ product.title }}</q-card-title>
-      <q-card-main>
-        <div>{{ product.description }}</div>
-      </q-card-main>
+      <img :src="showImage" alt="product image">
+      <q-card-section>{{ product.title }}</q-card-section>
+      <q-card-section>{{ product.description }}</q-card-section>
       <q-card-actions align="center">
         <q-btn icon="restore_from_trash" round color="positive" size='xl' @click='restore'/>
       </q-card-actions>

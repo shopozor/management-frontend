@@ -1,5 +1,5 @@
 // import * as request from '../simulateServer/users/requestUsers'
-import { apolloClient } from '../../../plugins/apollo'
+import { apolloClient } from '../../../boot/apollo'
 import * as cookie from '../../../../common/src/store/cookie'
 import types from '../../../../common/src/types'
 
@@ -111,8 +111,10 @@ export function getPermissions ({ commit }) {
 
 export function logout ({ commit }) {
   return new Promise((resolve, reject) => {
-    commit('logout')
-    removeToken()
-    resolve()
+    setTimeout(() => {
+      commit('logout')
+      removeToken()
+      resolve()
+    }, 1000)
   })
 }

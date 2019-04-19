@@ -3,7 +3,7 @@
     <div style="width: 500px; max-width: 90vw;">
       <q-list>
         <q-item>
-          <q-item-main>
+          <q-item-section>
             <q-field
               icon="mail"
               :helper="emailHelper">
@@ -15,13 +15,13 @@
                 @keyup.enter="focusPassword"
                 :error="$v.email.$error" />
             </q-field>
-          </q-item-main>
-          <q-item-side right>
+          </q-item-section>
+          <q-item-section right>
             <q-icon name="check_circle" v-show="!this.$v.email.$invalid" />
-          </q-item-side>
+          </q-item-section>
         </q-item>
         <q-item>
-            <q-item-main>
+            <q-item-section>
               <q-field
                 icon="vpn_lock"
                 :helper="passwordHelper"
@@ -35,13 +35,13 @@
                   @keyup.enter="focusConfirmPassword"
                   :error="$v.password.$error" />
               </q-field>
-            </q-item-main>
-          <q-item-side right>
+            </q-item-section>
+          <q-item-section right>
             <q-icon name="check_circle" v-show="!this.$v.password.$invalid" />
-          </q-item-side>
+          </q-item-section>
         </q-item>
         <q-item>
-            <q-item-main>
+            <q-item-section>
               <q-field
                 icon="vpn_lock"
                 :helper="confirmPasswordHelper"
@@ -55,10 +55,10 @@
                   @keyup.enter="submit"
                   :error="$v.confirmPassword.$error" />
               </q-field>
-            </q-item-main>
-          <q-item-side right>
+            </q-item-section>
+          <q-item-section right>
             <q-icon name="check_circle" v-show="!this.$v.confirmPassword.$invalid" />
-          </q-item-side>
+          </q-item-section>
         </q-item>
         <q-item class="row justify-center">
             <q-btn class="q-ma-md" color="primary" :label="$t('signup.createAccount')" @click="submit" ></q-btn>

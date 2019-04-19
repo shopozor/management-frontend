@@ -1,6 +1,6 @@
 <template>
   <q-card inline class="width-md q-ma-sm">
-    <q-card-main>
+    <q-card-section>
       <format-description-free v-if="formatUI === formatUIs.FREE" :formatId="formatId"/>
       <format-description-size-unit
         v-else-if="formatUI === formatUIs.AUTO_UNIT"
@@ -9,7 +9,7 @@
       <format-description-auto v-else-if="formatUI === formatUIs.AUTO_PRICE" :formatId="formatId"/>
       <format-description-bulk v-else-if="formatUI === formatUIs.BULK" :formatId="formatId"/>
       <format-u-i-select :formatId="formatId" style="width: 100%"/>
-    </q-card-main>
+    </q-card-section>
   </q-card>
 </template>
 

@@ -62,7 +62,7 @@ When(
 Then("il doit s'identifier", function () {
   cy.get('input[type=email]').should('exist')
   cy.get('input[type=password]').should('exist')
-  cy.get('.loginButton').should('exist')
+  cy.get('button[id="loginButton"]').should('exist')
 })
 
 Then("n'a pas accès à un menu utilisateur", function () {

@@ -4,7 +4,7 @@ application:
   id: management-frontend
   name: Management frontend
   version: 0.0
-  baseUrl: https://bitbucket.org/softozor/shopozor-management-frontend/raw/GIT_BRANCH/
+  baseUrl: https://bitbucket.org/softozor/shopozor-management-frontend/raw/GIT_BRANCH/e2e/
 
   globals:
     NODEJS_HOME: /home/jelastic
@@ -30,18 +30,30 @@ application:
           fixedCloudlets: 4
           cloudlets: 10
           env:
+            GRAPHQL_API: GRAPHQL_API_PLACEHOLDER
             PACKAGE_MANAGER: yarn
             PORT: ${globals.NODEJS_PORT}
 
   onInstall:
+    - setRepoCredentials
     - deployRepo
-    # TODO: configure pre-deployment script that creates .netrc file with bitbucket credentials
-    # https://stackoverflow.com/questions/7714326/git-submodule-url-not-including-username
-    # TODO: configure post-deployment script that launches the tests
-    # TODO: configure API URL
-    - startApp
+    - runTests
 
   actions:
+    setRepoCredentials:
+      - cmd [cp]:
+        - wget ${baseUrl}/.netrc --user GIT_USER --password GIT_PASSWORD -P ~
+        - log: $PWD
+        user: root
+      - replaceInFile:
+          nodeType: nodejs 
+          path: ${globals.NODEJS_HOME}/.netrc
+          replacements: 
+            - pattern: BITBUCKET_USER
+              replacement: GIT_USER
+            - pattern: BITBUCKET_PASSWORD
+              replacement: GIT_PASSWORD
+        user: root
     deployRepo:
       api:
         - method: environment.vcs.CreateProject
@@ -56,13 +68,9 @@ application:
           params:
             context: ${globals.NODEJS_CONTEXT}
       nodeGroup: cp
-    startApp:
-      # using the StartApp.sh script doesn't work for some reason
-      # it seems like the build and run part must be split into two
-      # distinct commands like here:
+    runTests:
       - cmd [cp]:
           - cd ${globals.NODEJS_PATH_TO_CONTEXT}
           - yarn
-          - yarn build
-      - restartNodes:
-          - nodeGroup: cp
+          - yarn run build
+          - yarn run cypress:e2e

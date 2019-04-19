@@ -43,8 +43,6 @@ application:
     setRepoCredentials:
       - cmd [cp]:
         - wget ${baseUrl}/.netrc --user GIT_USER --password GIT_PASSWORD -P ~
-        - log: $PWD
-        user: root
       - replaceInFile:
           nodeType: nodejs 
           path: ${globals.NODEJS_HOME}/.netrc
@@ -53,6 +51,8 @@ application:
               replacement: GIT_USER
             - pattern: BITBUCKET_PASSWORD
               replacement: GIT_PASSWORD
+      - cmd [cp]: 
+        - cp ${globals.NODEJS_HOME}/.netrc ~/.netrc
         user: root
     deployRepo:
       api:
@@ -72,5 +72,5 @@ application:
       - cmd [cp]:
           - cd ${globals.NODEJS_PATH_TO_CONTEXT}
           - yarn
-          - yarn run build
-          - yarn run cypress:e2e
+          - yarn build
+          - yarn cypress:e2e

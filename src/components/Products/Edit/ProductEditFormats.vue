@@ -1,16 +1,16 @@
 <template>
   <div>
-    <q-collapsible icon="settings" label="Conditionnements du produit et stock">
+    <q-expansion-item icon="settings" label="Conditionnements du produit et stock">
       <q-card>
-        <q-card-title>
+        <q-card-section>
           Prix à l'unité
-        </q-card-title>
-        <q-card-main>
+        </q-card-section>
+        <q-card-section>
           <product-default-price-per-unit-selector />
-        </q-card-main>
+        </q-card-section>
       </q-card>
       <div>interface par défaut</div>
-    </q-collapsible>
+    </q-expansion-item>
     <product-edit-format
       class="q-ma-sm"
       v-for="id in formatsIds"

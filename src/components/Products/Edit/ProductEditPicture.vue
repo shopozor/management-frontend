@@ -1,8 +1,6 @@
 <template>
   <q-card class="width-md height-md">
-    <q-card-media>
-      <img class="q-px-md q-pb-sm" :src="showImage" alt="product image">
-    </q-card-media>
+    <img class="q-px-md q-pb-sm" :src="showImage" alt="product image">
     <q-card-actions align="around">
       <q-btn round size="lg" icon="camera_alt" color="primary" />
       <q-btn round size="lg" icon="image" color="primary" />

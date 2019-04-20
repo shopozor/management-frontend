@@ -5,7 +5,7 @@ if [ $# -ne 5 ] ; then
   exit 0
 fi
 
-. helpers.sh
+. ./e2e/helpers.sh
 
 getSession() {
   local login=$1

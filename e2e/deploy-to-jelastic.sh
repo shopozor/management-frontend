@@ -68,7 +68,7 @@ installEnv() {
   -H "${CONTENT_TYPE}" \
   -X POST -fsS ${HOSTER_URL}"/1.0/development/scripting/rest/eval" \
   --data "session=${session}&shortdomain=${envName}&envName=${envName}&script=InstallApp&appid=appstore&type=install&charset=UTF-8" --data-urlencode "manifest=$manifest")
-  exitOnFail $cmd
+  #exitOnFail $cmd
   waitUntilEnvIsRunning $session $envName
   echo "Environment <$envName> installed" >&2
 }

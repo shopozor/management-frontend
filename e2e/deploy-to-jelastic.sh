@@ -23,7 +23,7 @@ getEnvs() {
     -A "${USER_AGENT}" \
     -X POST \
     -fsS ${HOSTER_URL}/1.0/environment/control/rest/getenvs -d "appid=${APPID}&session=${session}")
-  exitOnFail $cmd
+#  exitOnFail $cmd
   echo "Got environments" >&2
   echo $cmd
 }
@@ -38,6 +38,25 @@ wasEnvCreated() {
   echo $envExists
 }
 
+waitUntilEnvIsRunning () {
+  local session=$1
+  local envName=$2
+  while true
+  do
+    envInfo=$(curl -k \
+    -H "${CONTENT_TYPE}" \
+    -A "${USER_AGENT}" \
+    -X POST \
+    -fsS ${HOSTER_URL}/1.0/environment/control/rest/getenvinfo -d "session=${session}&envName=${envName}")
+    STATUS=$(echo $envInfo | jq '.env.status')
+    if [ "$STATUS" == "1" ] ; then
+      break;
+    else
+      sleep 1
+    fi
+  done
+}
+
 installEnv() {
   local session=$1
   local envName=$2
@@ -50,6 +69,7 @@ installEnv() {
   -X POST -fsS ${HOSTER_URL}"/1.0/development/scripting/rest/eval" \
   --data "session=${session}&shortdomain=${envName}&envName=${envName}&script=InstallApp&appid=appstore&type=install&charset=UTF-8" --data-urlencode "manifest=$manifest")
   exitOnFail $cmd
+  waitUntilEnvIsRunning $session $envName
   echo "Environment <$envName> installed" >&2
 }
 

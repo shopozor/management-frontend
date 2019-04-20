@@ -5,7 +5,7 @@ if [ $# -lt 5 ] ; then
   exit 0
 fi
 
-. helpers.sh
+. e2e/helpers.sh
 
 HOSTER_URL=$1
 APPID=$2

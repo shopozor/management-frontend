@@ -4,7 +4,6 @@ USER_AGENT="Mozilla/4.73 [en] (X11; U; Linux 2.2.15 i686)"
 exitOnFail() {
   local command=$1
   local result=$(echo $command | jq '.result')
-  echo "result = $result" >&2
   if [[ "$result" != "0" ]] ; then
     echo "Following command failed with result $result: $command" >&2
     exit 1

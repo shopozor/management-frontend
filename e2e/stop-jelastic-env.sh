@@ -5,33 +5,35 @@ if [ $# -ne 5 ] ; then
   exit 0
 fi
 
+. helpers.sh
+
 getSession() {
   local login=$1
   local password=$2
   echo "Signing in..." >&2
-  local signIn=$(curl -k -H "${CONTENT_TYPE}" -A "${USER_AGENT}"  -X POST \
+  local cmd=$(curl -k -H "${CONTENT_TYPE}" -A "${USER_AGENT}"  -X POST \
     -fsS "${HOSTER_URL}/1.0/users/authentication/rest/signin" -d "login=$login&password=$password");
-  echo 'Response signIn user: '$signIn >&2
+  exitOnFail $cmd
+  echo 'Response signIn user: '$cmd >&2
   echo "Signed in" >&2
-  echo $( jq '.session' <<< $signIn |  sed 's/\"//g' )
+  echo $(jq '.session' <<< $cmd |  sed 's/\"//g')
 }
 
 HOSTER_URL=$1
 APPID=$2
 SESSION=$(getSession $3 $4)
 ENV_NAME=$5
-CONTENT_TYPE="Content-Type: application/x-www-form-urlencoded; charset=UTF-8;";
-USER_AGENT="Mozilla/4.73 [en] (X11; U; Linux 2.2.15 i686)"
 
 stopEnv() {
   local session=$1
   local envName=$2
   echo "Stopping up environment <$envName>..." >&2
-  curl -k \
+  local cmd=$(curl -k \
     -H "${CONTENT_TYPE}" \
     -A "${USER_AGENT}" \
     -X POST \
-    -fsS ${HOSTER_URL}/1.0/environment/control/rest/stopenv -d "session=${session}&envName=${envName}"
+    -fsS ${HOSTER_URL}/1.0/environment/control/rest/stopenv -d "session=${session}&envName=${envName}")
+  exitOnFail $cmd
   echo "Environment <$envName> stopped" >&2 
   exit 0
 }

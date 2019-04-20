@@ -26,7 +26,7 @@ application:
         - nodeGroup: cp
           nodeType: nodejs
           displayName: Application servers
-          count: 2
+          count: 1
           fixedCloudlets: 4
           cloudlets: 10
           env:
@@ -73,4 +73,4 @@ application:
           - cd ${globals.NODEJS_PATH_TO_CONTEXT}
           - yarn
           - yarn build
-          - yarn cypress:e2e
+          - yarn start:e2e

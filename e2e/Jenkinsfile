@@ -36,6 +36,8 @@ pipeline {
         sh "sed -i \"s/GRAPHQL_API_PLACEHOLDER/$BACKEND_NAME_USR.hidora.com/g\" $FRONTEND_JPS"
         sh "chmod u+x ./e2e/deploy-to-jelastic.sh"
         sh "./e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
+        // TODO: find a way to detect when the executed command (cypress:ci) is done; status = 1 during the command execution
+        // maybe let the e2e env stop automatically as the stopped status is detectable
       }
     }
     stage('Retrieving test reports from frontend environment') {

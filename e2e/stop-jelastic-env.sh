@@ -7,21 +7,9 @@ fi
 
 . ./e2e/helpers.sh
 
-getSession() {
-  local login=$1
-  local password=$2
-  echo "Signing in..." >&2
-  local cmd=$(curl -k -H "${CONTENT_TYPE}" -A "${USER_AGENT}"  -X POST \
-    -fsS "${HOSTER_URL}/1.0/users/authentication/rest/signin" -d "login=$login&password=$password");
-  exitOnFail $cmd
-  echo 'Response signIn user: '$cmd >&2
-  echo "Signed in" >&2
-  echo $(jq '.session' <<< $cmd |  sed 's/\"//g')
-}
-
 HOSTER_URL=$1
 APPID=$2
-SESSION=$(getSession $3 $4)
+SESSION=$(getSession $3 $4 ${HOSTER_URL})
 ENV_NAME=$5
 
 stopEnv() {

@@ -1,3 +1,3 @@
 #! /bin/bash
 
-echo "trouduc"
+echo "trouduc" > /home/jelastic/test.txt

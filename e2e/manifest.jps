@@ -37,7 +37,6 @@ application:
   onInstall:
     - setRepoCredentials
     - deployRepo
-    - runTests
 
   actions:
     setRepoCredentials:
@@ -64,13 +63,8 @@ application:
             branch: GIT_BRANCH
             login: GIT_USER
             password: GIT_PASSWORD
+            hooks: {"postDeploy": "#! /bin/bash\nyarn && yarn build && yarn start:e2e"}
         - method: environment.vcs.Update
           params:
             context: ${globals.NODEJS_CONTEXT}
       nodeGroup: cp
-    runTests:
-      - cmd [cp]:
-          - cd ${globals.NODEJS_PATH_TO_CONTEXT}
-          - yarn
-          - yarn build
-          - yarn start:e2e

@@ -1,3 +1,3 @@
 #! /bin/bash
 
-echo "trouduc" > /home/jelastic/postHookResult.txt
+echo "trouduc"

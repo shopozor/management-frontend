@@ -12,10 +12,10 @@ pipeline {
       environment {
         GITHUB_CREDENTIALS = credentials('github-credentials')
         BACKEND_JPS = 'backend.jps'
-        BRANCH_NAME = GIT_BRANCH.tokenize('/')[1]
       }
+
       steps {
-        echo BRANCH_NAME
+        def BRANCH_NAME = GIT_BRANCH.tokenize('/')[1]
         sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
         sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
         sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"

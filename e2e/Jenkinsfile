@@ -15,7 +15,7 @@ pipeline {
       }
 
       steps {
-        sh "sed -i \"s/GIT_URL/'https://bitbucket.org/softozor/shopozor-management-frontend'/g\" ./common/e2e/manifest.jps"
+        sh "sed -i \"s@GIT_URL@https://bitbucket.org/softozor/shopozor-management-frontend@g\" ./common/e2e/manifest.jps"
 
         sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
         sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"

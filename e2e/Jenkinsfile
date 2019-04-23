@@ -14,7 +14,7 @@ pipeline {
         BACKEND_JPS = 'backend.jps'
       }
       steps {
-        echo GIT_BRANCH
+        echo GIT_BRANCH.tokenize('/')
         sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
         sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
         sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"

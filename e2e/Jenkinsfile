@@ -33,12 +33,13 @@ pipeline {
       steps {
         sh "sed -i \"s/GIT_USER/$BITBUCKET_CREDENTIALS_USR/g\" $FRONTEND_JPS"
         sh "sed -i \"s/GIT_PASSWORD/$BITBUCKET_CREDENTIALS_PSW/g\" $FRONTEND_JPS"
+        def (remote, branch) = GIT_BRANCH.tokenize('/')
         // sh "GIT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2) && sed -i \"s/GIT_BRANCH/$GIT_BRANCH/g\" $FRONTEND_JPS"
-        // sh "sed -i \"s/GIT_URL/$(git remote get-url --push origin)/g\" $FRONTEND_JPS"
-        sh "printenv"
-        // sh "sed -i \"s/GRAPHQL_API_PLACEHOLDER/$BACKEND_NAME_USR.hidora.com/g\" $FRONTEND_JPS"
-        // sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
-        // sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
+        sh "sed -i \"s/GIT_BRANCH/$branch/g\" $FRONTEND_JPS"
+        sh "sed -i \"s/GIT_URL/$GIT_URL/g\" $FRONTEND_JPS"
+        sh "sed -i \"s/GRAPHQL_API_PLACEHOLDER/$BACKEND_NAME_USR.hidora.com/g\" $FRONTEND_JPS"
+        sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
+        sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
       }
     }
     stage('Retrieving test reports from frontend environment') {
@@ -56,9 +57,9 @@ pipeline {
   }
   post {
     always {
-      // sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
-      // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
-      // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
+      sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
+      sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
+      sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
       junit "**/$REPORTS_FOLDER/*.xml"
       archiveArtifacts artifacts: 'cypress/videos/**/*.mp4, cypress/screenshots/**/*.png'
     }

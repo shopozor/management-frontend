@@ -8,27 +8,26 @@ pipeline {
     FRONTEND_NAME = credentials('mgmt-frontend-name-credentials') // contains envName + e2e jps url
   }
   stages {
-    stage('Starting up backend environment') {
-      environment {
-        GITHUB_CREDENTIALS = credentials('github-credentials')
-        BACKEND_JPS = 'backend.jps'
-        BACKEND_URL = "${BACKEND_NAME_USR}.hidora.com"
-      }
+    // stage('Starting up backend environment') {
+    //   environment {
+    //     GITHUB_CREDENTIALS = credentials('github-credentials')
+    //     BACKEND_JPS = 'backend.jps'
+    //   }
 
-      steps {
-        echo BACKEND_URL
-        sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
-        sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
-        sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
-        sh "sed -i \"s/GIT_BRANCH/dev/g\" $BACKEND_JPS"
-        sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
-        sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR cp $BACKEND_JPS"
-      }
-    }
+    //   steps {
+    //     sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
+    //     sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
+    //     sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
+    //     sh "sed -i \"s/GIT_BRANCH/dev/g\" $BACKEND_JPS"
+    //     sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
+    //     sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR cp $BACKEND_JPS"
+    //   }
+    // }
     stage('Starting up frontend and performing end-to-end tests') {
       environment {
         BITBUCKET_CREDENTIALS = credentials('bitbucket-credentials')
         FRONTEND_JPS = './common/e2e/manifest.jps'
+        BACKEND_URL = "http://${BACKEND_NAME_USR}.hidora.com/graphql/"
       }
       steps {
         script {
@@ -37,9 +36,7 @@ pipeline {
           sh "sed -i \"s/GIT_PASSWORD/$BITBUCKET_CREDENTIALS_PSW/g\" $FRONTEND_JPS"
           sh "sed -i \"s/GIT_BRANCH/${BRANCH_NAME}/g\" $FRONTEND_JPS"
           sh "sed -i \"s@GIT_URL@$GIT_URL@g\" $FRONTEND_JPS"
-          // sh "sed -i \"s/GRAPHQL_API_PLACEHOLDER/$BACKEND_NAME_USR.hidora.com/g\" $FRONTEND_JPS"
-          // TODO: we need BACKEND_NAME_USR.concat(".hidora.com") here
-          sh "sed -i \"s/GRAPHQL_API_PLACEHOLDER/$BACKEND_NAME_USR.hidora.com/g\" $FRONTEND_JPS"
+          sh "sed -i \"s@GRAPHQL_API_PLACEHOLDER@$BACKEND_URL@g\" $FRONTEND_JPS"
           sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
           sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
         }

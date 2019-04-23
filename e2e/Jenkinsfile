@@ -33,7 +33,9 @@ pipeline {
       steps {
         sh "sed -i \"s/GIT_USER/$BITBUCKET_CREDENTIALS_USR/g\" $FRONTEND_JPS"
         sh "sed -i \"s/GIT_PASSWORD/$BITBUCKET_CREDENTIALS_PSW/g\" $FRONTEND_JPS"
-        def (remote, branch) = GIT_BRANCH.tokenize('/')
+        script {
+          def (remote, branch) = GIT_BRANCH.tokenize('/')
+        }
         // sh "GIT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2) && sed -i \"s/GIT_BRANCH/$GIT_BRANCH/g\" $FRONTEND_JPS"
         sh "sed -i \"s/GIT_BRANCH/$branch/g\" $FRONTEND_JPS"
         sh "sed -i \"s/GIT_URL/$GIT_URL/g\" $FRONTEND_JPS"

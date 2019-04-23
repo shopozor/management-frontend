@@ -14,7 +14,6 @@ pipeline {
         BACKEND_JPS = 'backend.jps'
       }
       steps {
-        echo BRANCH_NAME
         echo GIT_BRANCH
         sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
         sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"

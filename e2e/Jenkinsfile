@@ -12,7 +12,7 @@ pipeline {
       environment {
         GITHUB_CREDENTIALS = credentials('github-credentials')
         BACKEND_JPS = 'backend.jps'
-        BACKEND_URL = BACKEND_NAME_USR.concat(".hidora.com")
+        BACKEND_URL = "${BACKEND_NAME_USR}.hidora.com"
       }
 
       steps {

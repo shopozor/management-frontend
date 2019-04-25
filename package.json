@@ -13,7 +13,7 @@
     "start:ci": "concurrently \"yarn cypress:ci\" --kill-others \"yarn start:dev\" --success first",
     "start:e2e": "concurrently \"yarn cypress:e2e\" --kill-others \"yarn start\" --success first",
     "lint": "eslint --ext .js,.vue src",
-    "start": "quasar serve dist/spa",
+    "start": "quasar serve dist/spa -H '0.0.0.0' -p 4000",
     "start:dev": "quasar dev",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
     "test:unit": "jest --updateSnapshot",
@@ -70,7 +70,7 @@
     "jwt-decode": "^2.2.0",
     "majestic": "^1.4.1",
     "moment": "^2.24.0",
-    "strip-ansi": "^5.2.0",
+    "strip-ansi": "=3.0.1",
     "vue-template-compiler": "^2.6.10",
     "wait-on": "^3.2.0",
     "wallaby-vue-compiler": "^1.0.5"

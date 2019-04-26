@@ -1,4 +1,5 @@
 pipeline {
+  // TODO: problem: jenkins makes a check out for every agent ... it might be better to just install yarn and npm on the jenkins node ... 
   agent none
   environment {
     REPORTS_FOLDER = 'junit-reports'

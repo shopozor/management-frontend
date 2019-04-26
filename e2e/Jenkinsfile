@@ -1,35 +1,28 @@
 pipeline {
-  // agent {
-  //   docker {
-  //     image 'node'
-  //   }
-  // }
   agent none
   environment {
     REPORTS_FOLDER = 'junit-reports'
     JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
     JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
     BACKEND_NAME = credentials('backend-name-credentials') // contains envName + e2e jps url
-    FRONTEND_NAME = credentials('mgmt-frontend-name-credentials') // contains envName + e2e jps url
+    FRONTEND_NAME = credentials('mgmt-frontend-name-credentials') // contains envName
   }
   stages {
-    // TODO: we need to update the vcs project OR redeploy the container depending on the current environment's state!
-    // stage('Starting up backend environment') {
-    //   agent any
-    //   environment {
-    //     GITHUB_CREDENTIALS = credentials('github-credentials')
-    //     BACKEND_JPS = 'backend.jps'
-    //   }
-
-    //   steps {
-    //     sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
-    //     sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
-    //     sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
-    //     sh "sed -i \"s/GIT_BRANCH/dev/g\" $BACKEND_JPS"
-    //     sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
-    //     sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR cp $BACKEND_JPS"
-    //   }
-    // }
+    stage('Starting up backend environment') {
+      agent any
+      environment {
+        GITHUB_CREDENTIALS = credentials('github-credentials')
+        BACKEND_JPS = 'backend.jps'
+      }
+      steps {
+        sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
+        sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
+        sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
+        sh "sed -i \"s/GIT_BRANCH/dev/g\" $BACKEND_JPS"
+        sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
+        sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR cp $BACKEND_JPS"
+      }
+    }
     stage('Building frontend app') {
       agent {
         docker {
@@ -48,13 +41,14 @@ pipeline {
       environment {
         BITBUCKET_CREDENTIALS = credentials('bitbucket-credentials')
         DOCKER_CREDENTIALS = credentials('docker-credentials')
+        DOCKER_REPO = "softozor/${FRONTEND_NAME}"
         FRONTEND_JPS = './common/e2e/manifest.jps'
       }
       steps {
         sh "docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW"
         sh "cp e2e/Dockerfile ."
-        sh "docker build -t softozor/shopozor-management-frontend-e2e ."
-        sh "docker push softozor/shopozor-management-frontend-e2e"
+        sh "docker build -t $DOCKER_REPO ."
+        sh "docker push $DOCKER_REPO"
         sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
         sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
       }
@@ -75,6 +69,7 @@ pipeline {
     }
   }
   post {
+    agent any
     always {
       // the environment deletion will trigger a reinstall next time
       // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done

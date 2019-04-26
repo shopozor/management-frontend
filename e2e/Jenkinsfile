@@ -58,6 +58,7 @@ pipeline {
       agent any
       steps {
         deleteFolder(REPORTS_FOLDER)
+        // TODO: try this: AddMountPointById( envName, session, nodeId, path, [protocol], [sourceHost], sourcePath, [sourceNodeId], [name], [readOnly], [sourceAddressType] ) : Response
         // open ssh connection with frontend environment
       }
     }

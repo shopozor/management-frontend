@@ -1,10 +1,10 @@
 pipeline {
-  // agent any // use docker image kkarczmarczyk/node-yarn?
-  agent {
-    docker {
-      image 'node'
-    }
-  }
+  // agent {
+  //   docker {
+  //     image 'node'
+  //   }
+  // }
+  agent none
   environment {
     REPORTS_FOLDER = 'junit-reports'
     JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
@@ -13,7 +13,9 @@ pipeline {
     FRONTEND_NAME = credentials('mgmt-frontend-name-credentials') // contains envName + e2e jps url
   }
   stages {
+    // TODO: we need to update the vcs project OR redeploy the container depending on the current environment's state!
     // stage('Starting up backend environment') {
+    //   agent any
     //   environment {
     //     GITHUB_CREDENTIALS = credentials('github-credentials')
     //     BACKEND_JPS = 'backend.jps'
@@ -28,9 +30,22 @@ pipeline {
     //     sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR cp $BACKEND_JPS"
     //   }
     // }
-    stage('Starting up frontend and performing end-to-end tests') {
+    stage('Building frontend app') {
+      agent {
+        docker {
+          image 'node'
+        }
+      }
       environment {
         GRAPHQL_API = "http://${BACKEND_NAME_USR}.hidora.com/graphql/"
+      }
+      steps {
+        sh "yarn && yarn build"
+      }
+    }
+    stage('Starting up frontend and performing end-to-end tests') {
+      agent any
+      environment {
         BITBUCKET_CREDENTIALS = credentials('bitbucket-credentials')
         DOCKER_CREDENTIALS = credentials('docker-credentials')
         FRONTEND_JPS = './common/e2e/manifest.jps'
@@ -38,7 +53,6 @@ pipeline {
       steps {
         sh "docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW"
         sh "cp e2e/Dockerfile ."
-        sh "yarn && yarn build"
         sh "docker build -t softozor/shopozor-management-frontend-e2e ."
         sh "docker push softozor/shopozor-management-frontend-e2e"
         sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
@@ -46,12 +60,14 @@ pipeline {
       }
     }
     stage('Retrieving test reports from frontend environment') {
+      agent any
       steps {
         deleteFolder(REPORTS_FOLDER)
         // open ssh connection with frontend environment
       }
     }
     stage('Retrieving artifacts from frontend environment') {
+      agent any
       steps {
         // open ssh connection with frontend environment
         echo "trouduc"

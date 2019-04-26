@@ -1,11 +1,14 @@
 pipeline {
   agent any
-  environment {
-    REPORTS_FOLDER = 'junit-reports'
-    JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
-    JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
+  environment {  
     BACKEND_NAME = credentials('backend-name-credentials') // contains envName + e2e jps url
     FRONTEND_NAME = credentials('mgmt-frontend-name-credentials') // contains envName
+    JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
+    JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
+    PATH_TO_TEST_RESULTS = '/home/node/test-results'
+    SCREENSHOTS_FOLDER = 'screenshots'
+    TEST_REPORTS_FOLDER = 'junit-reports'
+    VIDEOS_FOLDER = 'videos'
   }
   stages {
     stage('Starting up backend environment') {
@@ -42,21 +45,27 @@ pipeline {
         sh "cp e2e/Dockerfile ."
         sh "docker build -t $DOCKER_REPO ."
         sh "docker push $DOCKER_REPO"
+        sh "sed -i \"s@PATH_TO_TEST_RESULTS_PLACEHOLDER@$PATH_TO_TEST_RESULTS@g\" $FRONTEND_JPS"
         sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
         sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
       }
     }
-    stage('Retrieving test reports from frontend environment') {
-      steps {
-        deleteFolder(REPORTS_FOLDER)
-        // TODO: try this: AddMountPointById( envName, session, nodeId, path, [protocol], [sourceHost], sourcePath, [sourceNodeId], [name], [readOnly], [sourceAddressType] ) : Response
-        // open ssh connection with frontend environment
+    stage('Retrieving test results from frontend environment') {
+      environment {
+        JENKINS_ENV_NAME = 'shopozor-ci' // TODO: get this from the jenkins environment variables!
+        TARGET_NODE_GROUP = 'cp'
+        TARGET_PATH = '/mnt'
+        SOURCE_NODE_GROUP = 'cp'
       }
-    }
-    stage('Retrieving artifacts from frontend environment') {
       steps {
-        // open ssh connection with frontend environment
-        echo "trouduc"
+        deleteFolder(TEST_REPORTS_FOLDER)
+        deleteFolder(VIDEOS_FOLDER)
+        deleteFolder(SCREENSHOTS_FOLDER)
+        sh "chmod u+x ./common/e2e/mount-test-results.sh"
+        sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $JENKINS_ENV_NAME $TARGET_NODE_GROUP $TARGET_PATH $FRONTEND_NAME $SOURCE_NODE_GROUP $PATH_TO_TEST_RESULTS"
+        sh "cp -R /mnt/$TEST_REPORTS_FOLDER ."
+        sh "cp -R /mnt/$VIDEOS_FOLDER ."
+        sh "cp -R /mnt/$SCREENSHOTS_FOLDER ."
       }
     }
   }
@@ -68,8 +77,8 @@ pipeline {
       // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
       sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
       // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
-      junit "**/$REPORTS_FOLDER/*.xml"
-      archiveArtifacts artifacts: 'cypress/videos/**/*.mp4, cypress/screenshots/**/*.png'
+      junit "**/$TEST_REPORTS_FOLDER/*.xml"
+      archiveArtifacts artifacts: "$VIDEOS_FOLDER/**/*.mp4, $SCREENSHOTS_FOLDER/**/*.png"
     }
   }
 }

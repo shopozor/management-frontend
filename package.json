@@ -10,7 +10,7 @@
     "build": "quasar build",
     "cypress:ci": "wait-on http://localhost:4000 && cross-env CYPRESS_TAGS=\"not @wip\" && cypress run --env configFile=acceptance",
     "cypress:e2e": "wait-on http://localhost:4000 && cross-env CYPRESS_TAGS=\"not @wip and not @not-e2e\" && cypress run --env configFile=e2e",
-    "start:ci": "concurrently \"yarn cypress:ci\" --kill-others \"yarn start:dev\" --success first",
+    "start:ci": "concurrently \"yarn cypress:ci\" --kill-others \"yarn start\" --success first",
     "start:e2e": "concurrently \"yarn cypress:e2e\" --kill-others \"yarn start\" --success first",
     "lint": "eslint --ext .js,.vue src",
     "start": "quasar serve dist/spa -H '0.0.0.0' -p 4000",

@@ -1,6 +1,5 @@
 pipeline {
-  // TODO: problem: jenkins makes a check out for every agent ... it might be better to just install yarn and npm on the jenkins node ... 
-  agent none
+  agent any
   environment {
     REPORTS_FOLDER = 'junit-reports'
     JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
@@ -10,7 +9,6 @@ pipeline {
   }
   stages {
     stage('Starting up backend environment') {
-      agent any
       environment {
         GITHUB_CREDENTIALS = credentials('github-credentials')
         BACKEND_JPS = 'backend.jps'
@@ -25,11 +23,6 @@ pipeline {
       }
     }
     stage('Building frontend app') {
-      agent {
-        docker {
-          image 'node'
-        }
-      }
       environment {
         GRAPHQL_API = "http://${BACKEND_NAME_USR}.hidora.com/graphql/"
       }
@@ -38,7 +31,6 @@ pipeline {
       }
     }
     stage('Starting up frontend and performing end-to-end tests') {
-      agent any
       environment {
         BITBUCKET_CREDENTIALS = credentials('bitbucket-credentials')
         DOCKER_CREDENTIALS = credentials('docker-credentials')
@@ -55,7 +47,6 @@ pipeline {
       }
     }
     stage('Retrieving test reports from frontend environment') {
-      agent any
       steps {
         deleteFolder(REPORTS_FOLDER)
         // TODO: try this: AddMountPointById( envName, session, nodeId, path, [protocol], [sourceHost], sourcePath, [sourceNodeId], [name], [readOnly], [sourceAddressType] ) : Response
@@ -63,7 +54,6 @@ pipeline {
       }
     }
     stage('Retrieving artifacts from frontend environment') {
-      agent any
       steps {
         // open ssh connection with frontend environment
         echo "trouduc"
@@ -71,7 +61,6 @@ pipeline {
     }
   }
   post {
-    agent any
     always {
       // the environment deletion will trigger a reinstall next time
       // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done

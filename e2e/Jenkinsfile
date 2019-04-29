@@ -5,10 +5,11 @@ pipeline {
     FRONTEND_NAME = credentials('mgmt-frontend-name-credentials') // contains envName
     JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
     JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
-    PATH_TO_TEST_RESULTS = '/home/node/test-results'
-    SCREENSHOTS_FOLDER = 'screenshots'
-    TEST_REPORTS_FOLDER = 'junit-reports'
-    VIDEOS_FOLDER = 'videos'
+    // PATH_TO_TEST_RESULTS = '/home/node/test-results'
+    PATH_TO_TEST_RESULTS = '/home/node'
+    SCREENSHOTS_FOLDER = '/mnt/cypress/screenshots'
+    TEST_REPORTS_FOLDER = '/mnt/junit-reports'
+    VIDEOS_FOLDER = '/mnt/cypress/videos'
   }
   stages {
     stage('Starting up backend environment') {
@@ -17,6 +18,7 @@ pipeline {
         BACKEND_JPS = 'backend.jps'
       }
       steps {
+        echo JENKINS_URL.split('/')[2].split(':')[0]
         sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
         sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
         sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
@@ -45,7 +47,7 @@ pipeline {
         sh "cp e2e/Dockerfile ."
         sh "docker build -t $DOCKER_REPO ."
         sh "docker push $DOCKER_REPO"
-        sh "sed -i \"s@PATH_TO_TEST_RESULTS_PLACEHOLDER@$PATH_TO_TEST_RESULTS@g\" $FRONTEND_JPS"
+        // sh "sed -i \"s@PATH_TO_TEST_RESULTS_PLACEHOLDER@$PATH_TO_TEST_RESULTS@g\" $FRONTEND_JPS"
         sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
         sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
       }
@@ -58,14 +60,15 @@ pipeline {
         SOURCE_NODE_GROUP = 'cp'
       }
       steps {
-        deleteFolder(TEST_REPORTS_FOLDER)
-        deleteFolder(VIDEOS_FOLDER)
-        deleteFolder(SCREENSHOTS_FOLDER)
+        // deleteFolder(TEST_REPORTS_FOLDER)
+        // deleteFolder(VIDEOS_FOLDER)
+        // deleteFolder(SCREENSHOTS_FOLDER)
         sh "chmod u+x ./common/e2e/mount-test-results.sh"
+        // TODO: share the whole /home/node folder instead of copying everything over and over again
         sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $JENKINS_ENV_NAME $TARGET_NODE_GROUP $TARGET_PATH $FRONTEND_NAME $SOURCE_NODE_GROUP $PATH_TO_TEST_RESULTS"
-        sh "cp -R /mnt/$TEST_REPORTS_FOLDER ."
-        sh "cp -R /mnt/$VIDEOS_FOLDER ."
-        sh "cp -R /mnt/$SCREENSHOTS_FOLDER ."
+        // sh "cp -R /mnt/$TEST_REPORTS_FOLDER ."
+        // sh "cp -R /mnt/$VIDEOS_FOLDER ."
+        // sh "cp -R /mnt/$SCREENSHOTS_FOLDER ."
       }
     }
   }

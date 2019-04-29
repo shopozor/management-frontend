@@ -5,6 +5,12 @@ def prepareBackendConfiguration(gitUser, gitPwd, gitBranch, backendJps, backendJ
   sh "sed -i \"s/GIT_BRANCH/$gitBranch/g\" $backendJps"
 }
 
+def buildDockerImage(username, password, repo) {
+  sh "docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW"
+  sh "cp e2e/Dockerfile ."
+  sh "docker build -t $DOCKER_REPO ."
+  sh "docker push $DOCKER_REPO"
+}
 
 def deploy(backendJps, backendEnvName) {
   environment {

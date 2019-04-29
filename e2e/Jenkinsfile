@@ -22,14 +22,8 @@ pipeline {
       }
       steps {
         // echo CI_HOSTNAME.split('.')[0]
-        // sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
-        // sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
-        // sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
-        // sh "sed -i \"s/GIT_BRANCH/dev/g\" $BACKEND_JPS"
-        // sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
-        // sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR cp $BACKEND_JPS"
         script {
-          def lib = load './e2e/TestLib.groovy'
+          def lib = load './e2e/CommonLib.groovy'
           lib.prepareBackendConfiguration(GITHUB_CREDENTIALS_USR, GITHUB_CREDENTIALS_PSW, 'dev', BACKEND_JPS, BACKEND_NAME_PSW)
           lib.deploy(BACKEND_JPS, BACKEND_NAME_USR)
         }
@@ -45,22 +39,16 @@ pipeline {
     }
     stage('Starting up frontend and performing end-to-end tests') {
       environment {
-        BITBUCKET_CREDENTIALS = credentials('bitbucket-credentials')
         DOCKER_CREDENTIALS = credentials('docker-credentials')
         DOCKER_REPO = "softozor/${FRONTEND_NAME}"
         FRONTEND_JPS = './common/e2e/manifest.jps'
       }
       steps {
-        sh "docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW"
-        sh "cp e2e/Dockerfile ."
-        sh "docker build -t $DOCKER_REPO ."
-        sh "docker push $DOCKER_REPO"
         script {
-          def lib = load './e2e/TestLib.groovy'
+          def lib = load './e2e/CommonLib.groovy'
+          lib.buildDockerImage(DOCKER_CREDENTIALS_USR, DOCKER_CREDENTIALS_PSW, DOCKER_REPO)
           lib.deploy(FRONTEND_JPS, FRONTEND_NAME)
         }
-        // sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
-        // sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
       }
     }
     stage('Retrieving test results from frontend environment') {

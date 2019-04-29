@@ -67,6 +67,10 @@ pipeline {
         sh "chmod u+x ./common/e2e/mount-test-results.sh"
         // TODO: share the whole /home/node folder instead of copying everything over and over again
         sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $JENKINS_ENV_NAME $TARGET_NODE_GROUP $TARGET_PATH $FRONTEND_NAME $SOURCE_NODE_GROUP $PATH_TO_TEST_RESULTS"
+        sh "cp -R $TEST_REPORTS_FOLDER ."
+        sh "cp -R $VIDEOS_FOLDER ."
+        sh "cp -R $SCREENSHOTS_FOLDER ."
+
         // sh "cp -R /mnt/$TEST_REPORTS_FOLDER ."
         // sh "cp -R /mnt/$VIDEOS_FOLDER ."
         // sh "cp -R /mnt/$SCREENSHOTS_FOLDER ."
@@ -81,9 +85,8 @@ pipeline {
       // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
       sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
       // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
-      sh "ls $TEST_REPORTS_FOLDER"
-      archiveArtifacts artifacts: "$VIDEOS_FOLDER/**/*.mp4, $SCREENSHOTS_FOLDER/**/*.png"
-      junit "$TEST_REPORTS_FOLDER/*.xml"
+      archiveArtifacts artifacts: "videos/**/*.mp4, screenshots/**/*.png"
+      junit "junit-reports/*.xml"
     }
   }
 }

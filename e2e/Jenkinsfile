@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  parameters {
+    booleanParam(name: 'DELETE_FRONTEND', defaultValue: true, description: 'Disable this value if you need to get feedback about the frontend status after the test')
+  }
   environment {  
     BACKEND_NAME = credentials('backend-name-credentials') // contains envName + e2e jps url
     FRONTEND_NAME = credentials('mgmt-frontend-name-credentials') // contains envName
@@ -76,8 +79,10 @@ pipeline {
     always {
       // the environment deletion will trigger a reinstall next time
       // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done
-      sh "chmod u+x ./common/e2e/delete-jelastic-env.sh"
-      // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
+      if(params.DELETE_FRONTEND == true) {
+        sh "chmod u+x ./common/e2e/delete-jelastic-env.sh"
+        // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
+      }
       sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
       // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
       archiveArtifacts artifacts: "${VIDEOS_FOLDER}/**/*.mp4, ${SCREENSHOTS_FOLDER}/**/*.png"

@@ -22,10 +22,8 @@ def deploy(backendJps, backendEnvName) {
 }
 
 def deleteFolder(folderName) {
-  script {
-    dir(folderName) {
-      deleteDir()
-    }
+  dir(folderName) {
+    deleteDir()
   }
 }
 
@@ -33,18 +31,18 @@ def retrieveTestResults(screenshotsFolder, videosFolder, reportsFolder, jenkinsE
   environment {
     JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
     JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
-    PATH_TO_SHARED_SCREENSHOTS = "/mnt/cypress/${screenshotsFolder}"
-    PATH_TO_SHARED_VIDEOS = "/mnt/cypress/${videosFolder}"
-    PATH_TO_SHARED_REPORTS = "/mnt/${reportsFolder}"
+    // PATH_TO_SHARED_SCREENSHOTS = "/mnt/cypress/${screenshotsFolder}"
+    // PATH_TO_SHARED_VIDEOS = "/mnt/cypress/${videosFolder}"
+    // PATH_TO_SHARED_REPORTS = "/mnt/${reportsFolder}"
   }
   deleteFolder(reportsFolder)
   deleteFolder(videosFolder)
   deleteFolder(screenshotsFolder)
   sh "chmod u+x ./common/e2e/mount-test-results.sh"
   sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $jenkinsEnvName $targetNodeGroup $targetPath $frontendName $sourceNodeGroup $pathToTestResults"
-  sh "cp -R $PATH_TO_SHARED_REPORTS ."
-  sh "cp -R $PATH_TO_SHARED_VIDEOS ."
-  sh "cp -R $PATH_TO_SHARED_SCREENSHOTS ."
+  sh "cp -R /mnt/cypress/${screenshotsFolder} ."
+  sh "cp -R /mnt/cypress/${videosFolder} ."
+  sh "cp -R /mnt/${reportsFolder} ."
 }
 
 return this;

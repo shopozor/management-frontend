@@ -5,7 +5,6 @@ pipeline {
     FRONTEND_NAME = credentials('mgmt-frontend-name-credentials') // contains envName
     JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
     JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
-    // PATH_TO_TEST_RESULTS = '/home/node/test-results'
     PATH_TO_TEST_RESULTS = '/home/node'
     SCREENSHOTS_FOLDER = '/mnt/cypress/screenshots'
     TEST_REPORTS_FOLDER = '/mnt/junit-reports'
@@ -20,6 +19,7 @@ pipeline {
       }
       steps {
         // echo CI_HOSTNAME.split('.')[0]
+        echo TEST_REPORTS_FOLDER.split('/')[-1]
         sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
         sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
         sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"
@@ -61,7 +61,7 @@ pipeline {
         SOURCE_NODE_GROUP = 'cp'
       }
       steps {
-        // deleteFolder(TEST_REPORTS_FOLDER)
+        // deleteFolder(TEST_REPORTS_FOLDER.split('/')[-1])
         // deleteFolder(VIDEOS_FOLDER)
         // deleteFolder(SCREENSHOTS_FOLDER)
         sh "chmod u+x ./common/e2e/mount-test-results.sh"

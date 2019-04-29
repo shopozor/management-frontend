@@ -9,9 +9,6 @@ pipeline {
     SCREENSHOTS_FOLDER = 'screenshots'
     TEST_REPORTS_FOLDER = 'junit-reports'
     VIDEOS_FOLDER = 'videos'
-    PATH_TO_SHARED_SCREENSHOTS = "/mnt/cypress/${SCREENSHOTS_FOLDER}"
-    PATH_TO_SHARED_VIDEOS = "/mnt/cypress/${VIDEOS_FOLDER}"
-    PATH_TO_SHARED_REPORTS = "/mnt/${TEST_REPORTS_FOLDER}"
   }
   stages {
     stage('Starting up backend environment') {
@@ -59,14 +56,18 @@ pipeline {
         SOURCE_NODE_GROUP = 'cp'
       }
       steps {
-        deleteFolder(TEST_REPORTS_FOLDER)
-        deleteFolder(VIDEOS_FOLDER)
-        deleteFolder(SCREENSHOTS_FOLDER)
-        sh "chmod u+x ./common/e2e/mount-test-results.sh"
-        sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $JENKINS_ENV_NAME $TARGET_NODE_GROUP $TARGET_PATH $FRONTEND_NAME $SOURCE_NODE_GROUP $PATH_TO_TEST_RESULTS"
-        sh "cp -R $PATH_TO_SHARED_REPORTS ."
-        sh "cp -R $PATH_TO_SHARED_VIDEOS ."
-        sh "cp -R $PATH_TO_SHARED_SCREENSHOTS ."
+        script {
+        // deleteFolder(TEST_REPORTS_FOLDER)
+        // deleteFolder(VIDEOS_FOLDER)
+        // deleteFolder(SCREENSHOTS_FOLDER)
+        // sh "chmod u+x ./common/e2e/mount-test-results.sh"
+        // sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $JENKINS_ENV_NAME $TARGET_NODE_GROUP $TARGET_PATH $FRONTEND_NAME $SOURCE_NODE_GROUP $PATH_TO_TEST_RESULTS"
+        // sh "cp -R $PATH_TO_SHARED_REPORTS ."
+        // sh "cp -R $PATH_TO_SHARED_VIDEOS ."
+        // sh "cp -R $PATH_TO_SHARED_SCREENSHOTS ."
+          def lib = load './e2e/CommonLib.groovy'
+          lib.retrieveTestResults(SCREENSHOTS_FOLDER, VIDEOS_FOLDER, TEST_REPORTS_FOLDER, JENKINS_ENV_NAME, TARGET_NODE_GROUP, TARGET_PATH, FRONTEND_NAME, SOURCE_NODE_GROUP, PATH_TO_TEST_RESULTS)
+        }
       }
     }
   }
@@ -81,14 +82,6 @@ pipeline {
       // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
       archiveArtifacts artifacts: "${VIDEOS_FOLDER}/**/*.mp4, ${SCREENSHOTS_FOLDER}/**/*.png"
       junit "${TEST_REPORTS_FOLDER}/*.xml"
-    }
-  }
-}
-
-def deleteFolder(folderName) {
-  script {
-    dir(folderName) {
-      deleteDir()
     }
   }
 }

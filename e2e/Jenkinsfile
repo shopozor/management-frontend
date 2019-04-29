@@ -77,16 +77,18 @@ pipeline {
   post {
     // TODO: parameterize frontend environment deletion
     always {
-      // the environment deletion will trigger a reinstall next time
-      // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done
-      if(params.DELETE_FRONTEND == true) {
-        sh "chmod u+x ./common/e2e/delete-jelastic-env.sh"
-        // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
+      script {
+        // the environment deletion will trigger a reinstall next time
+        // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done
+        if(params.DELETE_FRONTEND == true) {
+          sh "chmod u+x ./common/e2e/delete-jelastic-env.sh"
+          // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
+        }
+        sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
+        // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
+        archiveArtifacts artifacts: "${VIDEOS_FOLDER}/**/*.mp4, ${SCREENSHOTS_FOLDER}/**/*.png"
+        junit "${TEST_REPORTS_FOLDER}/*.xml"
       }
-      sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
-      // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
-      archiveArtifacts artifacts: "${VIDEOS_FOLDER}/**/*.mp4, ${SCREENSHOTS_FOLDER}/**/*.png"
-      junit "${TEST_REPORTS_FOLDER}/*.xml"
     }
   }
 }

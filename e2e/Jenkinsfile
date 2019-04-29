@@ -6,9 +6,12 @@ pipeline {
     JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
     JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
     PATH_TO_TEST_RESULTS = '/home/node'
-    SCREENSHOTS_FOLDER = '/mnt/cypress/screenshots'
-    TEST_REPORTS_FOLDER = '/mnt/junit-reports'
-    VIDEOS_FOLDER = '/mnt/cypress/videos'
+    SCREENSHOTS_FOLDER = 'screenshots'
+    TEST_REPORTS_FOLDER = 'junit-reports'
+    VIDEOS_FOLDER = 'videos'
+    PATH_TO_SHARED_SCREENSHOTS = "/mnt/cypress/${SCREENSHOTS_FOLDER}"
+    PATH_TO_SHARED_VIDEOS = "/mnt/cypress/${VIDEOS_FOLDER}"
+    PATH_TO_SHARED_REPORTS = "/mnt/${TEST_REPORTS_FOLDER}"
   }
   stages {
     stage('Starting up backend environment') {
@@ -48,7 +51,6 @@ pipeline {
         sh "cp e2e/Dockerfile ."
         sh "docker build -t $DOCKER_REPO ."
         sh "docker push $DOCKER_REPO"
-        // sh "sed -i \"s@PATH_TO_TEST_RESULTS_PLACEHOLDER@$PATH_TO_TEST_RESULTS@g\" $FRONTEND_JPS"
         sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
         sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME cp $FRONTEND_JPS"
       }
@@ -61,23 +63,19 @@ pipeline {
         SOURCE_NODE_GROUP = 'cp'
       }
       steps {
-        // deleteFolder(TEST_REPORTS_FOLDER.split('/')[-1])
-        // deleteFolder(VIDEOS_FOLDER)
-        // deleteFolder(SCREENSHOTS_FOLDER)
+        deleteFolder(TEST_REPORTS_FOLDER)
+        deleteFolder(VIDEOS_FOLDER)
+        deleteFolder(SCREENSHOTS_FOLDER)
         sh "chmod u+x ./common/e2e/mount-test-results.sh"
-        // TODO: share the whole /home/node folder instead of copying everything over and over again
         sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $JENKINS_ENV_NAME $TARGET_NODE_GROUP $TARGET_PATH $FRONTEND_NAME $SOURCE_NODE_GROUP $PATH_TO_TEST_RESULTS"
-        sh "cp -R $TEST_REPORTS_FOLDER ."
-        sh "cp -R $VIDEOS_FOLDER ."
-        sh "cp -R $SCREENSHOTS_FOLDER ."
-
-        // sh "cp -R /mnt/$TEST_REPORTS_FOLDER ."
-        // sh "cp -R /mnt/$VIDEOS_FOLDER ."
-        // sh "cp -R /mnt/$SCREENSHOTS_FOLDER ."
+        sh "cp -R $PATH_TO_SHARED_TEST_REPORTS ."
+        sh "cp -R $PATH_TO_SHARED_VIDEOS ."
+        sh "cp -R $PATH_TO_SHARED_SCREENSHOTS ."
       }
     }
   }
   post {
+    // TODO: parameterize frontend environment deletion
     always {
       // the environment deletion will trigger a reinstall next time
       // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done
@@ -85,8 +83,8 @@ pipeline {
       // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
       sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
       // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
-      archiveArtifacts artifacts: "videos/**/*.mp4, screenshots/**/*.png"
-      junit "junit-reports/*.xml"
+      archiveArtifacts artifacts: "${VIDEOS_FOLDER}/**/*.mp4, ${SCREENSHOTS_FOLDER}/**/*.png"
+      junit "${TEST_REPORTS_FOLDER}/*.xml"
     }
   }
 }

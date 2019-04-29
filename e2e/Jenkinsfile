@@ -22,7 +22,7 @@ pipeline {
       }
       steps {
         script {
-          def lib = load './TestLib.groovy'
+          def lib = load './e2e/TestLib.groovy'
           lib.myTest()
         }
         // echo CI_HOSTNAME.split('.')[0]

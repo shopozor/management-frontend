@@ -68,7 +68,7 @@ pipeline {
         deleteFolder(SCREENSHOTS_FOLDER)
         sh "chmod u+x ./common/e2e/mount-test-results.sh"
         sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $JENKINS_ENV_NAME $TARGET_NODE_GROUP $TARGET_PATH $FRONTEND_NAME $SOURCE_NODE_GROUP $PATH_TO_TEST_RESULTS"
-        sh "cp -R $PATH_TO_SHARED_TEST_REPORTS ."
+        sh "cp -R $PATH_TO_SHARED_REPORTS ."
         sh "cp -R $PATH_TO_SHARED_VIDEOS ."
         sh "cp -R $PATH_TO_SHARED_SCREENSHOTS ."
       }

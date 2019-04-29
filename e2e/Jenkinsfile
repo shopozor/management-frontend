@@ -81,8 +81,8 @@ pipeline {
       // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
       sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
       // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
-      sh "ls $TEST_REPORTS_FOLDER"
       archiveArtifacts artifacts: "$VIDEOS_FOLDER/**/*.mp4, $SCREENSHOTS_FOLDER/**/*.png"
+      sh "ls $TEST_REPORTS_FOLDER"
       junit "$TEST_REPORTS_FOLDER/*.xml"
     }
   }

@@ -18,7 +18,7 @@ pipeline {
         BACKEND_JPS = 'backend.jps'
       }
       steps {
-        echo JENKINS_URL.split('/')[2].split(':')[0]
+        echo JENKINS_URL.split('/')[2].split(':')[0].split('.')[0]
         sh "curl -o $BACKEND_JPS $BACKEND_NAME_PSW"
         sh "sed -i \"s/GIT_USER/$GITHUB_CREDENTIALS_USR/g\" $BACKEND_JPS"
         sh "sed -i \"s/GIT_PASSWORD/$GITHUB_CREDENTIALS_PSW/g\" $BACKEND_JPS"

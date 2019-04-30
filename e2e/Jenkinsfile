@@ -1,4 +1,4 @@
-pipeline {
+pipeline { // TODO: first thing: retest this script!
   agent any
   parameters {
     booleanParam(name: 'DELETE_FRONTEND', defaultValue: true, description: 'Disable this value if you need to get feedback about the frontend status after the test')
@@ -46,7 +46,7 @@ pipeline {
       steps {
         script {
           def lib = load './e2e/CommonLib.groovy'
-          lib.buildDockerImage(DOCKER_CREDENTIALS_USR, DOCKER_CREDENTIALS_PSW, DOCKER_REPO)
+          lib.buildDockerImage()
           lib.deploy(FRONTEND_JPS, FRONTEND_NAME)
         }
       }
@@ -60,14 +60,6 @@ pipeline {
       }
       steps {
         script {
-        // deleteFolder(TEST_REPORTS_FOLDER)
-        // deleteFolder(VIDEOS_FOLDER)
-        // deleteFolder(SCREENSHOTS_FOLDER)
-        // sh "chmod u+x ./common/e2e/mount-test-results.sh"
-        // sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $JENKINS_ENV_NAME $TARGET_NODE_GROUP $TARGET_PATH $FRONTEND_NAME $SOURCE_NODE_GROUP $PATH_TO_TEST_RESULTS"
-        // sh "cp -R $PATH_TO_SHARED_REPORTS ."
-        // sh "cp -R $PATH_TO_SHARED_VIDEOS ."
-        // sh "cp -R $PATH_TO_SHARED_SCREENSHOTS ."
           def lib = load './e2e/CommonLib.groovy'
           lib.retrieveTestResults(SCREENSHOTS_FOLDER, VIDEOS_FOLDER, TEST_REPORTS_FOLDER, JENKINS_ENV_NAME, TARGET_NODE_GROUP, TARGET_PATH, FRONTEND_NAME, SOURCE_NODE_GROUP, PATH_TO_TEST_RESULTS)
         }
@@ -75,17 +67,20 @@ pipeline {
     }
   }
   post {
-    // TODO: parameterize frontend environment deletion
     always {
       script {
+        def lib = load './e2e/CommonLib.groovy'
         // the environment deletion will trigger a reinstall next time
         // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done
         if(params.DELETE_FRONTEND == true) {
-          sh "chmod u+x ./common/e2e/delete-jelastic-env.sh"
-          // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
+          // sh "chmod u+x ./common/e2e/delete-jelastic-env.sh"
+          // // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
+          lib.deleteEnvironment(FRONTEND_NAME)
         }
-        sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
+        // sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
         // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
+        lib.stopEnvironment(BACKEND_NAME_USR)
+
         archiveArtifacts artifacts: "${VIDEOS_FOLDER}/**/*.mp4, ${SCREENSHOTS_FOLDER}/**/*.png"
         junit "${TEST_REPORTS_FOLDER}/*.xml"
       }

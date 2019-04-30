@@ -5,7 +5,7 @@ def prepareBackendConfiguration(gitUser, gitPwd, gitBranch, backendJps, backendJ
   sh "sed -i \"s/GIT_BRANCH/$gitBranch/g\" $backendJps"
 }
 
-def buildDockerImage(username, password, repo) {
+def buildDockerImage() {
   sh "docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW"
   sh "cp e2e/Dockerfile ."
   sh "docker build -t $DOCKER_REPO ."
@@ -13,10 +13,6 @@ def buildDockerImage(username, password, repo) {
 }
 
 def deploy(backendJps, backendEnvName) {
-  environment {
-    JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
-    JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
-  }
   sh "chmod u+x ./common/e2e/deploy-to-jelastic.sh"
   sh "./common/e2e/deploy-to-jelastic.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $backendEnvName cp $backendJps"
 }
@@ -28,13 +24,6 @@ def deleteFolder(folderName) {
 }
 
 def retrieveTestResults(screenshotsFolder, videosFolder, reportsFolder, jenkinsEnvName, targetNodeGroup, targetPath, frontendName, sourceNodeGroup, pathToTestResults) {
-  environment {
-    JELASTIC_APP_CREDENTIALS = credentials('jelastic-app-credentials')
-    JELASTIC_CREDENTIALS = credentials('jelastic-credentials')
-    // PATH_TO_SHARED_SCREENSHOTS = "/mnt/cypress/${screenshotsFolder}"
-    // PATH_TO_SHARED_VIDEOS = "/mnt/cypress/${videosFolder}"
-    // PATH_TO_SHARED_REPORTS = "/mnt/${reportsFolder}"
-  }
   deleteFolder(reportsFolder)
   deleteFolder(videosFolder)
   deleteFolder(screenshotsFolder)
@@ -43,6 +32,16 @@ def retrieveTestResults(screenshotsFolder, videosFolder, reportsFolder, jenkinsE
   sh "cp -R /mnt/cypress/${screenshotsFolder} ."
   sh "cp -R /mnt/cypress/${videosFolder} ."
   sh "cp -R /mnt/${reportsFolder} ."
+}
+
+def deleteEnvironment(envName) {
+  sh "chmod u+x ./common/e2e/delete-jelastic-env.sh"
+  sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $envName"
+}
+
+def stopEnvironment(envName) {
+  sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
+  sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $envName"
 }
 
 return this;

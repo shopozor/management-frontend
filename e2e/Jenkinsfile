@@ -1,2 +1,3 @@
-def commonPipeline = load './common/e2e/CommonPipeline.groovy'
-commonPipeline.run()
+// @Library('frontend-e2e-pipeline')_
+
+frontendE2ePipeline()

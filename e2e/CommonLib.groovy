@@ -23,15 +23,20 @@ def deleteFolder(folderName) {
   }
 }
 
-def retrieveTestResults(screenshotsFolder, videosFolder, reportsFolder, jenkinsEnvName, targetNodeGroup, targetPath, frontendName, sourceNodeGroup, pathToTestResults) {
-  deleteFolder(reportsFolder)
-  deleteFolder(videosFolder)
-  deleteFolder(screenshotsFolder)
+def retrieveTestResults(jenkinsEnvName, targetNodeGroup, targetPath, frontendName, sourceNodeGroup) {
+  deleteFolder(TEST_REPORTS_FOLDER)
+  deleteFolder(VIDEOS_FOLDER)
+  deleteFolder(SCREENSHOTS_FOLDER)
   sh "chmod u+x ./common/e2e/mount-test-results.sh"
-  sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $jenkinsEnvName $targetNodeGroup $targetPath $frontendName $sourceNodeGroup $pathToTestResults"
-  sh "cp -R /mnt/cypress/${screenshotsFolder} ."
-  sh "cp -R /mnt/cypress/${videosFolder} ."
-  sh "cp -R /mnt/${reportsFolder} ."
+  sh "./common/e2e/mount-test-results.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $jenkinsEnvName $targetNodeGroup $targetPath $frontendName $sourceNodeGroup $PATH_TO_TEST_RESULTS"
+  sh "cp -R /mnt/cypress/${SCREENSHOTS_FOLDER} ."
+  sh "cp -R /mnt/cypress/${VIDEOS_FOLDER} ."
+  sh "cp -R /mnt/${TEST_REPORTS_FOLDER} ."
+}
+
+def buildArtifacts() {
+  archiveArtifacts artifacts: "${VIDEOS_FOLDER}/**/*.mp4, ${SCREENSHOTS_FOLDER}/**/*.png"
+  junit "${TEST_REPORTS_FOLDER}/*.xml"
 }
 
 def deleteEnvironment(envName) {

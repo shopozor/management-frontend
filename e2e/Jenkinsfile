@@ -23,7 +23,7 @@ pipeline { // TODO: first thing: retest this script!
       steps {
         // echo CI_HOSTNAME.split('.')[0]
         script {
-          def lib = load './e2e/CommonLib.groovy'
+          def lib = load './e2e/CommonLib.groovy' // TODO: do I really need to load every time? can't I just load that at the top of this file?
           lib.prepareBackendConfiguration(GITHUB_CREDENTIALS_USR, GITHUB_CREDENTIALS_PSW, 'dev', BACKEND_JPS, BACKEND_NAME_PSW)
           lib.deploy(BACKEND_JPS, BACKEND_NAME_USR)
         }
@@ -52,16 +52,14 @@ pipeline { // TODO: first thing: retest this script!
       }
     }
     stage('Retrieving test results from frontend environment') {
-      environment {
-        JENKINS_ENV_NAME = 'shopozor-ci' // TODO: get this from the jenkins environment variables!
-        TARGET_NODE_GROUP = 'cp'
-        TARGET_PATH = '/mnt'
-        SOURCE_NODE_GROUP = 'cp'
-      }
       steps {
         script {
           def lib = load './e2e/CommonLib.groovy'
-          lib.retrieveTestResults(SCREENSHOTS_FOLDER, VIDEOS_FOLDER, TEST_REPORTS_FOLDER, JENKINS_ENV_NAME, TARGET_NODE_GROUP, TARGET_PATH, FRONTEND_NAME, SOURCE_NODE_GROUP, PATH_TO_TEST_RESULTS)
+          def targetNodeGroup = 'cp'
+          def targetPath = '/mnt'
+          def sourceNodeGroup = 'cp'
+          def jenkinsEnvName = 'shopozor-ci' // TODO: get this from the jenkins environment variables!
+          lib.retrieveTestResults(jenkinsEnvName, targetNodeGroup, targetPath, FRONTEND_NAME, sourceNodeGroup)
         }
       }
     }
@@ -73,16 +71,10 @@ pipeline { // TODO: first thing: retest this script!
         // the environment deletion will trigger a reinstall next time
         // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done
         if(params.DELETE_FRONTEND == true) {
-          // sh "chmod u+x ./common/e2e/delete-jelastic-env.sh"
-          // // sh "./common/e2e/delete-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $FRONTEND_NAME"
           lib.deleteEnvironment(FRONTEND_NAME)
         }
-        // sh "chmod u+x ./common/e2e/stop-jelastic-env.sh"
-        // sh "./common/e2e/stop-jelastic-env.sh $JELASTIC_APP_CREDENTIALS_USR $JELASTIC_APP_CREDENTIALS_PSW $JELASTIC_CREDENTIALS_USR $JELASTIC_CREDENTIALS_PSW $BACKEND_NAME_USR"
         lib.stopEnvironment(BACKEND_NAME_USR)
-
-        archiveArtifacts artifacts: "${VIDEOS_FOLDER}/**/*.mp4, ${SCREENSHOTS_FOLDER}/**/*.png"
-        junit "${TEST_REPORTS_FOLDER}/*.xml"
+        lib.buildArtifacts()
       }
     }
   }

@@ -17,7 +17,11 @@ pipeline {
   }
   stages {
     stage('Load common lib') {
-      commonLib = load './e2e/CommonLib.groovy'
+      steps {
+        script {
+          commonLib = load './e2e/CommonLib.groovy'
+        }
+      }
     }
     stage('Starting up backend environment') {
       environment {

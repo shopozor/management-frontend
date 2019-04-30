@@ -27,13 +27,9 @@ pipeline {
       environment {
         GITHUB_CREDENTIALS = credentials('github-credentials')
         BACKEND_JPS = 'backend.jps'
-        // CI_HOSTNAME = JENKINS_URL.split('/')[2].split(':')[0]
       }
       steps {
-        // echo CI_HOSTNAME.split('.')[0]
         script {
-          def ciHostname = JENKINS_URL.split('/')[2].split(':')[0]
-          echo ciHostname.split('\\.')[0]
           commonLib.prepareBackendConfiguration(GITHUB_CREDENTIALS_USR, GITHUB_CREDENTIALS_PSW, 'dev', BACKEND_JPS, BACKEND_NAME_PSW)
           commonLib.deploy(BACKEND_JPS, BACKEND_NAME_USR)
         }
@@ -66,7 +62,7 @@ pipeline {
           def targetNodeGroup = 'cp'
           def targetPath = '/mnt'
           def sourceNodeGroup = 'cp'
-          def jenkinsEnvName = 'shopozor-ci' // TODO: get this from the jenkins environment variables!
+          def jenkinsEnvName = JENKINS_URL.split('/')[2].split(':')[0].split('\\.')[0]
           commonLib.retrieveTestResults(jenkinsEnvName, targetNodeGroup, targetPath, FRONTEND_NAME, sourceNodeGroup)
         }
       }

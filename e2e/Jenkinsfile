@@ -1,4 +1,6 @@
-pipeline { // TODO: first thing: retest this script!
+def commonLib
+
+pipeline {
   agent any
   parameters {
     booleanParam(name: 'DELETE_FRONTEND', defaultValue: true, description: 'Disable this value if you need to get feedback about the frontend status after the test')
@@ -14,6 +16,9 @@ pipeline { // TODO: first thing: retest this script!
     VIDEOS_FOLDER = 'videos'
   }
   stages {
+    stage('Load common lib') {
+      def commonLib = load './e2e/CommonLib.groovy'
+    }
     stage('Starting up backend environment') {
       environment {
         GITHUB_CREDENTIALS = credentials('github-credentials')
@@ -23,9 +28,10 @@ pipeline { // TODO: first thing: retest this script!
       steps {
         // echo CI_HOSTNAME.split('.')[0]
         script {
-          def lib = load './e2e/CommonLib.groovy' // TODO: do I really need to load every time? can't I just load that at the top of this file?
-          lib.prepareBackendConfiguration(GITHUB_CREDENTIALS_USR, GITHUB_CREDENTIALS_PSW, 'dev', BACKEND_JPS, BACKEND_NAME_PSW)
-          lib.deploy(BACKEND_JPS, BACKEND_NAME_USR)
+          def ciHostname = JENKINS_URL.split('/')[2].split(':')[0]
+          echo ciHostname.split('.')[0]
+          commonLib.prepareBackendConfiguration(GITHUB_CREDENTIALS_USR, GITHUB_CREDENTIALS_PSW, 'dev', BACKEND_JPS, BACKEND_NAME_PSW)
+          commonLib.deploy(BACKEND_JPS, BACKEND_NAME_USR)
         }
       }
     }
@@ -45,21 +51,19 @@ pipeline { // TODO: first thing: retest this script!
       }
       steps {
         script {
-          def lib = load './e2e/CommonLib.groovy'
-          lib.buildDockerImage()
-          lib.deploy(FRONTEND_JPS, FRONTEND_NAME)
+          commonLib.buildDockerImage()
+          commonLib.deploy(FRONTEND_JPS, FRONTEND_NAME)
         }
       }
     }
     stage('Retrieving test results from frontend environment') {
       steps {
         script {
-          def lib = load './e2e/CommonLib.groovy'
           def targetNodeGroup = 'cp'
           def targetPath = '/mnt'
           def sourceNodeGroup = 'cp'
           def jenkinsEnvName = 'shopozor-ci' // TODO: get this from the jenkins environment variables!
-          lib.retrieveTestResults(jenkinsEnvName, targetNodeGroup, targetPath, FRONTEND_NAME, sourceNodeGroup)
+          commonLib.retrieveTestResults(jenkinsEnvName, targetNodeGroup, targetPath, FRONTEND_NAME, sourceNodeGroup)
         }
       }
     }
@@ -67,14 +71,13 @@ pipeline { // TODO: first thing: retest this script!
   post {
     always {
       script {
-        def lib = load './e2e/CommonLib.groovy'
         // the environment deletion will trigger a reinstall next time
         // a frontend reinstall is required because at the end of the manifest's installation, we know that the tests are done
         if(params.DELETE_FRONTEND == true) {
-          lib.deleteEnvironment(FRONTEND_NAME)
+          commonLib.deleteEnvironment(FRONTEND_NAME)
         }
-        lib.stopEnvironment(BACKEND_NAME_USR)
-        lib.buildArtifacts()
+        commonLib.stopEnvironment(BACKEND_NAME_USR)
+        commonLib.buildArtifacts()
       }
     }
   }

@@ -6,7 +6,3 @@
 	path = graphql
 	url = https://github.com/softozor/shopozor-graphql
 	branch = master
-[submodule "common"]
-	path = common
-	url = https://github.com/softozor/shopozor-common-frontend
-	branch = master

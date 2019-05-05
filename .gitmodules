@@ -8,5 +8,5 @@
 	branch = master
 [submodule "common"]
 	path = common
-	url = https://bitbucket.org/softozor/shopozor-common-frontend
+	url = https://github.com/softozor/shopozor-common-frontend
 	branch = master

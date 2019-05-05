@@ -9,4 +9,4 @@
 [submodule "common"]
 	path = common
 	url = https://github.com/softozor/shopozor-common-frontend
-	branch = master
+	branch = dev

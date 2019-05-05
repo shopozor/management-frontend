@@ -34,7 +34,7 @@ When(
   function () {
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
     cy.visit('/')
-    cy.fixture('Authentication/Credentials/NewCustomer')
+    cy.fixture('Authentication/Credentials/NewConsumer')
       .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
   }
 )

@@ -14,14 +14,14 @@ pipeline {
       }
     }
     stage('Building application') {
+      environment {
+        GRAPHQL_API = 'http://localhost:8000/graphql/'
+      }
       steps {
         sh "yarn build"
       }
     }
     stage('Performing acceptance tests') {
-      environment {
-        GRAPHQL_API = 'http://localhost:8000/graphql/'
-      }
       steps {
         deleteFolder(REPORTS_FOLDER)
         sh "CYPRESS_CACHE_FOLDER=$WORKSPACE/.cache yarn start:ci"

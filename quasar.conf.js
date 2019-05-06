@@ -1,3 +1,5 @@
+const helpers = require('./common/quasar.helpers')
+
 // Configuration for your app
 
 module.exports = function (ctx) {
@@ -13,10 +15,8 @@ module.exports = function (ctx) {
     ],
     supportIE: false,
     build: {
-      env: ctx.dev ? {
-        API: process.env.GRAPHQL_API ? JSON.stringify(process.env.GRAPHQL_API) : JSON.stringify('http://localhost:8000/graphql/')
-      } : {
-        API: JSON.stringify(process.env.GRAPHQL_API)
+      env: {
+        API: helpers.getAPI(ctx.dev)
       },
       scopeHoisting: true,
       // vueRouterMode: 'history',

@@ -1,4 +1,3 @@
 @Library('frontend-e2e-pipeline') _
 
-// TODO: do not forget to automatically configure the shared libs in jenkins!
 frontendE2ePipeline()

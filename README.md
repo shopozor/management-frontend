@@ -2,6 +2,12 @@
 
 > WIP
 
+## Build statuses
+
+[![e2e Build Status](http://shopozor-ci.hidora.com/buildStatus/icon?job=shopozor-management-e2e&subject=e2e%20tests)](http://shopozor-ci.hidora.com/job/shopozor-management-e2e/)
+[![Acceptance Build Status](http://shopozor-ci.hidora.com/buildStatus/icon?job=shopozor-management-frontend-acceptance&subject=acceptance%20tests)](http://shopozor-ci.hidora.com/job/shopozor-management-frontend-acceptance/)
+[![Unit Build Status](http://shopozor-ci.hidora.com/buildStatus/icon?job=shopozor-management-frontend-unit&subject=unit%20tests)](http://shopozor-ci.hidora.com/job/shopozor-management-frontend-unit/)
+
 ## Continuous integration
 
 The articles below are pretty useful:

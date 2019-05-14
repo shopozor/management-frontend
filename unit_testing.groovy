@@ -20,8 +20,8 @@ pipeline {
     stage('Performing unit tests') {
       steps {
         deleteFolder(REPORTS_FOLDER)
-        echo "Need to trigger unit tests!"
-        sh "exit 1"
+        sh "yarn test:unit"
+        echo "NO TEST OUTPUT DEFINED!!!!!"
       }
     }
   }

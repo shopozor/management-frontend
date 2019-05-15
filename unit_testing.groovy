@@ -20,8 +20,7 @@ pipeline {
     stage('Performing unit tests') {
       steps {
         deleteFolder(REPORTS_FOLDER)
-        sh "yarn test:unit"
-        echo "NO TEST OUTPUT DEFINED!!!!!"
+        sh "yarn test:unit:ci"
       }
     }
   }

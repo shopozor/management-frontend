@@ -14,6 +14,7 @@ beforeEach(() => {
 })
 
 Given("un {PersonaType} identifié", function (persona) {
+  injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
   login(persona)
 })
 

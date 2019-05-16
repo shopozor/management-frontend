@@ -9,6 +9,7 @@ import '../../../../common/cypress/integration/Authentication/common/PersonaType
 import types from '../../../../common/src/types'
 
 Given('un {PersonaType} connecté au Shopozor', function (persona) {
+  injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
   login(persona)
 })
 

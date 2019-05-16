@@ -55,15 +55,13 @@ Fonctionnalité: Le membre du staff réinitialise son mot de passe
 
   @not-e2e
   Plan du Scénario: Le membre du staff définit son mot de passe une deuxième fois avec le même lien
-    
-    Le lien de réinitialisation de mot de passe n'est valide qu'une seule fois.
 
+    Le lien de réinitialisation de mot de passe n'est valide qu'une seule fois.
+    
     # Tester ce scénario "end-to-end" pourrait être techniquement possible. Il faudrait 
     # mettre en place mailtrap et consulter cette boîte mail durant le test. Dans une 
     # première phase, nous ne considérons pas ce scénario durant les test e2e.
 
-    Le lien de réinitialisation de mot de passe ne peut être utilisé qu'une seule fois.
-    
     Etant donné un <membre> qui a reçu un lien de réinitialisation de mot de passe
     Et qui a déjà réinitialisé son mot de passe avec ce lien
     Lorsqu'il le réinitialise pour la deuxième fois
@@ -79,16 +77,16 @@ Fonctionnalité: Le membre du staff réinitialise son mot de passe
     @not-e2e
     Plan du Scénario: Le membre du staff définit son mot de passe trop tard 
     
+      En plus de n'être utilisable qu'une seule fois, le lien expire après un certain temps. 
+      Dans ce cas, le mot de passe de l'utilisateur reste inchangé. Il a toujours la possibilité 
+      de refaire une demande de réinitialisation pour obtenir un nouveau lien.  
+
       # Tester ce scénario "end-to-end" n'est pas raisonnable car il faudrait en principe 
       # attendre suffisamment longtemps pour que le lien expire. Il est possible de faire 
       # avancer le temps durant les tests côté serveur mais durant les tests e2e c'est plus 
       # compliqué. Il faudrait théoriquement avoir une méthode dans l'api du serveur pour lui 
       # avancer son temps, ce qui est faisable mais demande du travail dont la plus-value est 
       # discutable.
-
-      En plus de n'être utilisable qu'une seule fois, le lien expire après un certain temps. 
-      Dans ce cas, le mot de passe de l'utilisateur reste inchangé. Il a toujours la possibilité 
-      de refaire une demande de réinitialisation pour obtenir un nouveau lien.  
       
       Etant donné un <membre> qui a reçu un lien de réinitialisation de mot de passe
       Lorsqu'il définit un mot de passe conforme trop tard 

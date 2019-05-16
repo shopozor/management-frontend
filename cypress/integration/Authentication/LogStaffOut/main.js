@@ -1,5 +1,6 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
+import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
 import {
   login,
   navigateTo,

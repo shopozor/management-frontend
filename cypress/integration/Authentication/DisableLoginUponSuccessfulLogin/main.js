@@ -1,7 +1,8 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
-import '../../../../common/cypress/integration/Authentication/common/PersonaType'
+import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
 import { login } from '../../../../common/cypress/integration/Authentication/common/Helpers'
+import '../../../../common/cypress/integration/Authentication/common/PersonaType'
 
 before(() => {
   cy.log(

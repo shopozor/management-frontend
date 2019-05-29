@@ -95,7 +95,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint --fix && yarn test:unit",
-      "pre-push": "yarn lint --fix && yarn test:unit && yarn start:ci"
+      "pre-push": "yarn lint --fix && yarn test:unit && yarn build && yarn start:ci"
     }
   }
 }

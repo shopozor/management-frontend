@@ -51,7 +51,8 @@ module.exports = function (ctx) {
     },
     devServer: {
       // https: true,
-      port: 4000,
+      port: 5000, // make sure to have a different port than that of the consumer frontend app
+      // this is to avoid problems upon pushing code because of the pre-push hook
       open: true // opens browser window automatically
     },
     // framework: 'all' --- includes everything; for dev only!

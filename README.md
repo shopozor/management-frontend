@@ -53,6 +53,14 @@ password: Budzonnerie1
 
 ## Development setup
 
+### Pre-commit hooks
+
+Pre-commit (and pre-push) hooks are configured with `husky` (see `husky` section of [package.json](package.json)). You also need to activate the hooks for the `graphql` and `fixtures` submodules. To do that, you run 
+
+```
+./common/scripts/activate-hooks.sh
+```
+
 ### Run the saleor server
 
 1. Browse your `saleor` project folder

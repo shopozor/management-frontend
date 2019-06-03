@@ -1,10 +1,10 @@
 [submodule "cypress/fixtures"]
 	path = cypress/fixtures
-	url = https://github.com/softozor/shopozor-fixtures
+	url = https://github.com/shopozor/fixtures
 	branch = master
 [submodule "graphql"]
 	path = graphql
-	url = https://github.com/softozor/shopozor-graphql
+	url = https://github.com/shopozor/graphql
 	branch = master
 [submodule "common"]
 	path = common

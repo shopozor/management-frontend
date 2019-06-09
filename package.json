@@ -36,6 +36,7 @@
     "graphql-tag": "^2.10.0",
     "node-fetch": "^2.3.0",
     "quasar": "^1.0.0-beta.17",
+    "sinon": "^7.3.2",
     "vue-apollo": "^3.0.0-beta.26",
     "vue-i18n": "^8.4.0",
     "vue-simple-calendar": "^4.0.2",

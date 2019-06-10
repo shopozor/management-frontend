@@ -1,4 +1,4 @@
-import types from '../../common/src/types'
+import types from '../../common/types'
 
 export const links = [
   types.links.LOGIN,

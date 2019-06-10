@@ -16,7 +16,7 @@ import FormatPrice from './FormatPrice/FormatPrice'
 import FormatAmount from './FormatAmount'
 import FormatStateManager from './FormatStateManager'
 import FormatCriticalValuesMixin from './FormatCriticalValuesMixin'
-import types from '../../../../../common/src/types'
+import types from '../../../../../common/types'
 
 export default {
   name: 'ProductEditFormat',

@@ -9,7 +9,7 @@ import '../../../../common/cypress/integration/Authentication/common/PersonaType
 import '../../../../common/cypress/integration/Authentication/common/SessionDurationType'
 import TokenHandler from '../../../../common/cypress/integration/Authentication/common/TokenHandler'
 import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
-import types from '../../../../common/src/types'
+import types from '../../../../common/types'
 
 before(() => {
   cy.log(
@@ -34,7 +34,7 @@ When(
   function () {
     injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
     cy.visit('/')
-    cy.fixture('Authentication/Credentials/NewCustomer')
+    cy.fixture('Authentication/Credentials/NewConsumer')
       .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
   }
 )

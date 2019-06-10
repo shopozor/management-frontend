@@ -1,4 +1,4 @@
-import { unitsDefinitions, physicalSizesRank } from '../../../common/src/types/UnitsDefinitions'
+import { unitsDefinitions, physicalSizesRank } from '../../../common/types/UnitsDefinitions'
 
 export const convert = ({ startValue, startUnit, endUnit }) => {
   if (unitsAreCompatible({ unit1: startUnit, unit2: endUnit })) {

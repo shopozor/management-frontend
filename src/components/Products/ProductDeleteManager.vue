@@ -9,7 +9,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import types from '../../../common/src/types'
+import types from '../../../common/types'
 
 export default {
   name: 'ProductDeleteManager',

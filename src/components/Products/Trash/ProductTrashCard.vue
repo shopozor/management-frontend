@@ -13,7 +13,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import types from '../../../../common/src/types'
+import types from '../../../../common/types'
 import ShowImageMixin from '../../../assets/images/ShowImageMixin'
 
 export default {

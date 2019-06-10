@@ -15,7 +15,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import types from '../../../../../../common/src/types'
+import types from '../../../../../../common/types'
 import FormatDescriptionFree from './FormatDescriptionFree'
 import FormatDescriptionSizeUnit from './FormatDescriptionSizeUnit'
 import FormatDescriptionAuto from './FormatDescriptionAuto'

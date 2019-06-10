@@ -6,7 +6,7 @@ import {
   getTokenCookie
 } from '../../../../common/cypress/integration/Authentication/common/Helpers'
 import '../../../../common/cypress/integration/Authentication/common/PersonaType'
-import types from '../../../../common/src/types'
+import types from '../../../../common/types'
 
 Given('un {PersonaType} connecté au Shopozor', function (persona) {
   login(persona)

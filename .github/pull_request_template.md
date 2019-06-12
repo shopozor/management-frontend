@@ -4,6 +4,8 @@
 
 - [ ] You have configured the triggering of the pre-commit hook on your local repository's clone.
 - [ ] You have covered your code with unit and acceptance tests
+- [ ] The feature you have implemented has no tag `@wip` any more
+- [ ] None of the feature files have a tag `@current` or `@focus`
 
 # Changes
 

@@ -1,3 +1,5 @@
+const helpers = require('./common/quasar.helpers')
+
 // Configuration for your app
 
 module.exports = function (ctx) {
@@ -13,16 +15,14 @@ module.exports = function (ctx) {
     ],
     supportIE: false,
     build: {
-      env: ctx.dev ? {
-        API: JSON.stringify('http://localhost:8000/graphql/')
-      } : {
-        API: JSON.stringify('GRAPHQL_API')
+      env: {
+        API: helpers.getAPI(ctx.dev)
       },
       scopeHoisting: true,
       // vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
-      // analyze: true,
+      analyze: false,
       // extractCSS: false,
       extendWebpack (cfg) {
         cfg.module.rules.push({
@@ -51,7 +51,8 @@ module.exports = function (ctx) {
     },
     devServer: {
       // https: true,
-      port: 4000,
+      port: 5000, // make sure to have a different port than that of the consumer frontend app
+      // this is to avoid problems upon pushing code because of the pre-push hook
       open: true // opens browser window automatically
     },
     // framework: 'all' --- includes everything; for dev only!

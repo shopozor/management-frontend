@@ -1,0 +1,3 @@
+@Library('frontend-e2e-pipeline') _
+
+frontendE2ePipeline(frontendType: 'management')

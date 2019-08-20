@@ -1,5 +1,6 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
+import { injectResponseFixtureIfFaked } from '../../../../common/cypress/integration/common/fakeServer'
 import {
   login,
   navigateTo,
@@ -9,6 +10,7 @@ import '../../../../common/cypress/integration/Authentication/common/PersonaType
 import types from '../../../../common/types'
 
 Given('un {PersonaType} connecté au Shopozor', function (persona) {
+  injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
   login(persona)
 })
 

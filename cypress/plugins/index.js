@@ -14,7 +14,9 @@
 const cucumber = require('cypress-cucumber-preprocessor').default
 // const webpack = require('@cypress/webpack-preprocessor')
 
-module.exports = on => {
+const helpers = require('../../common/cypress/plugins/helpers')
+
+module.exports = (on, config) => {
   // const options = {
   //   webpackOptions: require('../webpack.config.js')
   // }
@@ -28,4 +30,6 @@ module.exports = on => {
 
   on('file:preprocessor', file => { return cucumber()(file) })
   // on('file:preprocessor', file => webpack(options)(file))
+
+  return helpers.getConfiguration(config)
 }

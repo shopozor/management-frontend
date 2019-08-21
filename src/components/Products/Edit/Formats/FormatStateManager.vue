@@ -11,7 +11,7 @@
 <script>
 import { mapActions } from 'vuex'
 import FormatCriticalValuesMixin from './FormatCriticalValuesMixin'
-import types from '../../../../../common/src/types'
+import types from '../../../../../common/types'
 
 export default {
   name: 'FormatStateManager',

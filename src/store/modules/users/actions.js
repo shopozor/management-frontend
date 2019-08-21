@@ -1,7 +1,7 @@
 // import * as request from '../simulateServer/users/requestUsers'
 import { apolloClient } from '../../../boot/apollo'
 import * as cookie from '../../../../common/src/store/cookie'
-import types from '../../../../common/src/types'
+import types from '../../../../common/types'
 
 import LogIn from './graphql/login.graphql'
 

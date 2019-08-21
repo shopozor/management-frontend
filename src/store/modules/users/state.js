@@ -1,4 +1,4 @@
-import types from '../../../../common/src/types'
+import types from '../../../../common/types'
 
 // export default {
 //   permissions: [types.permissions.MANAGE_PRODUCTS],

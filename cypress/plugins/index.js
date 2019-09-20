@@ -12,24 +12,9 @@
 // the project's config changing)
 
 const cucumber = require('cypress-cucumber-preprocessor').default
-// const webpack = require('@cypress/webpack-preprocessor')
-
 const helpers = require('../../common/cypress/plugins/helpers')
 
 module.exports = (on, config) => {
-  // const options = {
-  //   webpackOptions: require('../webpack.config.js')
-  // }
-  // on('file:preprocessor', file => {
-  //   if (file.filePath.match(/\.(js|feature)$/)) {
-  //     return cucumber()(file)
-  //   } else {
-  //     return webpack(options)(file)
-  //   }
-  // })
-
   on('file:preprocessor', file => { return cucumber()(file) })
-  // on('file:preprocessor', file => webpack(options)(file))
-
   return helpers.getConfiguration(config)
 }

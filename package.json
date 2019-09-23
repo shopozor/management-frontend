@@ -1,8 +1,8 @@
 {
   "name": "shopozor-manager",
   "version": "1.0.0",
-  "description": "Gérez vos ventes en Budzonnerie",
-  "productName": "Gestion de Budzonnerie",
+  "description": "Admin interface to the Shopozor",
+  "productName": "Shopozor Admin",
   "cordovaId": "org.cordova.quasar.app",
   "author": "Softozor",
   "private": true,

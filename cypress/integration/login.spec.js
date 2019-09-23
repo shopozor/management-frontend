@@ -12,13 +12,13 @@ describe('Log staff member in', function(){
     const email = 'test@example.com'
     const password = 'password'
 
+    beforeEach(() => getTokenCookie().should('not.exist'))
+
     // TODO: the same test needs to be run on the management-frontend side; maybe we could just 
     // TODO: put this test into the common repo and import it somehow
     // TODO: do that for all personas (Consommateur, Producteur, Responsable, Rex, Softozor)! 
     // TODO:  --> try to use jest-each for that purpose
     it('redirects to home page if identified staff member browses /login', function () {
-      // TODO: before all:
-      getTokenCookie().should('not.exist')
       /*
       * Beaucoup d'événements peuvent se passer au moment de l'identification et de la déconnexion d'un utilisateur, 
       * notamment certaines opérations de nettoyage de données. Si un utilisateur peut s'identifier alors qu'il est 
@@ -37,9 +37,6 @@ describe('Log staff member in', function(){
     })
 
     it('denies an unregistered user access to the admin panel', function () {
-      // TODO: before all:
-      getTokenCookie().should('not.exist')
-      
       // Given
       cy.stubServer('Authentication/LogStaffIn/Producteur')
 
@@ -55,9 +52,6 @@ describe('Log staff member in', function(){
     })
 
     it('denies a registered user with invalid password access to the admin panel', function () {
-      // TODO: before all:
-      getTokenCookie().should('not.exist')
-      
       // Given
       cy.stubServer('Authentication/LogStaffIn/WrongCredentials')
 
@@ -73,9 +67,6 @@ describe('Log staff member in', function(){
     })
 
     it('grants a registered user with valid credentials access to the admin panel', function () {
-      // TODO: before all:
-      getTokenCookie().should('not.exist')
-      
       // Given
       cy.stubServer('Authentication/LogStaffIn/Producteur')
 

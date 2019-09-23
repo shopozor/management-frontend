@@ -1,12 +1,16 @@
 import {
   connectWithUserCredentialsViaGui,
   getTokenDuration,
-  getTokenCookie
+  getTokenCookie,
+  login
 } from '../../common/cypress/Authentication/Helpers'
 import TokenHandler from '../../common/cypress/Authentication/TokenHandler'
 
 describe('Log staff member in', function(){
   context('Login functionality', function() {
+
+    const email = 'test@example.com'
+    const password = 'password'
 
     // TODO: the same test needs to be run on the management-frontend side; maybe we could just 
     // TODO: put this test into the common repo and import it somehow
@@ -22,8 +26,8 @@ describe('Log staff member in', function(){
       * C'est pourquoi il faut empêcher à un utilisateur identifié d'accéder à l'interface d'identification. 
       */
       // Given
-      cy.stubServer(`Authentication/LogConsumerIn/Responses/${persona}`)
-      login(persona)
+      cy.stubServer(`Authentication/LogConsumerIn/Producteur`)
+      login(email, password)
 
       // When
       cy.visit('/login')
@@ -37,12 +41,11 @@ describe('Log staff member in', function(){
       getTokenCookie().should('not.exist')
       
       // Given
-      cy.stubServer(`Authentication/LogStaffIn/Responses/${persona}`)
+      cy.stubServer('Authentication/LogStaffIn/Producteur')
 
       // When
       cy.visit('/')
-      cy.fixture(`Authentication/Credentials/${persona}`)
-        .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
+      connectWithUserCredentialsViaGui(email, password)
 
       // Then
       cy.get('@graphql').then(() => {
@@ -56,12 +59,11 @@ describe('Log staff member in', function(){
       getTokenCookie().should('not.exist')
       
       // Given
-      cy.stubServer('Authentication/LogStaffIn/Responses/WrongCredentials')
+      cy.stubServer('Authentication/LogStaffIn/WrongCredentials')
 
       // When
       cy.visit('/')
-      cy.fixture(`Authentication/Credentials/${persona}`)
-        .then(user => connectWithUserCredentialsViaGui(user.email, user.password + 'a'))
+      connectWithUserCredentialsViaGui(email, password)
 
       // Then
       cy.get('@graphql').then(() => {
@@ -75,12 +77,12 @@ describe('Log staff member in', function(){
       getTokenCookie().should('not.exist')
       
       // Given
-      cy.stubServer(`Authentication/LogStaffIn/Responses/${persona}`)
+      cy.stubServer('Authentication/LogStaffIn/Producteur')
 
       // When
       cy.visit('/')
-      cy.fixture(`Authentication/Credentials/${persona}`)
-        .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
+      // TODO: we don't need these credentials here, because we fake the server response anyway!
+      connectWithUserCredentialsViaGui(email, password)
 
       //Then
       cy.get('@graphql').then(() => {

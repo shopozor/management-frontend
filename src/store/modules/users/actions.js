@@ -3,7 +3,7 @@ import { apolloClient } from '../../../boot/apollo'
 import * as cookie from '../../../../common/src/store/cookie'
 import types from '../../../../common/types'
 
-import LogIn from './graphql/login.graphql'
+import LogIn from './graphql/calls/login.graphql'
 
 function saveUser ({ email, userId, token }) {
   cookie.set({ cookieId: types.cookies.EMAIL, cookieValue: email, cookieDuration: 30 })

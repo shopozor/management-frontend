@@ -2,14 +2,14 @@ import {
   login,
   navigateTo,
   getTokenCookie
-} from '../../common/cypress/integration/Authentication/Helpers'
+} from '../../common/cypress/Authentication/Helpers'
 import types from '../../common/types'
 
 describe('Log staff member out', function(){
   context('Logout functionality', function() {
     it('closes the session with the server', function () {
       // Given
-      injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
+      cy.stubServer(`Authentication/LogStaffIn/Responses/${persona}`)
       login(persona)
 
       // When
@@ -21,7 +21,7 @@ describe('Log staff member out', function(){
 
     it('redirects to the login page', function () {
       // Given
-      injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
+      cy.stubServer(`Authentication/LogStaffIn/Responses/${persona}`)
       login(persona)
 
       // When

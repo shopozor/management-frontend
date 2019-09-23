@@ -3,9 +3,9 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 import {
   connectWithUserCredentialsViaGui,
   getTokenCookie
-} from '../../../../common/cypress/integration/Authentication/common/Helpers'
-import '../../../../common/cypress/integration/Authentication/common/PersonaType'
-import '../../../../common/cypress/integration/Authentication/common/SessionDurationType'
+} from '../../../../common/cypress/Authentication/Helpers'
+import '../../../../common/cypress/parameterTypes/PersonaType'
+import '../../../../common/cypress/parameterTypes/SessionDurationType'
 import types from '../../../../common/types'
 
 Given('un utilisateur non identifié', () => {

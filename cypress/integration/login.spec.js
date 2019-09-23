@@ -2,8 +2,8 @@ import {
   connectWithUserCredentialsViaGui,
   getTokenDuration,
   getTokenCookie
-} from '../../common/cypress/integration/Authentication/Helpers'
-import TokenHandler from '../../common/cypress/integration/Authentication/TokenHandler'
+} from '../../common/cypress/Authentication/Helpers'
+import TokenHandler from '../../common/cypress/Authentication/TokenHandler'
 
 describe('Log staff member in', function(){
   context('Login functionality', function() {
@@ -22,7 +22,7 @@ describe('Log staff member in', function(){
       * C'est pourquoi il faut empêcher à un utilisateur identifié d'accéder à l'interface d'identification. 
       */
       // Given
-      injectResponseFixtureIfFaked(`Authentication/LogConsumerIn/Responses/${persona}`)
+      cy.stubServer(`Authentication/LogConsumerIn/Responses/${persona}`)
       login(persona)
 
       // When
@@ -35,9 +35,9 @@ describe('Log staff member in', function(){
     it('denies an unregistered user access to the admin panel', function () {
       // TODO: before all:
       getTokenCookie().should('not.exist')
-      injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
-
+      
       // Given
+      cy.stubServer(`Authentication/LogStaffIn/Responses/${persona}`)
 
       // When
       cy.visit('/')
@@ -54,9 +54,9 @@ describe('Log staff member in', function(){
     it('denies a registered user with invalid password access to the admin panel', function () {
       // TODO: before all:
       getTokenCookie().should('not.exist')
-      injectResponseFixtureIfFaked('Authentication/LogStaffIn/Responses/WrongCredentials')
-
+      
       // Given
+      cy.stubServer('Authentication/LogStaffIn/Responses/WrongCredentials')
 
       // When
       cy.visit('/')
@@ -73,9 +73,9 @@ describe('Log staff member in', function(){
     it('grants a registered user with valid credentials access to the admin panel', function () {
       // TODO: before all:
       getTokenCookie().should('not.exist')
-      injectResponseFixtureIfFaked(`Authentication/LogStaffIn/Responses/${persona}`)
-
+      
       // Given
+      cy.stubServer(`Authentication/LogStaffIn/Responses/${persona}`)
 
       // When
       cy.visit('/')
@@ -93,6 +93,5 @@ describe('Log staff member in', function(){
         })
       })
     })
-
   })
 })

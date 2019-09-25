@@ -80,6 +80,7 @@
     "husky": "^3.0.5",
     "jest-junit": "^8.0.0",
     "jwt-decode": "^2.2.0",
+    "lolex": "^4.2.0",
     "majestic": "^1.6.0",
     "moment": "^2.24.0",
     "strip-ansi": "5.2.0",

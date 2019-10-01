@@ -1,5 +1,14 @@
 # Shopozor management frontend
 
+## Docker images
+
+### Development
+
+As a backend developer, you might need to connect your application to the Shopozor's management frontend. The development docker image is produced manually upon every PR merging into the `dev` branch. You can start the management frontend like this:
+```
+docker run -p 5000:5000 -it softozor/shopozor-management-frontend:production-dev
+```
+
 ## Pull requests
 
 ### Workflow

@@ -15,6 +15,13 @@ const cucumber = require('cypress-cucumber-preprocessor').default
 const helpers = require('../../common/cypress/plugins/helpers')
 
 module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if(process.env.NODE_ENV === 'development' && browser.name === 'chrome') {
+      args.push('--remote-debugging-port=9222')
+      console.log('DEBUG MODE ENABLED')
+      return args
+    }
+  })
   on('file:preprocessor', file => { return cucumber()(file) })
   return helpers.getConfiguration(config)
 }

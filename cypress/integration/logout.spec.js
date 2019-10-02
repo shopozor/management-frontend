@@ -25,7 +25,7 @@ describe('Log staff member out', function(){
 
     it('redirects to the login page', function () {
       // Given
-      cy.stubServer(`Authentication/LogStaffIn/Producteur`)
+      cy.stubServer('Authentication/LogStaffIn/Producteur')
       login(email, password)
 
       // When
@@ -33,6 +33,23 @@ describe('Log staff member out', function(){
       
       // Then
       cy.url().should('include', '/login')
+    })
+
+    it('forgets about the token and redirects to /', function () {
+      // Given
+      cy.stubServer('Authentication/LogStaffIn/Producteur')
+      login(email, password)
+
+      // When
+      navigateTo(types.links.LOGOUT)
+
+      // Then
+      const tokenHandler = new TokenHandler
+      tokenHandler.getNullToken().then(() => {
+        getTokenCookie().should('not.exist')
+      })
+      cy.location('pathname').should('eq', '/')
+      checkIfLinkIsActive(types.links.HOME)
     })
   })
 })

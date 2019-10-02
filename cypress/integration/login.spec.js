@@ -16,8 +16,6 @@ describe('Log staff member in', function(){
 
     // TODO: the same test needs to be run on the management-frontend side; maybe we could just 
     // TODO: put this test into the common repo and import it somehow
-    // TODO: do that for all personas (Consommateur, Producteur, Responsable, Rex, Softozor)! 
-    // TODO:  --> try to use jest-each for that purpose
     it('redirects to home page if identified staff member browses /login', function () {
       /*
       * Beaucoup d'événements peuvent se passer au moment de l'identification et de la déconnexion d'un utilisateur, 
@@ -72,18 +70,11 @@ describe('Log staff member in', function(){
 
       // When
       cy.visit('/')
-      // TODO: we don't need these credentials here, because we fake the server response anyway!
       connectWithUserCredentialsViaGui(email, password)
 
       //Then
       cy.get('@graphql').then(() => {
-        const handler = new TokenHandler
-        handler.getToken().then(token => {
-          // TODO: it is sufficient to check that a token is received; 
-          // TODO: no need to check the session duration
-          const tokenDuration = getTokenDuration(token)
-          expect(tokenDuration.asSeconds()).to.equal(expectedDuration.asSeconds())
-        })
+        getTokenCookie().should('exist')
       })
     })
   })

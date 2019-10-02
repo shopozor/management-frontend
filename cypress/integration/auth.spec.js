@@ -1,13 +1,13 @@
 import {
   connectWithUserCredentialsViaGui,
-  getTokenDuration,
   getTokenCookie,
   login
 } from '../../common/cypress/Authentication/Helpers'
 import TokenHandler from '../../common/cypress/Authentication/TokenHandler'
 
-describe('Log staff member in', function(){
-  context('Login functionality', function() {
+describe('Staff authentication', function(){
+
+  context('Staff login', function() {
 
     const email = 'test@example.com'
     const password = 'password'
@@ -76,6 +76,31 @@ describe('Log staff member in', function(){
       cy.get('@graphql').then(() => {
         getTokenCookie().should('exist')
       })
+    })
+  })
+
+  context('Staff logout', function() {
+
+    const email = 'test@example.com'
+    const password = 'password'
+    
+    beforeEach(() => getTokenCookie().should('not.exist'))
+
+    it('forgets about the token and redirects to /', function () {
+      // Given
+      cy.stubServer('Authentication/LogStaffIn/Producteur')
+      login(email, password)
+
+      // When
+      navigateTo(types.links.LOGOUT)
+
+      // Then
+      const tokenHandler = new TokenHandler
+      tokenHandler.getNullToken().then(() => {
+        getTokenCookie().should('not.exist')
+      })
+      cy.location('pathname').should('eq', '/')
+      checkIfLinkIsActive(types.links.HOME)
     })
   })
 })

@@ -36,7 +36,7 @@ describe('Staff authentication', function(){
 
     it('denies an unregistered user access to the admin panel', function () {
       // Given
-      cy.stubServer('Authentication/LogStaffIn/Producteur')
+      cy.stubServer('Authentication/LogStaffIn/WrongCredentials')
 
       // When
       cy.visit('/')

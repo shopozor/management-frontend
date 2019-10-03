@@ -6,7 +6,6 @@ export const links = [
   types.links.PROFILE,
   types.links.LOGOUT,
   types.links.HOME,
-  types.links.FAKE_SHOP,
   types.links.MAP,
   types.links.ORDERS,
   types.links.PRODUCTS,
@@ -24,7 +23,6 @@ export const orderedLinks = {
   ],
   navigation: [
     types.links.HOME,
-    types.links.FAKE_SHOP,
     types.links.MAP,
     types.links.CALENDAR,
     types.links.ORDERS,
@@ -42,7 +40,6 @@ export const accessRules = {
     [types.links.PROFILE]: false,
     [types.links.LOGOUT]: false,
     [types.links.HOME]: true,
-    [types.links.FAKE_SHOP]: true,
     [types.links.CALENDAR]: false,
     [types.links.MAP]: true,
     [types.links.ORDERS]: false,

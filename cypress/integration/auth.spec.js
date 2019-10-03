@@ -4,10 +4,12 @@ import {
   login
 } from '../../common/cypress/Authentication/Helpers'
 import TokenHandler from '../../common/cypress/Authentication/TokenHandler'
+import { navigateTo, checkIfLinkIsActive } from '../../common/cypress/Authentication/Helpers'
+import types from '../../common/types'
 
-describe('Staff authentication', function(){
+describe('Staff authentication', function () {
 
-  context('Staff login', function() {
+  context('Staff login', function () {
 
     const email = 'test@example.com'
     const password = 'password'
@@ -79,14 +81,14 @@ describe('Staff authentication', function(){
     })
   })
 
-  context('Staff logout', function() {
+  context('Staff logout', function () {
 
     const email = 'test@example.com'
     const password = 'password'
-    
+
     beforeEach(() => getTokenCookie().should('not.exist'))
 
-    it('forgets about the token and redirects to /', function () {
+    it('forgets about the token and redirects to /login', function () {
       // Given
       cy.stubServer('Authentication/LogStaffIn/Producteur')
       login(email, password)
@@ -100,7 +102,7 @@ describe('Staff authentication', function(){
         getTokenCookie().should('not.exist')
       })
       cy.location('pathname').should('eq', '/')
-      checkIfLinkIsActive(types.links.HOME)
+      checkIfLinkIsActive(types.links.LOGIN)
     })
   })
 })

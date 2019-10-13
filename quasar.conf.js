@@ -95,7 +95,13 @@ module.exports = function (ctx) {
       // lang: 'fr' // Quasar language
     },
     // animations: 'all' --- includes all animations
-    animations: [],
+    animations: [
+      'shake',
+      'flipOutY',
+      'flipInY',
+      'bounceIn',
+      'bounceOut'
+    ],
     ssr: {
       pwa: false
     },

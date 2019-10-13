@@ -41,19 +41,19 @@ export default {
       return this.editedFormats[this.formatId].formatUI
     },
     description () {
-      return this.editedFormats[this.formatId]['description']
+      return this.editedFormats[this.formatId].description
     },
     size () {
-      return this.editedFormats[this.formatId]['size']
+      return this.editedFormats[this.formatId].size
     },
     sizeUnit () {
-      return this.editedFormats[this.formatId]['sizeUnit']
+      return this.editedFormats[this.formatId].sizeUnit
     },
     customerPrice () {
-      return this.editedFormats[this.formatId]['customerPrice']
+      return this.editedFormats[this.formatId].customerPrice
     },
     customerPriceUnit () {
-      return this.editedFormats[this.formatId]['customerPriceUnit']
+      return this.editedFormats[this.formatId].customerPriceUnit
     }
   },
   methods: {

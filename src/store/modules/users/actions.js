@@ -3,7 +3,7 @@ import { apolloClient } from '../../../boot/apollo'
 import * as cookie from '../../../../common/src/store/cookie'
 import types from '../../../../common/types'
 
-import LogIn from './graphql/login.graphql'
+import Login from '../../../../graphql/calls/login.graphql'
 
 function saveUser ({ email, userId, token }) {
   cookie.set({ cookieId: types.cookies.EMAIL, cookieValue: email, cookieDuration: 30 })
@@ -44,7 +44,7 @@ export function login ({ commit }, { email, password, stayLoggedIn }) {
   return new Promise((resolve, reject) => {
     apolloClient
       .mutate({
-        mutation: LogIn,
+        mutation: Login,
         variables: {
           email,
           password
@@ -111,10 +111,8 @@ export function getPermissions ({ commit }) {
 
 export function logout ({ commit }) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      commit('logout')
-      removeToken()
-      resolve()
-    }, 1000)
+    commit('logout')
+    removeToken()
+    resolve()
   })
 }

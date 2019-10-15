@@ -20,8 +20,8 @@ When(
   "un Consommateur s'identifie avec un e-mail et un mot de passe valides",
   function () {
     cy.visit('/')
-    cy.fixture(`Authentication/Credentials/Consommateur`)
-      .then(user => connectWithUserCredentialsViaGui(user.email, user.password))
+    cy.fixture(`Users/Consommateurs`)
+      .then(users => connectWithUserCredentialsViaGui(users[0].email, users[0].password))
   }
 )
 

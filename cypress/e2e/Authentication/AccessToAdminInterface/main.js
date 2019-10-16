@@ -1,4 +1,4 @@
-import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
+import { Before, Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
 import {
   connectWithUserCredentialsViaGui,
@@ -7,6 +7,13 @@ import {
 import '../../../../common/cypress/parameterTypes/PersonaType'
 import '../../../../common/cypress/parameterTypes/SessionDurationType'
 import types from '../../../../common/types'
+
+Before(() => {
+  cy.log('Before each scenario')
+  cy.on('window:before:load', (win) => {
+    cy.stub(win, 'fetch').as('graphql')
+  })
+})
 
 Given('un utilisateur non identifié', () => {
   getTokenCookie().should('not.exist')
